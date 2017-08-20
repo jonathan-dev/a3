@@ -4,7 +4,8 @@ import {
     GraphQLObjectType,
     GraphQLString,
     GraphQLList,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLNonNull
 } from 'graphql';
 import mongo from './mongo'
 
@@ -47,8 +48,8 @@ const PostType = new GraphQLObjectType({
         },
         tags: {
             type: new GraphQLList(TagType),
-            resolve: (post) => post.tags.map(tagId => 
-                 mongo.getTag(tagId).then(tag => tag)
+            resolve: (post) => post.tags.map(tagId =>
+                mongo.getTag(tagId).then(tag => tag)
             )
         }
 
@@ -62,21 +63,24 @@ const QueryType = new GraphQLObjectType({
     fields: () => ({
         posts: {
             type: new GraphQLList(PostType),
-            // args: {
-            //     id: {
-            //         type: GraphQLString
-            //     }
-            // },
             resolve: (x, args) => {
                 console.log("args: ", args)
                 return mongo.getPosts()
                     .then(x => x)
             }
         },
-        hello: {
-            type: GraphQLString,
-            resolve() {
-                return 'world';
+        deletePost: {
+            type: PostType,
+            description: 'Delete an article with id and return the article that was deleted.',
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLString)
+                }
+            },
+            resolve: (value, {
+                id
+            }) => {
+                return mongo.deletePost(id);
             }
         }
     })

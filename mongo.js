@@ -76,6 +76,9 @@ export default {
   getPosts(page) {
     return Post.find()
   },
+  deletePost(id) {
+    return Post.findByIdAndRemove(id)
+  },
   getTag(id) {
     return Tag.findById(id)
   }
