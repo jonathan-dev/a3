@@ -22,6 +22,10 @@ app.get('/edit', (req, res) => {
     res.sendFile(__dirname + "/public/views/edit_post_page.html");
 })
 
+app.get('/post/id', (req, res) => {
+    res.sendFile(__dirname + '/public/views/post_detail_page.html');
+})
+
 app.post('/upload', (req, res) => {
     req.fields; // contains non-file fields
     req.files; // contains files
