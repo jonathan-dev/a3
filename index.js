@@ -1,15 +1,25 @@
 import express from 'express'
 import graphQLHTTP from 'express-graphql'
-
+import mongo from './mongo'
 import schema from './schema'
+import DataLoader from 'dataloader'
 
 
 const PORT = 8000
 const app = express()
 
-app.use(graphQLHTTP({
-    schema,
-    graphiql: true
+app.use(graphQLHTTP(req => {
+    const postLoader = new DataLoader(
+        keys => Promise.all(keys.map(mongo.getPosts))
+    )
+    const loaders = {
+        person: postLoader,
+    }
+    return {
+        context: {loaders},
+        schema,
+        graphiql: true
+    }
 }))
 
 app.listen(
