@@ -37,7 +37,7 @@ app.post('/upload', (req, res) => {
     console.log("Image saved!:");
     console.log(image);
     // TODO save in database
-    res.end("Done!");
+    res.redirect('/');
 })
 
 app.listen(
