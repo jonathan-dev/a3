@@ -22,6 +22,7 @@ app.post('/upload', (req, res) => {
         title: req.fields.title,
         path: req.files.upload.path
     };
+
     console.log("Image saved!:");
     console.log(image);
     // TODO save in database
