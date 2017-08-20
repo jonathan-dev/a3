@@ -6,6 +6,7 @@
   "dependencies": {
     "casual": "^1.5.17",
     "express": "^4.15.4",
+    "express-formidable": "^1.0.0",
     "express-graphql": "^0.6.7",
     "graphql": "^0.10.5"
   },
