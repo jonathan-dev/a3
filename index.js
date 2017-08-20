@@ -5,6 +5,11 @@ const PORT = 8000
 const app = express()
 
 app.use(formidable())
+app.use('/public', express.static('public'));
+
+app.get('/upload', (req, res) => {
+    res.sendFile(__dirname + "/public/views/upload_page.html");
+})
 
 app.post('/upload', (req, res) => {
     req.fields; // contains non-file fields
