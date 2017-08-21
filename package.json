@@ -1,7 +1,7 @@
 {
-  "name": "graphql",
+  "name": "assessment3",
   "version": "1.0.0",
-  "description": "",
+  "description": "assessment3 for advanced internet programming",
   "main": "index.js",
   "dependencies": {
     "casual": "^1.5.17",
