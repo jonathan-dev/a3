@@ -7,13 +7,12 @@ import {
     GraphQLInt,
     GraphQLNonNull,
     GraphQLInputObjectType
-} from 'graphql';
-import mongo from './mongo'
+} from 'graphql'; // GraphQL and GraphQL types
+import mongo from './mongo' // Database
 
 const TagType = new GraphQLObjectType({
     name: 'Tag',
-    description: '...',
-
+    description: 'is used to sort post into Categories',
     fields: () => ({
         id: {
             type: GraphQLString,
@@ -34,9 +33,10 @@ var TagAttributesInputType = new GraphQLInputObjectType({
     })
 });
 
+//TODO: add Path to File
 const PostType = new GraphQLObjectType({
     name: 'Post',
-    description: '...',
+    description: 'Post that is displayed in the feed',
 
     fields: () => ({
         id: {
