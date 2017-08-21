@@ -89,5 +89,20 @@ export default {
   },
   getTag(id) {
     return Tag.findById(id)
+  },
+  createPost(postInput) {
+    if (postInput.title && postInput.tags) {
+      postInput.date = new Date()
+      postInput.voteup = 0
+      postInput.vote = 0
+
+      return new Post({
+        title: postInput.title,
+        voteup: 0,
+        votedown: 0,
+        view: 0,
+        tags: postInput.tags.map(x => x.id)
+      }).save()
+    }
   }
 };

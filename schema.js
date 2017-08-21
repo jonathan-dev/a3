@@ -29,7 +29,6 @@ var TagAttributesInputType = new GraphQLInputObjectType({
     name: 'TagAttributes',
     fields: () => ({
         id:          { type: GraphQLString },
-        name:        { type: GraphQLString },
     })
 });
 
@@ -69,7 +68,6 @@ const PostType = new GraphQLObjectType({
                 mongo.getTag(tagId).then(tag => tag)
             )
         }
-
     })
 })
 
@@ -89,12 +87,7 @@ var PostAttributesInputType = new GraphQLInputObjectType({
   var PostInputType = new GraphQLInputObjectType({
     name: 'PostInput',
     fields: () => ({
-      id:          { type: GraphQLString },
       title:       { type: new GraphQLNonNull(GraphQLString) },
-      date:        { type: new GraphQLNonNull(GraphQLString) },
-      voteup:      { type: GraphQLInt },
-      votedown:    { type: GraphQLInt },
-      view:    { type: GraphQLInt },
       tags:        { type: new GraphQLList(PostAttributesInputType) }
     })
   });
@@ -141,7 +134,7 @@ const PostMutation = new GraphQLObjectType({
         },
         resolve: (root, { post }) => {
             console.log(post)
-            return mongo.getPost(post.id).then(x => x)
+            return mongo.createPost(post).then(x => x)
         }
       },
       updatePost: {
