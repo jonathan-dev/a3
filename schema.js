@@ -5,7 +5,8 @@ import {
     GraphQLString,
     GraphQLList,
     GraphQLInt,
-    GraphQLNonNull
+    GraphQLNonNull,
+    GraphQLInputObjectType
 } from 'graphql';
 import mongo from './mongo'
 
@@ -14,6 +15,10 @@ const TagType = new GraphQLObjectType({
     description: '...',
 
     fields: () => ({
+        id: {
+            type: GraphQLString,
+            resolve: (tag) => tag._id
+        },
         name: {
             type: GraphQLString,
             resolve: (tag) => tag.name
@@ -21,11 +26,23 @@ const TagType = new GraphQLObjectType({
     })
 })
 
+var TagAttributesInputType = new GraphQLInputObjectType({
+    name: 'TagAttributes',
+    fields: () => ({
+        id:          { type: GraphQLString },
+        name:        { type: GraphQLString },
+    })
+});
+
 const PostType = new GraphQLObjectType({
     name: 'Post',
     description: '...',
 
     fields: () => ({
+        id: {
+            type: GraphQLString,
+            resolve: (post) => post._id
+        },
         title: {
             type: GraphQLString,
             resolve: (post) => post.title
@@ -56,6 +73,32 @@ const PostType = new GraphQLObjectType({
     })
 })
 
+var PostAttributesInputType = new GraphQLInputObjectType({
+    name: 'PostAttributes',
+    fields: () => ({
+        id:          { type: GraphQLString },
+        title:       { type: GraphQLString },
+        date:        { type: GraphQLString },
+        votedown:    { type: GraphQLInt },
+        voteup:      { type: GraphQLInt },
+        view:        { type: GraphQLInt },
+        tags:        { type: new GraphQLList(TagAttributesInputType) },
+    })
+});
+  
+  var PostInputType = new GraphQLInputObjectType({
+    name: 'PostInput',
+    fields: () => ({
+      id:          { type: GraphQLString },
+      title:       { type: new GraphQLNonNull(GraphQLString) },
+      date:        { type: new GraphQLNonNull(GraphQLString) },
+      voteup:      { type: GraphQLInt },
+      votedown:    { type: GraphQLInt },
+      view:    { type: GraphQLInt },
+      tags:        { type: new GraphQLList(PostAttributesInputType) }
+    })
+  });
+
 const QueryType = new GraphQLObjectType({
     name: 'Query',
     description: '...',
@@ -71,7 +114,7 @@ const QueryType = new GraphQLObjectType({
         },
         deletePost: {
             type: PostType,
-            description: 'Delete an article with id and return the article that was deleted.',
+            description: 'Delete an post with id and return the post that was deleted.',
             args: {
                 id: {
                     type: new GraphQLNonNull(GraphQLString)
@@ -86,6 +129,36 @@ const QueryType = new GraphQLObjectType({
     })
 })
 
+const PostMutation = new GraphQLObjectType({
+    name: 'PostMutations',
+    description: 'Post API Mutations',
+    fields: () => ({
+      createPost: {
+        type: PostType,
+        description: 'Create a new post.',
+        args: {
+          post: { type: PostInputType }
+        },
+        resolve: (root, { post }) => {
+            console.log(post)
+            return mongo.getPost(post.id).then(x => x)
+        }
+      },
+      updatePost: {
+        type: PostType,
+        description: 'Update an post, and optionally any related posts.',
+        args: {
+          post: { type: PostAttributesInputType }
+        },
+        resolve: (root, { post }) => {
+            console.log(post)
+            return mongo.getPost(post.id).then(x => x)
+        }
+      }
+    })
+  });
+
 export default new GraphQLSchema({
     query: QueryType,
+    mutation: PostMutation
 })

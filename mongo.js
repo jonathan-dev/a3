@@ -73,6 +73,9 @@ initDatabase()
 
 
 export default {
+  getPost(id) {
+    return Post.findById(id)
+  },
   getPosts(page) {
     return Post.find()
   },
