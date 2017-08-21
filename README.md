@@ -9,10 +9,10 @@ You will need NPM, Node and MongoDB installed and configured already.
 2. Open terminal and do `npm install` to install all dependencies
 3. Start an instance of MongoDB
     - Run instance `localhost` on the default port (`27017`)
-    - *Note*: You can modify the settings for this in `mongo.js`
+    - *Note: You can modify the settings for this in `mongo.js`*
 4. Run with `npm start`
 
-*Note*: node execution does not work due to the use of ES6 code e.g. imports
+*Note: node execution does not work due to the use of ES6 code e.g. imports*
 
 # Structure
 
