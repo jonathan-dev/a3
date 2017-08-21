@@ -1,17 +1,36 @@
+<!-- TODO convert template to react rendered template -->
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Post Detail Page</title>
-</head>
-<body>
-<img src="/public/uploads/upload_67fd14d9990e0f8a58694177ebd5481e" style="width: 50%"/>
-<br /><a href="">comment</a>
-<p>Comment A
-    <small>upvotes: 10k, <a href="">reply</a> <a href="">upvote</a> <a href="">downvote</a></small>
-</p>
-<p>Comment B (User posted comment, therefore no reply button but edit/delete options)
-    <small>upvotes: 10k <a href="">edit</a>   <a href="">delete</a></small>
-</p>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Post Detail Page</title>
+    </head>
+
+    <body> <!-- Dummy body for testing purpose, adjust if there is any need -->
+        <img src="/public/uploads/upload_67fd14d9990e0f8a58694177ebd5481e" style="width: 50%"/><br />
+        <a href="">comment</a>
+
+        <!-- Start of the comment section -->
+        <!-- Sample comment of other User, therefore no editable content here -->
+        <p>
+            Comment A
+            <small>
+                upvotes: 10k,
+                <a href="">reply</a>
+                <a href="">upvote</a>
+                <a href="">downvote</a>
+            </small>
+        </p>
+
+        <!-- Sample comment of active user, editable content here -->
+        <p>
+            Comment B (User posted comment, therefore no reply button but edit/delete options)
+            <small>
+                upvotes: 10k
+                <a href="">edit</a>
+                <a href="">delete</a>
+            </small>
+        </p>
+    </body>
 </html>

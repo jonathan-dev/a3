@@ -1,65 +1,73 @@
+<!-- TODO convert template to react rendered template -->
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Project Harry</title>
-</head>
-<body>
-    <div style="position: fixed; float: left;">
-        <button style="width: 100px; height: 50px">Hot</button>
-        <button style="width: 100px; height: 50px">Trending</button>
-        <button style="width: 100px; height: 50px">Fresh</button>
-        <button style="width: 100px; height: 50px">Funny</button>
-        <button style="width: 100px; height: 50px">Lately</button>
-        <button style="width: 100px; height: 50px">AIP</button>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <title>Project Harry</title>
+    </head>
 
-    <div style="float: right;">
-        <form action="/upload" method="get">
-            <input type="submit" value="Upload">
-        </form>
-        <button style="width: 100px; height: 50px;">Your Posts</button>
-        <button style="width: 100px; height: 50px;">Login/Signup/Logoutt</button>
-        <button style="width: 100px; height: 50px;">Settings</button>
-    </div>
+    <body> <!-- This body contains solely dummy data for backend testing purposes, adjust data if necessary -->
+        <!-- Dummy header bar (left part) -->
+        <div style="position: fixed; float: left;">
+            <button style="width: 100px; height: 50px">Hot</button>
+            <button style="width: 100px; height: 50px">Trending</button>
+            <button style="width: 100px; height: 50px">Fresh</button>
+            <button style="width: 100px; height: 50px">Funny</button>
+            <button style="width: 100px; height: 50px">Lately</button>
+            <button style="width: 100px; height: 50px">AIP</button>
+        </div>
 
-    <div>
-        <h2>Title post here</h2>
-        <!-- Dummy image, TODO: adjust path or remove if not necessary -->
-        <img src="/public/uploads/upload_67fd14d9990e0f8a58694177ebd5481e" style="width: 50%"/> <small>9555 Upvotes</small>
-        <br />
-        <a href="">upvote</a>
-        <a href="">downvote</a>
-        <a href="">delete</a>
-        <a href="/edit">update</a>
-        <a href="/post/id">comment</a>
-        <a href="">share</a>
-    </div>
+        <!-- Dummy header bar (right part), TODO if #style-attributes increases, outsource attributes to css file -->
+        <div style="float: right;">
+            <form action="/upload" method="get">
+                <input type="submit" value="Upload">
+            </form>
+            <button style="width: 100px; height: 50px;">Your Posts</button>
+            <button style="width: 100px; height: 50px;">Login/Signup/Logoutt</button>
+            <button style="width: 100px; height: 50px;">Settings</button>
+        </div>
 
-    <div>
-        <h2>Title post here</h2>
-        <!-- Dummy image, TODO: adjust path or remove if not necessary -->
-        <img src="/public/uploads/upload_67fd14d9990e0f8a58694177ebd5481e" style="width: 50%"/> <small>9555 Upvotes</small>
-        <br />
-        <a href="">upvote</a>
-        <a href="">downvote</a>
-        <a href="">delete</a>
-        <a href="/edit">update</a>
-        <a href="/post/id">comment</a>
-        <a href="">share</a>
-    </div>
+        <!-- Dummy post 1 -->
+        <div>
+            <h2>Title post here</h2>
+            <!-- Dummy image, TODO: adjust path or remove if not necessary -->
+            <img src="/public/uploads/upload_67fd14d9990e0f8a58694177ebd5481e" style="width: 50%"/> <small>9555 Upvotes</small>
+            <br />
+            <a href="">upvote</a>
+            <a href="">downvote</a>
+            <a href="">delete</a>
+            <a href="/edit">update</a>
+            <a href="/post/id">comment</a>
+            <a href="">share</a>
+        </div>
 
-    <div>
-        <h2>Title post here</h2>
-        <!-- Dummy image, TODO: adjust path or remove if not necessary -->
-        <img src="/public/uploads/upload_67fd14d9990e0f8a58694177ebd5481e" style="width: 50%"/> <small>9555 Upvotes</small>
-        <br />
-        <a href="">upvote</a>
-        <a href="">downvote</a>
-        <a href="">delete</a>
-        <a href="/edit">update</a>
-        <a href="/post/id">comment</a>
-        <a href="">share</a>
-    </div>
-</body>
+        <!-- Dummy post 2 -->
+        <div>
+            <h2>Title post here</h2>
+            <!-- Dummy image, TODO: adjust path or remove if not necessary -->
+            <img src="/public/uploads/upload_67fd14d9990e0f8a58694177ebd5481e" style="width: 50%"/> <small>9555 Upvotes</small>
+            <br />
+            <a href="">upvote</a>
+            <a href="">downvote</a>
+            <a href="">delete</a>
+            <a href="/edit">update</a>
+            <a href="/post/id">comment</a>
+            <a href="">share</a>
+        </div>
+
+        <!-- Dummy post 3 -->
+        <div>
+            <h2>Title post here</h2>
+            <!-- Dummy image, adjust path or remove if not necessary -->
+            <img src="/public/uploads/upload_67fd14d9990e0f8a58694177ebd5481e" style="width: 50%"/> <small>9555 Upvotes</small>
+            <br />
+            <a href="">upvote</a>
+            <a href="">downvote</a>
+            <a href="">delete</a>
+            <a href="/edit">update</a>
+            <a href="/post/id">comment</a>
+            <a href="">share</a>
+        </div>
+    </body>
 </html>

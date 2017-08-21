@@ -1,21 +1,23 @@
+<!-- TODO convert template to react rendered template -->
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload Page</title>
-</head>
-<body>
-    <h1>Upload your files here!</h1>
-    <form action="/upload" enctype="multipart/form-data" method="post">
-        Title:<br/>
-        <input type="text" name="title">
-        <br /><br />
+    <head>
+        <meta charset="UTF-8">
+        <title>Upload Page</title>
+    </head>
 
-        File:<br />
-        <input type="file" name="upload" multiple="multiple">
-        <br /><br /><br />
+    <body>
+        <h1>Upload your files here!</h1>
 
-        <input type="submit" value="Upload">
-    </form>
-</body>
+        <!-- Sample form for uploading Posts including images for testing purposes, adjust if necessary -->
+        <form action="/upload" enctype="multipart/form-data" method="post">
+            Title:<br/>
+            <input name="title"><br /><br />
+
+            File:<br />
+            <input type="file" name="upload" multiple="multiple"><br /><br />
+            <input type="submit" value="Upload">
+        </form>
+    </body>
 </html>
