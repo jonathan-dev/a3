@@ -95,7 +95,7 @@ var PostAttributesInputType = new GraphQLInputObjectType({
 
 const QueryType = new GraphQLObjectType({
     name: 'Query',
-    description: '...',
+    description: 'Perform a query on the database using one of the following:',
 
     fields: () => ({
         posts: {
@@ -103,6 +103,15 @@ const QueryType = new GraphQLObjectType({
             resolve: (x, args) => {
                 console.log("args: ", args)
                 return mongo.getPosts()
+                    .then(x => x)
+            }
+        },
+        tags: {
+            type: new GraphQLList(TagType),
+            description: 'Get a list of all tags that have been used',
+            resolve: (x, args) => {
+                console.log("args: ", args)
+                return mongo.getTags()
                     .then(x => x)
             }
         },

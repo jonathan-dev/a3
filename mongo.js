@@ -90,6 +90,9 @@ export default {
   getTag(id) {
     return Tag.findById(id)
   },
+  getTags(page) {
+    return Tag.find()
+  },
   createPost(postInput) {
     if (postInput.title && postInput.tags) {
       postInput.date = new Date()
