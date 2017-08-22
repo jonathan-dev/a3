@@ -104,5 +104,13 @@ export default {
         tags: postInput.tags.map(x => x.id)
       }).save()
     }
+  },
+  updatePost(postInput) {
+    console.log("update post1: ", postInput)
+    if(postInput.id && postInput.title) {
+      console.log("update post2: ", postInput)
+      postInput.tags = postInput.tags.map(x => x.id)
+      return Post.findByIdAndUpdate(postInput.id,postInput)
+    }
   }
 };

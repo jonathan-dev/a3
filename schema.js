@@ -87,8 +87,9 @@ var PostAttributesInputType = new GraphQLInputObjectType({
   var PostInputType = new GraphQLInputObjectType({
     name: 'PostInput',
     fields: () => ({
-      title:       { type: new GraphQLNonNull(GraphQLString) },
-      tags:        { type: new GraphQLList(PostAttributesInputType) }
+        id:          { type: GraphQLString },
+        title:       { type: new GraphQLNonNull(GraphQLString) },
+        tags:        { type: new GraphQLList(PostAttributesInputType) }
     })
   });
 
@@ -133,7 +134,6 @@ const PostMutation = new GraphQLObjectType({
           post: { type: PostInputType }
         },
         resolve: (root, { post }) => {
-            console.log(post)
             return mongo.createPost(post).then(x => x)
         }
       },
@@ -141,11 +141,11 @@ const PostMutation = new GraphQLObjectType({
         type: PostType,
         description: 'Update an post, and optionally any related posts.',
         args: {
-          post: { type: PostAttributesInputType }
+          post: { type: PostInputType }
         },
         resolve: (root, { post }) => {
-            console.log(post)
-            return mongo.getPost(post.id).then(x => x)
+            console.log('resolve: ',post)
+            return mongo.updatePost(post).then(x => x)
         }
       }
     })
