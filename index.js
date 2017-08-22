@@ -9,6 +9,9 @@ app.use(formidable({
     uploadDir: __dirname + '/public/uploads'
 }))
 
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
 // ---- ROUTES ----
 
 // serve all files in the public folder statically
@@ -16,7 +19,7 @@ app.use('/public', express.static('public'));
 
 // serve the main page (hot page) to the client
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/public/views/hot_page.html");
+    res.render(__dirname + "/public/views/hot_page.ejs");
 })
 
 // serve the post upload page to the client
