@@ -24,3 +24,34 @@ All main views are held in `public/views`
 
 ### Database access
 Configured in `mongo.js`
+
+# Coding conventions
+1. Variables in CamelCase
+2. Filenames should be all lowercase
+3. Use two spaces for indenting
+4. Have a comment on every function that describes it purpose
+5. Don't abbreviate local variables
+6. Embedded function commnts in //
+7. make use of error functions when given as function parameter
+8. make use of TODO and FIXME annotation
+9. write todo/fixme statements like this: TODO: "task" / FIXME: "task" 
+10. Use semicolons?
+
+11. Expand route callback functions: 
+function(route, callback() {
+
+});
+
+12. Use newline for each method in method chaining and place dot in new line.
+Example:
+    call()
+    .then()
+    .then()
+13. no comma after last json key value pair
+14. Use single quotes instead of double quotes in strings
+15. function definitions with one space between function name and parenthesis
+
+Example:
+    function myFunction () {
+
+    }
