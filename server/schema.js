@@ -110,7 +110,7 @@ var PostInputType = new GraphQLInputObjectType({
       type: new GraphQLNonNull(GraphQLString)
     },
     tags: {
-      type: new GraphQLList(PostAttributesInputType)
+      type: new GraphQLNonNull(new GraphQLList(PostAttributesInputType))
     }
   })
 })
