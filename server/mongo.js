@@ -1,5 +1,5 @@
 import mongoose from 'mongoose' // connection to the mongodb
-import casual from 'casual'; // creating mock data
+import casual from 'casual' // creating mock data
 
 // location of the mongodb
 const MONGO = 'mongodb://localhost/a3'
@@ -13,7 +13,7 @@ db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function () {
   // we're connected!
   console.log(`connected to mongodb at: ${MONGO}`)
-});
+})
 
 let postSchema = mongoose.Schema({
   title: String,
@@ -25,7 +25,7 @@ let postSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+})
 let tagSchema = mongoose.Schema({
   name: String
 })
@@ -51,7 +51,7 @@ async function initDatabase() {
   // insert posts
   const posts = await Post.find()
   if (posts.length === 0) {
-    casual.seed(123);
+    casual.seed(123)
     const tagdata = await Tag.find()
     let ps = []
     for (let i = 0; i < 10; i++) {
@@ -116,4 +116,4 @@ export default {
       return Post.findByIdAndUpdate(postInput.id,postInput)
     }
   }
-};
+}

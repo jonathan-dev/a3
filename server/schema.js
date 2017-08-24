@@ -7,7 +7,7 @@ import {
   GraphQLInt,
   GraphQLNonNull,
   GraphQLInputObjectType
-} from 'graphql'; // GraphQL and GraphQL types
+} from 'graphql' // GraphQL and GraphQL types
 import mongo from './mongo' // Database
 
 const TagType = new GraphQLObjectType({
@@ -32,7 +32,7 @@ var TagAttributesInputType = new GraphQLInputObjectType({
       type: GraphQLString
     },
   })
-});
+})
 
 // TODO: add Path to File
 const PostType = new GraphQLObjectType({
@@ -98,7 +98,7 @@ var PostAttributesInputType = new GraphQLInputObjectType({
       type: new GraphQLList(TagAttributesInputType)
     },
   })
-});
+})
 
 var PostInputType = new GraphQLInputObjectType({
   name: 'PostInput',
@@ -113,7 +113,7 @@ var PostInputType = new GraphQLInputObjectType({
       type: new GraphQLList(PostAttributesInputType)
     }
   })
-});
+})
 
 const QueryType = new GraphQLObjectType({
   name: 'Query',
@@ -148,7 +148,7 @@ const QueryType = new GraphQLObjectType({
       resolve: (value, {
         id
       }) => {
-        return mongo.deletePost(id);
+        return mongo.deletePost(id)
       }
     }
   })
@@ -188,7 +188,7 @@ const PostMutation = new GraphQLObjectType({
       }
     }
   })
-});
+})
 
 export default new GraphQLSchema({
   query: QueryType,
