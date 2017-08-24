@@ -13,20 +13,22 @@ app.use('/public', express.static('dist'));
 
 // graphql endpoint
 app.use(graphQLHTTP(req => {
-    const postLoader = new DataLoader(
-        keys => Promise.all(keys.map(mongo.getPosts))
-    )
-    const loaders = {
-        person: postLoader,
-    }
-    return {
-        context: {loaders},
-        schema,
-        graphiql: true
-    }
+  const postLoader = new DataLoader(
+    keys => Promise.all(keys.map(mongo.getPosts))
+  )
+  const loaders = {
+    person: postLoader,
+  }
+  return {
+    context: {
+      loaders
+    },
+    schema,
+    graphiql: true
+  }
 }))
 
 app.listen(
-    PORT,
-    () => console.log(`server listening on http://localhost:${PORT}`)
+  PORT,
+  () => console.log(`server listening on http://localhost:${PORT}`)
 )
