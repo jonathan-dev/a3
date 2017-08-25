@@ -68,7 +68,7 @@ function(route, callback(){
 });
 ```
 
-12. Use newline for each method in method chaining **and** place dot in new line. Example:
+12. Use newline for each method in method chaining **and** place dot in new line:
 ```
 # good:
     
