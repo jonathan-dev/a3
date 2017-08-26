@@ -33,7 +33,6 @@ app.use(formidable({
   uploadDir: __dirname + '/public/uploads/images'
 }));
 
-app.listen(
-  PORT,
-  () => console.log(`server listening on http://localhost:${PORT}`)
-)
+app.listen(PORT, () => {
+  console.log(`server listening on http://localhost:${PORT}`);
+});
