@@ -35,7 +35,21 @@ app.use(formidable({
 }));
 
 app.get('/create/post', function (req, res) {
-  res.send("Hello, you are at /");
+  res.sendFile(__dirname + '../client/views/create_post_page.html');
+});
+
+
+// upload post functionality
+app.post('/create/post', (req, res) => {
+  // NOTE: req.fields contains all data except file data, req.file contains all file related data
+  // store image data in variable
+  var image = {
+    title: req.fields.title, // title defined in corresponding form, see /views/upload_page.html for further reference
+    path: req.files.upload.path
+  };
+  console.log(image);
+  // TODO: save image infos in database
+  res.redirect('/'); // go back to home
 });
 
 app.listen(PORT, () => {
