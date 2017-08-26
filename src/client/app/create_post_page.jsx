@@ -39,9 +39,9 @@ class PostUpload extends React.Component {
 
   // TODO: make generic attribute change, so that this method can be used for all input changes except file changes
   handleInputChange (event) {
-    this.setState {
-      title: event.target.value;
-    }
+    this.setState({
+      title: event.target.value
+    });
   }
 
   render() {
