@@ -11,6 +11,7 @@ const app = express();
 // serve all the files in the public folder statically
 app.use('/public', express.static('public'));
 
+/*
 // graphql endpoint
 app.use(graphQLHTTP(req => {
   const postLoader = new DataLoader(
@@ -26,12 +27,16 @@ app.use(graphQLHTTP(req => {
     schema,
     graphiql: true
   }
-}));
+}));*/
 
 // apply middleware for handling file uploads
 app.use(formidable({
   uploadDir: __dirname + '/public/uploads/images'
 }));
+
+app.get('/', function (req, res) {
+  res.send("Hello, you are at /");
+});
 
 app.listen(PORT, () => {
   console.log(`server listening on http://localhost:${PORT}`);
