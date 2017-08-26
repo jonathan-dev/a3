@@ -12,7 +12,7 @@ const app = express();
 app.use('/public', express.static('public'));
 
 /*
-// graphql endpoint
+// graphql endpoin
 app.use(graphQLHTTP(req => {
   const postLoader = new DataLoader(
     keys => Promise.all(keys.map(mongo.getPosts))
