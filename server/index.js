@@ -3,22 +3,22 @@ import graphQLHTTP from 'express-graphql'
 import mongo from './mongo'
 import schema from './schema'
 import DataLoader from 'dataloader'
+import formidable from 'express-formidable'
 
+const PORT = 8000;
+const app = express();
 
-const PORT = 8000
-const app = express()
-
-// serve the Vue single page app
-app.use('/public', express.static('dist'));
+// serve all the files in the public folder statically
+app.use('/public', express.static('public'));
 
 // graphql endpoint
 app.use(graphQLHTTP(req => {
   const postLoader = new DataLoader(
     keys => Promise.all(keys.map(mongo.getPosts))
-  )
+  );
   const loaders = {
     person: postLoader,
-  }
+  };
   return {
     context: {
       loaders
@@ -26,7 +26,7 @@ app.use(graphQLHTTP(req => {
     schema,
     graphiql: true
   }
-}))
+}));
 
 app.listen(
   PORT,
