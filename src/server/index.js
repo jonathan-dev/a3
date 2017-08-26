@@ -34,7 +34,7 @@ app.use(formidable({
   uploadDir: __dirname + '/public/uploads/images'
 }));
 
-app.get('/', function (req, res) {
+app.get('/create/post', function (req, res) {
   res.send("Hello, you are at /");
 });
 
