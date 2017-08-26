@@ -28,6 +28,11 @@ app.use(graphQLHTTP(req => {
   }
 }));
 
+// apply middleware for handling file uploads
+app.use(formidable({
+  uploadDir: __dirname + '/public/uploads/images'
+}));
+
 app.listen(
   PORT,
   () => console.log(`server listening on http://localhost:${PORT}`)
