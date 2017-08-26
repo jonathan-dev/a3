@@ -17,6 +17,7 @@ db.once('open', function () {
 
 let postSchema = mongoose.Schema({
   title: String,
+  imagePath: String,
   voteup: Number,
   votedown: Number,
   view: Number,
@@ -94,13 +95,14 @@ export default {
     return Tag.find()
   },
   createPost(postInput) {
-    if (postInput.title && postInput.tags) {
+    if (postInput.title && postInput.tags && postInput.imagePath) {
       postInput.date = new Date()
       postInput.voteup = 0
       postInput.vote = 0
 
       return new Post({
         title: postInput.title,
+        imagePath: postInput.imagePath,
         voteup: 0,
         votedown: 0,
         view: 0,
