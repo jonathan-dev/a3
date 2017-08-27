@@ -1,48 +1,43 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {render} from 'react-dom';
-import Fetch from 'react-fetch'
-class PostUpload extends React.Component {
+import Axios from 'axios'
+import ImagesUploader from 'react-images-uploader';
+
+class ImageUpload extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      title: '',
-      file: '',
-      imagePreviewUrl: ''
-    };
-
-    this.handleImageChange = this.handleImageChange.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {file: '',imagePreviewUrl: ''};
   }
 
-  handleSubmit(e) {
-    Fetch('/create/post');
-    e.preventDefault();
-    // TODO: do something with -> this.state.file
+  _handleSubmit(e) {
+    Axios.post('/create/post', {
+      title: "Kekse Title",
+      file: this.state.file
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
     console.log('handle uploading-', this.state.file);
   }
 
-  handleImageChange(event) {
-    event.preventDefault();
+  _handleImageChange(e) {
+    e.preventDefault();
 
     let reader = new FileReader();
-    let file = event.target.files[0];
+    let file = e.target.files[0];
 
     reader.onloadend = () => {
       this.setState({
         file: file,
         imagePreviewUrl: reader.result
       });
-    };
+    }
 
     reader.readAsDataURL(file)
-  }
-
-  // TODO: make generic attribute change, so that this method can be used for all input changes except file changes
-  handleInputChange (event) {
-    this.setState({
-      title: event.target.value
-    });
   }
 
   render() {
@@ -51,29 +46,39 @@ class PostUpload extends React.Component {
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} />);
     } else {
-      $imagePreview = (<div className="previewText">No image selected</div>);
+      $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
     }
 
     return (
       <div className="previewComponent">
-        <form onSubmit={(event)=>this.handleSubmit(event)}>
-          <label>
-            Title:
-            <input type="text" value={this.state.title} onChange={this.handleInputChange} />
-          </label>
+        <form action="/create/post" encType="multipart/form-data" method="post">
           <input className="fileInput"
                  type="file"
-                 onChange={(event)=>this.handleImageChange(event)} />
-          <button className="submitButton"
-                  type="submit"
-                  onClick={(event)=>this.handleSubmit(event)}>Upload Image</button>
+                 name="upload"
+                 onChange={(e)=>this._handleImageChange(e)} />
+          <input type="submit" value="upload" />
         </form>
         <div className="imgPreview">
           {$imagePreview}
         </div>
       </div>
-    );
+    )
   }
 }
 
-render(<PostUpload/>, document.getElementById("app"));
+class PostUpload extends React.Component {
+  render () {
+    return ();
+  }
+}
+
+const element = (<form action="/create/post" enctype="multipart/form-data" method="post">
+  Title:<br/>
+  <input name="title"><br /><br />
+
+    File:<br />
+    <input type="file" name="upload" multiple="multiple"><br /><br />
+      <input type="submit" value="Upload">
+</form>));))))))))))))))
+
+render(<ImageUpload/>, document.getElementById("app"));
