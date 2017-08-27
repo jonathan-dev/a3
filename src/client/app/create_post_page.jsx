@@ -66,19 +66,4 @@ class ImageUpload extends React.Component {
   }
 }
 
-class PostUpload extends React.Component {
-  render () {
-    return ();
-  }
-}
-
-const element = (<form action="/create/post" enctype="multipart/form-data" method="post">
-  Title:<br/>
-  <input name="title"><br /><br />
-
-    File:<br />
-    <input type="file" name="upload" multiple="multiple"><br /><br />
-      <input type="submit" value="Upload">
-</form>));))))))))))))))
-
 render(<ImageUpload/>, document.getElementById("app"));
