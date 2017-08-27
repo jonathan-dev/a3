@@ -4,13 +4,14 @@ import mongo from './mongo'
 import schema from './schema'
 import DataLoader from 'dataloader'
 import formidable from 'express-formidable'
+import path from 'path'
 
 const PORT = 8000;
 const app = express();
 
 // serve all the files in the public folder statically
-app.use('/public', express.static('public'));
-
+app.use('/server/public', express.static(__dirname + '/public'));
+app.use('/client/public', express.static(path.resolve(__dirname + '/../client/public')));
 /*
 // graphql endpoin
 app.use(graphQLHTTP(req => {
@@ -35,7 +36,7 @@ app.use(formidable({
 }));
 
 app.get('/create/post', function (req, res) {
-  res.sendFile(__dirname + '../client/views/create_post_page.html');
+  res.sendFile(path.resolve(__dirname + '/../client/public/views/create_post_page.html'));
 });
 
 

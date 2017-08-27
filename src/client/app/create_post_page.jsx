@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-
+import Fetch from 'react-fetch'
 class PostUpload extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +16,7 @@ class PostUpload extends React.Component {
   }
 
   handleSubmit(e) {
+    Fetch('/create/post');
     e.preventDefault();
     // TODO: do something with -> this.state.file
     console.log('handle uploading-', this.state.file);
