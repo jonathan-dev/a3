@@ -95,10 +95,10 @@ export default {
     return Tag.find()
   },
   createPost(postInput) {
-    if (postInput.title && postInput.tags && postInput.imagePath) {
-      postInput.date = new Date()
-      postInput.voteup = 0
-      postInput.vote = 0
+    if (postInput.title && postInput.imagePath) {
+      postInput.date = new Date();
+      postInput.voteup = 0;
+      postInput.vote = 0;
 
       return new Post({
         title: postInput.title,
@@ -106,7 +106,7 @@ export default {
         voteup: 0,
         votedown: 0,
         view: 0,
-        tags: postInput.tags.map(x => x.id)
+        tags: [] // TODO: revert to: postInput.tags.map(x => x.id) if testing is done
       }).save()
     }
   },
