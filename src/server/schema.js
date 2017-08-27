@@ -34,7 +34,6 @@ var TagAttributesInputType = new GraphQLInputObjectType({
   })
 })
 
-// TODO: add Path to File
 const PostType = new GraphQLObjectType({
   name: 'Post',
   description: 'Post that is displayed in the feed',
@@ -43,6 +42,10 @@ const PostType = new GraphQLObjectType({
     id: {
       type: GraphQLString,
       resolve: (post) => post._id
+    },
+    imagePath: {
+      type: GraphQLString,
+      resolve: (post) => post.imagePath
     },
     title: {
       type: GraphQLString,

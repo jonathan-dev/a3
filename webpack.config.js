@@ -8,7 +8,8 @@ var config = {
   entry: {
     // Add new entries here, will be automatically created
     // with name [name].entry.js in src/client/public/js
-    createPostPage: APP_DIR + '/create_post_page.jsx'
+    createPostPage: APP_DIR + '/create_post_page.jsx',
+    hotPagePostList: APP_DIR + '/hot_page_post_list.jsx'
   },
   output: {
     path: BUILD_DIR,
