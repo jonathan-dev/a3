@@ -37,16 +37,19 @@ app.post('/create/post', function (req, res) {
   let postTitle;
   let imagePath;
 
+  // parse the incoming node.js request containing form data
   form.parse(req,function (error, fields, files) {
     // TODO: catch error
     postTitle = fields.title;
   });
 
+  // When new file is detected in upload stream, set the storage path
   form.on('fileBegin', function (name, file) {
     imagePath = IMAGES_URLS + file.name;
     file.path = __dirname + "/public/uploads/images/" + file.name;
   });
 
+  // when entire request has been received store the post in the database
   form.on('end', function () {
     let post = {
       title: postTitle,

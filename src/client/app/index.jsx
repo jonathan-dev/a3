@@ -1,3 +1,5 @@
+// React testing file TODO: remove if not needed anymore
+
 import React from 'react';
 import {render} from 'react-dom';
 
