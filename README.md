@@ -51,28 +51,31 @@ All main views are held in `public/views`
 Configured in `mongo.js`
 
 # Coding conventions
-1. Variables in CamelCase.
-2. Filenames should be all lowercase.
+1. CamelCase throughout code
+    - Variables
+    - Function names capitalized
+    - When in doubt, camelcase it out
+2. Filenames should be all lowercase, words separated by underscore 
+  e.g. `hot_page_post_list.jsx`
 3. Use two spaces for indenting.
 4. Have a comment on every function that describes it purpose.
 5. Don't abbreviate local variables.
 6. Embedded function comments in //.
 7. Make use of error functions when given as function parameter.
-8. Make use of TODO and FIXME annotation.
-9. Use the TODO/FIXME annotation like this:
+8. Make use of TODO and FIXME annotation:
 ```
 // TODO: this todo statement is written all uppercase followed by a colon.
 // FIXME: so is this fixme statement.
 ```
-10. Make use of semicolons.
-11. Expand route callback functions: 
+9. Make use of semicolons on every line
+10. Expand route callback functions: 
 ```
 function(route, callback(){
     // callback code here    
 });
 ```
 
-12. Use newline for each method in method chaining **and** place dot in new line:
+11. Use newline for each method in method chaining **and** place dot in new line:
 ```
 # good:
     
@@ -85,14 +88,14 @@ function(route, callback(){
     
     call().thenFuncA().thenFuncB().thenFuncC();
 ```
-13. Don't put a comma after the last json key value pair.
-14. Expand assignment when giving a json object its key value pairs.
+12. Don't put a comma after the last json key value pair.
+13. Expand assignment when giving a json object its key value pairs.
 ```
 #good:
     
 
     let human = {
-        name: "Kevin",
+        name: 'Kevin',
         age: 21
     };
     
