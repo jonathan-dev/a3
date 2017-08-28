@@ -10,7 +10,7 @@ var config = {
     // with name [name].entry.js in src/client/public/js
     createPostPage: APP_DIR + '/create_post_page.jsx',
     hotPagePostList: APP_DIR + '/hot_page_post_list.jsx',
-    topBar: APP_DIR + '/top_bar.jsx',
+    topBar: APP_DIR + '/top_bar.jsx'
   },
   output: {
     path: BUILD_DIR,
