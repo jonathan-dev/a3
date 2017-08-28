@@ -17,7 +17,7 @@ $ npm install
     - *Note: You can modify the settings for this in `mongo.js`*
 4. Generate .js files from the react source files:
 ```
-$ ./node_modules/.bin/webpack -d
+$ npm run build
 ```
 5. Start the server:
 ```
