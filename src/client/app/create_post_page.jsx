@@ -41,6 +41,7 @@ class ImageUpload extends React.Component {
   }
 
   render() {
+
     let {imagePreviewUrl} = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {

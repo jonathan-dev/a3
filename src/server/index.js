@@ -10,6 +10,10 @@ const PORT = 8000;
 const app = express();
 const IMAGES_URLS = "http://localhost:8000/server/public/uploads/images/";
 
+//------------------------------------------
+// Configuration
+//------------------------------------------
+
 // serve all the files in the public folder statically
 app.use('/server/public', express.static(__dirname + '/public'));
 app.use('/client/public', express.static(path.resolve(__dirname + '/../client/public')));
@@ -60,6 +64,8 @@ app.post('/create/post', function (req, res) {
 
   res.redirect('/');
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`server listening on http://localhost:${PORT}`);
