@@ -11,10 +11,6 @@ import languages from '../../language/language';
 const client = new ApolloClient();
 
 let currentLanguage = "english"; // default, TODO: change when user changes his local language later on
-console.log("LANG: ");
-console.log(languages);
-console.log("ENGLISH TAGS:");
-console.log(languages["english"]);
 
 //Query for retrieving a list of image posts
 const postsListQuery = gql`
