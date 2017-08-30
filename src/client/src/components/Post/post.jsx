@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-
+import './post.sass'
+import Tag from '@/Tag/tag'
 export default class Post extends Component {
     render(){
         return (
             <div>
                 <h3>Post Title</h3>
-                <p>{new Date().getUTCDate}</p>
+                <p>11.11.2016</p>
+                <img src="/kangaroo.jpg" />
+                <div>
+                    <Tag tagName="kangaroo"/>
+                </div>
             </div>
         );
     }

@@ -14,25 +14,28 @@ module.exports = {
     filename: '[name].js',
     publicPath: ''
   },
-  // resolve: {
-  //   modules: [resolve('node_modules')],
-  //   extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx']    
-  // },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json'],
+    alias: {
+      '@': resolve('src/components/')
+    }
+  },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         use: 'babel-loader',
         exclude: resolve('node_modules'),
-        // options: {
-        //   presets: ['env']
-        // }
-        // include: resolve('src')
       },
       {
         test: /\.sass$/,
-        use: ["style", "css", "sass"],
-        include: resolve('src')
+        use: [{
+            loader: "style-loader" // creates style nodes from JS strings
+        }, {
+            loader: "css-loader" // translates CSS into CommonJS
+        }, {
+            loader: "sass-loader" // compiles Sass to CSS
+        }]
       }
     ]
   },
