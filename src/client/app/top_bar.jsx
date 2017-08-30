@@ -25,7 +25,7 @@ var listStyle = {
   listStyle:'none',
   listStyleType:'none',
   overflow:'auto'
-}
+};
 
 //Simple CSS to style each tag item
 var tagStyle = {
@@ -36,7 +36,7 @@ var tagStyle = {
   margin:'1em',
   border:'1px solid #000;',
   textTransform:'capitalize'
-}
+};
 
 //Query for retrieving a list all tags in the tags 'table'
 const tagsListQuery = gql`

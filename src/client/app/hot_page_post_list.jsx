@@ -6,8 +6,15 @@ import {
 } from 'react-apollo';
 import React, { Component } from 'react';
 import {render} from 'react-dom'
+import languages from '../../language/language';
 
 const client = new ApolloClient();
+
+let currentLanguage = "english"; // default, TODO: change when user changes his local language later on
+console.log("LANG: ");
+console.log(languages);
+console.log("ENGLISH TAGS:");
+console.log(languages["english"]);
 
 //Query for retrieving a list of image posts
 const postsListQuery = gql`
@@ -31,14 +38,14 @@ const PostsList = ({ data: {loading, error, posts}}) => {
     return <p>{error.message}</p>;
   }
   return <ul>
-    { posts.map( post => 
+    { posts.map( post =>
       <li key={post.id}>
         {post.title}
         <img src={post.imagePath} />
         <p>
-          {post.voteup} upvotes, {post.votedown} downvotes
+          {post.voteup} {languages[currentLanguage]["upvotes"]}, {post.votedown} {languages[currentLanguage]["downvotes"]}
         </p>
-      </li>) 
+      </li>)
     }
   </ul>;
 };
@@ -46,7 +53,7 @@ const PostsList = ({ data: {loading, error, posts}}) => {
 //
 const PostsListWithData = graphql(postsListQuery)(PostsList);
 
-//Top level function to insert 
+//Top level function to insert
 class App extends Component {
   render() {
     return (

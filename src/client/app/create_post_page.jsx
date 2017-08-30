@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import Axios from 'axios'
-import ImagesUploader from 'react-images-uploader';
+import Axios from 'axios';
 
 class ImageUpload extends React.Component {
   constructor(props) {
