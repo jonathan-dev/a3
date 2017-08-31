@@ -4,13 +4,25 @@ import {
     BrowserRouter as Router,
     Route,
     Link
-  } from 'react-router-dom'
+} from 'react-router-dom';
 
-import Post from './components/Post/post.jsx'
+import { ApolloProvider, createNetworkInterface, ApolloClient } from 'react-apollo';
+
+import HotPage from '@/HotPage/hot_page';
+
+const networkInterface = createNetworkInterface({
+  uri: 'http://localhost:8000/graphql'
+});
+
+const client = new ApolloClient({
+  networkInterface
+})
 
 render(
+  <ApolloProvider client={client}>
     <Router>
-        <Route path="/" component={Post}/>
-    </Router>,
+        <Route path="/" component={HotPage}/>
+    </Router>
+  </ApolloProvider>,
     document.getElementById('root')
 );

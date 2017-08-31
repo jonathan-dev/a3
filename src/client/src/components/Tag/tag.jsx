@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './tag.sass'
-export default class Post extends Component {
+export default class Tag extends Component {
     render(){
         return (
             <div className="tag">
@@ -8,4 +9,8 @@ export default class Post extends Component {
             </div>
         );
     }
+}
+
+Tag.propTypes = {
+  tagName: PropTypes.string
 }

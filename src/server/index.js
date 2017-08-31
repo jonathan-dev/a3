@@ -2,6 +2,7 @@ import express from 'express'
 import mongo from './mongo'
 import formidable from 'formidable'
 import path from 'path'
+import cors from 'cors'
 
 import graphQLHTTP from 'express-graphql'
 import schema from './schema'
@@ -13,7 +14,7 @@ const IMAGES_URLS = "http://localhost:8000/server/public/uploads/images/";
 //------------------------------------------
 // Configuration
 //------------------------------------------
-
+app.use(cors())
 // serve all the files in the public folder statically
 app.use('/server/public', express.static(__dirname + '/public'));
 app.use('/client/public', express.static(path.resolve(__dirname + '/../client/public')));
