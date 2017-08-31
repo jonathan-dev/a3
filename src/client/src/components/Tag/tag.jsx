@@ -5,12 +5,8 @@ export default class Tag extends Component {
     render(){
         return (
             <div className="tag">
-                <p className="tag_name">{this.props.tagName}</p>
+                <p className="tag_name">{this.props.tag.name}</p>
             </div>
         );
     }
-}
-
-Tag.propTypes = {
-  tagName: PropTypes.string
 }

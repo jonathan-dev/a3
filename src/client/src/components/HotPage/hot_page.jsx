@@ -23,7 +23,6 @@ class HotPage extends Component {
     return (
       <div>
         {posts.map(post =>{
-          console.log(post)
           return <Post post={post} />
         })}
       </div>
@@ -40,6 +39,10 @@ query postListQuery {
     imagePath
     voteup
     votedown
+    tags {
+      id
+      name
+    }
   }
 }
 `;
