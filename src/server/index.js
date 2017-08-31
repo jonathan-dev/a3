@@ -3,21 +3,32 @@ import mongo from './mongo'
 import formidable from 'formidable'
 import path from 'path'
 import cors from 'cors'
-
 import graphQLHTTP from 'express-graphql'
 import schema from './schema'
 
+function resolve (dir) {
+  return path.join(__dirname, dir)
+}
+
+//------------------------------------------
+// Constants
+//------------------------------------------
 const PORT = 8000;
+const IMAGES_URL = 'public/uploads/images/';
+//------------------------------------------
+
 const app = express();
-const IMAGES_URLS = "http://localhost:8000/server/public/uploads/images/";
 
 //------------------------------------------
 // Configuration
 //------------------------------------------
+
+// allow Cross-Origin Resource Sharing (CORS)
+// required when using webpack dev server to serve the client
 app.use(cors())
-// serve all the files in the public folder statically
-app.use('/server/public', express.static(__dirname + '/public'));
-app.use('/client/public', express.static(path.resolve(__dirname + '/../client/public')));
+
+// serve images statically
+app.use('/images', express.static(resolve(IMAGES_URL)))
 
 // GraphqQL server route
 app.use('/graphql', graphQLHTTP(req => ({
@@ -27,7 +38,7 @@ app.use('/graphql', graphQLHTTP(req => ({
 
 // main page (hot page) server route
 app.get('/', function (req, res) {
-  res.sendFile(path.resolve(__dirname + '/../client/public/views/index.html'));
+  res.sendFile(path.resolve(resolve('dist')));
 });
 
 

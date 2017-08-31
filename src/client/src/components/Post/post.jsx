@@ -7,7 +7,7 @@ export default class Post extends Component {
       <div>
         <h3>{this.props.post.title}</h3>
         <p>11.11.2016</p>
-        <img src="/kangaroo.jpg" />
+        <img src="http://localhost:8000/images/sanic_crop.png" />
         <div>
           {this.props.post.tags.map(tag =>{
             return <Tag tag={tag} />
