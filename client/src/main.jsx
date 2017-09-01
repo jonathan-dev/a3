@@ -3,12 +3,14 @@ import { render } from 'react-dom';
 import {
     BrowserRouter as Router,
     Route,
-    Link
+    Link,
+    Switch
 } from 'react-router-dom';
 
 import { ApolloProvider, createNetworkInterface, ApolloClient } from 'react-apollo';
 
 import HotPage from '@/HotPage/hot_page';
+import CreatePost from '@/CreatePost/create_post';
 
 const networkInterface = createNetworkInterface({
   uri: 'http://localhost:8000/graphql'
@@ -21,7 +23,17 @@ const client = new ApolloClient({
 render(
   <ApolloProvider client={client}>
     <Router>
-        <Route path="/" component={HotPage}/>
+      <div>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/create">create</Link></li>
+          <li><Link to="/hot">hot</Link></li>
+        </ul>
+        <Switch>
+        <Route exact path="/" component={HotPage}/>
+        <Route path="/create" component={CreatePost}/>
+        </Switch>
+      </div>
     </Router>
   </ApolloProvider>,
     document.getElementById('root')

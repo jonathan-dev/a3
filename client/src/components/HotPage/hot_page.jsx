@@ -23,7 +23,7 @@ class HotPage extends Component {
     return (
       <div>
         {posts.map(post =>{
-          return <Post post={post} />
+          return <Post key={post.id} post={post} />
         })}
       </div>
     )

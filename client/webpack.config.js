@@ -45,6 +45,7 @@ module.exports = {
   })],
   devServer: {
     contentBase: resolve('dist'),
+    historyApiFallback: true,
     compress: true,
     port: 9000
   }

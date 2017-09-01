@@ -5,6 +5,7 @@ import path from 'path'
 import cors from 'cors'
 import graphQLHTTP from 'express-graphql'
 import schema from './schema'
+import DataLoader from 'dataloader'
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -29,12 +30,6 @@ app.use(cors())
 
 // serve images statically
 app.use('/images', express.static(resolve(IMAGES_URL)))
-
-// GraphqQL server route
-app.use('/graphql', graphQLHTTP(req => ({
-  schema,
-  pretty: true
-})));
 
 // main page (hot page) server route
 app.get('/', function (req, res) {
@@ -77,7 +72,22 @@ app.post('/create/post', function (req, res) {
   res.redirect('/');
 });
 
-
+// GraphqQL server route
+app.use(graphQLHTTP(req => {
+  const postLoader = new DataLoader(
+    keys => Promise.all(keys.map(mongo.getPosts))
+  )
+  const loaders = {
+    person: postLoader,
+  }
+  return {
+    context: {
+      loaders
+    },
+    schema,
+    graphiql: true
+  }
+}))
 
 app.listen(PORT, () => {
   console.log(`server listening on http://localhost:${PORT}`);

@@ -10,8 +10,9 @@ export default class Post extends Component {
         <img src="http://localhost:8000/images/sanic_crop.png" />
         <div>
           {this.props.post.tags.map(tag =>{
-            return <Tag tag={tag} />
-          })}
+            return <Tag key={tag.id} tag={tag} />
+          })
+        }
         </div>
       </div>
     );
