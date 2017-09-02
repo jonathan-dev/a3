@@ -24,6 +24,7 @@
     "webpack-dev-server": "^2.7.1"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "babel-core": "^6.26.0",
     "react": "^15.6.1",
     "react-apollo": "^1.4.15",

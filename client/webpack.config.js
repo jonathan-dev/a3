@@ -10,7 +10,7 @@ module.exports = {
     app: './src/main.jsx'
   },
   output: {
-    path: resolve('dist'),
+    path: resolve('../server/dist'),
     filename: 'bundle.js',
     publicPath: ''
   },

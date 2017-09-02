@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone'
+import Dropzone from 'react-dropzone';
+import axios from 'axios';
 
 export default class Accept extends React.Component {
   constructor() {
@@ -10,6 +11,33 @@ export default class Accept extends React.Component {
     }
   }
 
+  onDropHandler(accepted, rejected) {
+    this.setState({ accepted, rejected});
+    if(accepted) {
+      console.log(accepted);
+
+      let formData = new FormData();
+      formData.append("index", 1);
+      formData.append("image", accepted[0]);
+
+      axios.post(window.location.origin+'/upload', formData, {
+        onUploadProgress: (e) => {
+          if (e.lengthComputable) {
+            let loaded = Math.round((e.loaded / e.total) * 100);
+            console.log(loaded);
+          }
+        }
+      })
+      .then(response => {
+        let data = response.data;
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+   }
+
   render() {
     this.state.accepted.map(f => console.log('f: ', f))
     return (
@@ -17,7 +45,7 @@ export default class Accept extends React.Component {
         <div className="dropzone">
           <Dropzone
             accept="image/jpeg, image/png"
-            onDrop={(accepted, rejected) => { this.setState({ accepted, rejected }); }}
+            onDrop={this.onDropHandler}
           >
             <p>Try dropping some files here, or click to select files to upload.</p>
             <p>Only *.jpeg and *.png images will be accepted</p>

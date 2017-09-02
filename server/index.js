@@ -30,6 +30,7 @@ app.use(cors())
 
 // serve images statically
 app.use('/images', express.static(resolve(IMAGES_URL)))
+app.use('/', express.static(resolve('dist')))
 
 // main page (hot page) server route
 app.get('/', function (req, res) {
@@ -43,37 +44,80 @@ app.get('/create/post', function (req, res) {
 });
 
 // upload post functionality
-app.post('/create/post', function (req, res) {
-  let form = new formidable.IncomingForm();
-  let postTitle;
-  let imagePath;
+// app.post('/create/post', function (req, res) {
+//   console.log('post')
+//   let form = new formidable.IncomingForm();
+//   let postTitle;
+//   let imagePath;
 
-  // parse the incoming node.js request containing form data
-  form.parse(req,function (error, fields, files) {
-    // TODO: catch error
-    postTitle = fields.title;
-  });
+//   // parse the incoming node.js request containing form data
+//   form.parse(req,function (error, fields, files) {
+//     // TODO: catch error
+//     postTitle = fields.title;
+//     console.log(fields, files)
+//     if(error){
+//       console.error(error);
+//     }
+//   });
 
-  // When new file is detected in upload stream, set the storage path
-  form.on('fileBegin', function (name, file) {
-    imagePath = IMAGES_URLS + file.name;
-    file.path = __dirname + "/public/uploads/images/" + file.name;
-  });
+//   // When new file is detected in upload stream, set the storage path
+//   form.on('fileBegin', function (name, file) {
+//     console.log('fileBegin');
+//     imagePath = IMAGES_URLS + file.name;
+//     file.path = __dirname + "/public/uploads/images/" + file.name;
+//   });
 
-  // when entire request has been received store the post in the database
-  form.on('end', function () {
-    let post = {
-      title: postTitle,
-      imagePath: imagePath
-    };
-    mongo.createPost(post);
-  });
+//   // when entire request has been received store the post in the database
+//   form.on('end', function () {
+//     console.log('end')
+//     let post = {
+//       title: postTitle,
+//       imagePath: imagePath
+//     };
+//     mongo.createPost(post);
+//   });
 
-  res.redirect('/');
+//   // res.redirect('/');
+// });
+
+// POST
+app.post('/upload', function(req, res) {
+	var form = new formidable.IncomingForm();
+	var index, filename;
+
+	form.parse(req);
+
+	form.on('field', function(name, value) {
+    console.log('field: ',name,value)
+		if (name == 'index') index = value;
+	});
+
+	form.on('fileBegin', function(name, file) {
+    console.log('fileBegin')
+		file.path = __dirname + '/public/uploads/images/' + file.name;
+	});
+
+	form.on('file', function(name, file) {
+    console.log('file')
+		filename = file.name;
+	});
+
+	form.on('end', function() {
+    console.log('end')
+		res.json({
+      index: index,
+			filename: filename
+		});
+	});
+
+	form.on('error', function () {
+    console.log('error')
+		res.end('Something went wrong on ther server side. Your file may not have yet uploaded.');
+	});
 });
 
 // GraphqQL server route
-app.use(graphQLHTTP(req => {
+app.use('/graphql', graphQLHTTP(req => {
   const postLoader = new DataLoader(
     keys => Promise.all(keys.map(mongo.getPosts))
   )
