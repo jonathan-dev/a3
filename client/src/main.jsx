@@ -13,7 +13,7 @@ import HotPage from '@/HotPage/hot_page';
 import CreatePost from '@/CreatePost/create_post';
 
 const networkInterface = createNetworkInterface({
-  uri: 'http://localhost:8000/graphql'
+  uri: window.location.origin+'/graphql'
 });
 
 const client = new ApolloClient({

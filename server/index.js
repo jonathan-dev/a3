@@ -6,6 +6,7 @@ import cors from 'cors'
 import graphQLHTTP from 'express-graphql'
 import schema from './schema'
 import DataLoader from 'dataloader'
+import md5 from 'md5'
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -32,53 +33,22 @@ app.use(cors())
 app.use('/images', express.static(resolve(IMAGES_URL)))
 app.use('/', express.static(resolve('dist')))
 
-// main page (hot page) server route
-app.get('/', function (req, res) {
-  res.sendFile(path.resolve(resolve('dist')));
-});
-
-
-// create post get request route
-app.get('/create/post', function (req, res) {
-  res.sendFile(path.resolve(__dirname + '/../client/public/views/create_post_page.html'));
-});
-
-// upload post functionality
-// app.post('/create/post', function (req, res) {
-//   console.log('post')
-//   let form = new formidable.IncomingForm();
-//   let postTitle;
-//   let imagePath;
-
-//   // parse the incoming node.js request containing form data
-//   form.parse(req,function (error, fields, files) {
-//     // TODO: catch error
-//     postTitle = fields.title;
-//     console.log(fields, files)
-//     if(error){
-//       console.error(error);
-//     }
-//   });
-
-//   // When new file is detected in upload stream, set the storage path
-//   form.on('fileBegin', function (name, file) {
-//     console.log('fileBegin');
-//     imagePath = IMAGES_URLS + file.name;
-//     file.path = __dirname + "/public/uploads/images/" + file.name;
-//   });
-
-//   // when entire request has been received store the post in the database
-//   form.on('end', function () {
-//     console.log('end')
-//     let post = {
-//       title: postTitle,
-//       imagePath: imagePath
-//     };
-//     mongo.createPost(post);
-//   });
-
-//   // res.redirect('/');
-// });
+// GraphqQL server route
+app.use('/graphql', graphQLHTTP(req => {
+  const postLoader = new DataLoader(
+    keys => Promise.all(keys.map(mongo.getPosts))
+  )
+  const loaders = {
+    person: postLoader,
+  }
+  return {
+    context: {
+      loaders
+    },
+    schema,
+    graphiql: true
+  }
+}))
 
 // POST
 app.post('/upload', function(req, res) {
@@ -94,7 +64,9 @@ app.post('/upload', function(req, res) {
 
 	form.on('fileBegin', function(name, file) {
     console.log('fileBegin')
-		file.path = __dirname + '/public/uploads/images/' + file.name;
+    console.log('file:', file)
+    let imgId = md5(file.name+new Date().toString)
+    file.path = __dirname + '/public/uploads/images/' + imgId+'.png';
 	});
 
 	form.on('file', function(name, file) {
@@ -116,22 +88,9 @@ app.post('/upload', function(req, res) {
 	});
 });
 
-// GraphqQL server route
-app.use('/graphql', graphQLHTTP(req => {
-  const postLoader = new DataLoader(
-    keys => Promise.all(keys.map(mongo.getPosts))
-  )
-  const loaders = {
-    person: postLoader,
-  }
-  return {
-    context: {
-      loaders
-    },
-    schema,
-    graphiql: true
-  }
-}))
+app.get('/*', function (req, res) {
+  res.sendFile(path.resolve(resolve('dist/index.html')));
+});
 
 app.listen(PORT, () => {
   console.log(`server listening on http://localhost:${PORT}`);
