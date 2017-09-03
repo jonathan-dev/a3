@@ -5,11 +5,30 @@ which allows users to upload images as a post, view filtered feeds of user's pos
 and vote posts up or down within the feeds.
 
 # Set-up
-This project needs NodeJS including a package manager like npm and MongoDB installed
+### Required programs
+This project requires you to install:
+- NodeJS
+- A package manager like npm
+- MongoDB (standalone or running in a docker container)
+
+### Installing dependencies
+1. Open a terminal in the project folder.
+
+2. Install dependencies for client:
+```
+cd client
+npm install
+```
+
+3. Install dependencies for server:
+```
+cd ..\server
+npm install
+```
 
 ## Development (NEW)
-### client
-The client will be **rebuild** when changes are made to the source files.
+### Starting the client
+The client will automatically be **rebuilt** when changes are made to the source files.
 
 ```bash
 # Terminal 1
@@ -17,17 +36,19 @@ cd client
 npm run watch
 ```
 
-### server
+### Starting the server
 The commands below will start the mongo db and the server.
+Do this in a separate terminal window.
 The server will automatically restart when the source files are changed
 ```bash
 # Terminal 2
 cd server
 # start mongo db container and detaches output
-# optionally you can run a mongodb on port 27017 (default)
+# alternatively you can run a mongodb on port 27017 (default)
 docker-compose -d
 npm start
 ```
+
 ## OLD
 1. Install the dependencies:
 ```
