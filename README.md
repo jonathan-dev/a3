@@ -9,15 +9,12 @@ This project needs NodeJS including a package manager like npm and MongoDB insta
 
 ## Development (NEW)
 ### client
-The command below will start a webpack-dev-server that serves the react application on port **9000**.
-
 The client will be **rebuild** when changes are made to the source files.
 
-When the application is opened in a browser it will **automatically refresh** when it is rebuild.
 ```bash
 # Terminal 1
 cd client
-npm run serve
+npm run watch
 ```
 
 ### server
@@ -74,6 +71,13 @@ All main views are held in `public/views`
 
 ### Database access
 Configured in `mongo.js`
+
+# Links to used struff
+progress bar:
+https://github.com/react-component/progress
+
+drop zone:
+https://react-dropzone.js.org/
 
 # Coding conventions
 1. CamelCase throughout code
