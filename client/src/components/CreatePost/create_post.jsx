@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
+import { Line, Circle } from 'rc-progress';
 
 export default class Accept extends React.Component {
   constructor() {
     super()
     this.state = {
       accepted: [],
-      rejected: []
+      rejected: [],
+      loaded: 0
     }
+
+    this.onDropHandler = this.onDropHandler.bind(this);
   }
 
   onDropHandler(accepted, rejected) {
     this.setState({ accepted, rejected});
     if(accepted) {
-      console.log(accepted);
 
       let formData = new FormData();
       formData.append("index", 1);
@@ -24,7 +27,7 @@ export default class Accept extends React.Component {
         onUploadProgress: (e) => {
           if (e.lengthComputable) {
             let loaded = Math.round((e.loaded / e.total) * 100);
-            console.log(loaded);
+            this.setState({loaded: loaded})
           }
         }
       })
@@ -50,6 +53,7 @@ export default class Accept extends React.Component {
             <p>Try dropping some files here, or click to select files to upload.</p>
             <p>Only *.jpeg and *.png images will be accepted</p>
           </Dropzone>
+          <Line percent={this.state.loaded} strokeWidth="4" strokeColor="#F00" />
         </div>
         <aside>
           <h2>Accepted files</h2>

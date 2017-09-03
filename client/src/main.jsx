@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-    Switch
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch
 } from 'react-router-dom';
-
-import { ApolloProvider, createNetworkInterface, ApolloClient } from 'react-apollo';
-
+import {
+  ApolloProvider,
+  createNetworkInterface,
+  ApolloClient
+} from 'react-apollo';
 import HotPage from '@/HotPage/hot_page';
 import CreatePost from '@/CreatePost/create_post';
 
@@ -36,5 +38,5 @@ render(
       </div>
     </Router>
   </ApolloProvider>,
-    document.getElementById('root')
+  document.getElementById('root')
 );
