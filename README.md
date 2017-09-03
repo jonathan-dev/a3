@@ -5,13 +5,13 @@ which allows users to upload images as a post, view filtered feeds of user's pos
 and vote posts up or down within the feeds.
 
 # Set-up
-###Required programs
+### Required programs
 This project requires you to install:
 - NodeJS
 - A package manager like npm
 - MongoDB (standalone or running in a docker container)
 
-###Installing dependencies
+### Installing dependencies
 1. Open a terminal in the project folder.
 
 2. Install dependencies for client:
