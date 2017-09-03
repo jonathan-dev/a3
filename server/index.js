@@ -52,33 +52,30 @@ app.use('/graphql', graphQLHTTP(req => {
 
 // POST
 app.post('/upload', function(req, res) {
-	var form = new formidable.IncomingForm();
-	var index, filename;
+	let form = new formidable.IncomingForm();
+	let imgId;
 
 	form.parse(req);
 
 	form.on('field', function(name, value) {
     console.log('field: ',name,value)
-		if (name == 'index') index = value;
 	});
 
 	form.on('fileBegin', function(name, file) {
     console.log('fileBegin')
-    console.log('file:', file)
-    let imgId = md5(file.name+new Date().toString)
+    // generate img id
+    imgId  = md5(file.name+new Date().toString());
     file.path = __dirname + '/public/uploads/images/' + imgId+'.png';
 	});
 
 	form.on('file', function(name, file) {
     console.log('file')
-		filename = file.name;
 	});
 
 	form.on('end', function() {
     console.log('end')
 		res.json({
-      index: index,
-			filename: filename
+			imgId: imgId
 		});
 	});
 
