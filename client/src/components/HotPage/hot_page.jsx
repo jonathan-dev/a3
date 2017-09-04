@@ -36,7 +36,7 @@ query postListQuery {
   posts {
     id
     title
-    imagePath
+    imageId
     voteup
     votedown
     tags {

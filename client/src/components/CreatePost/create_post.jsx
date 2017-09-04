@@ -2,8 +2,17 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import { Line, Circle } from 'rc-progress';
+import { gql, graphql } from 'react-apollo';
 
-export default class Accept extends React.Component {
+const PostMutations = gql`
+mutation PostMutations($post: PostInput!) {
+  createPost(post: $post) {
+    title
+  }
+}
+`;
+
+class createPost extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -13,6 +22,19 @@ export default class Accept extends React.Component {
     }
 
     this.onDropHandler = this.onDropHandler.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    console.log('click')
+    this.props.mutate({
+      variables: { post: {title:"create test", imageId:"23798739", tags: []} }
+    })
+      .then(({ data }) => {
+        console.log('got data', data);
+      }).catch((error) => {
+        console.log('there was an error sending the query', error);
+      });
   }
 
   onDropHandler(accepted, rejected) {
@@ -70,7 +92,10 @@ export default class Accept extends React.Component {
             }
           </ul>
         </aside>
+        <button onClick={this.onClick}>post</button>
       </section>
     );
   }
 }
+
+export default graphql(PostMutations)(createPost)
