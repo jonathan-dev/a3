@@ -99,10 +99,11 @@ export default {
       postInput.date = new Date();
       postInput.voteup = 0;
       postInput.vote = 0;
+      console.log('postinput', postInput);
 
       return new Post({
         title: postInput.title,
-        imagePath: postInput.imagePath,
+        imageId: postInput.imageId,
         voteup: 0,
         votedown: 0,
         view: 0,

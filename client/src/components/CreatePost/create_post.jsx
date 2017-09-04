@@ -18,17 +18,25 @@ class createPost extends React.Component {
     this.state = {
       accepted: [],
       rejected: [],
-      loaded: 0
+      loaded: 0,
+      title: '',
+      imageId: ''
     }
 
     this.onDropHandler = this.onDropHandler.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({title: event.target.value});
   }
 
   onClick() {
     console.log('click')
     this.props.mutate({
-      variables: { post: {title:"create test", imageId:"23798739", tags: []} }
+      variables: { post: {title:this.state.title, imageId: this.state.imageId, tags: []} }
+      //TODO: hadle tags
     })
       .then(({ data }) => {
         console.log('got data', data);
@@ -56,6 +64,7 @@ class createPost extends React.Component {
       .then(response => {
         let data = response.data;
         console.log(response);
+        this.setState({imageId: data.imageId})
       })
       .catch(err => {
         console.log(err);
@@ -92,6 +101,7 @@ class createPost extends React.Component {
             }
           </ul>
         </aside>
+        <input type="text" onChange={this.handleChange} />
         <button onClick={this.onClick}>post</button>
       </section>
     );

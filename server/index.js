@@ -75,7 +75,7 @@ app.post('/upload', function(req, res) {
 	form.on('end', function() {
     console.log('end')
 		res.json({
-			imgId: imgId
+			imageId: imgId
 		});
 	});
 
