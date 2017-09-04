@@ -40,3 +40,7 @@ render(
   </ApolloProvider>,
   document.getElementById('root')
 );
+
+/**
+ * TODO: make navigation bar component out of link list
+ */

@@ -109,3 +109,8 @@ class createPost extends React.Component {
 }
 
 export default graphql(PostMutations)(createPost)
+
+/**
+ * TODO: add styling
+ * TODO: compress image before upload see trello
+ */

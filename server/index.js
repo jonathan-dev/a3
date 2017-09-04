@@ -50,7 +50,7 @@ app.use('/graphql', graphQLHTTP(req => {
   }
 }))
 
-// POST
+// image upload
 app.post('/upload', function(req, res) {
 	let form = new formidable.IncomingForm();
 	let imgId;
@@ -85,6 +85,7 @@ app.post('/upload', function(req, res) {
 	});
 });
 
+// serve the index page if nothing else fits (fix for client side routing)
 app.get('/*', function (req, res) {
   res.sendFile(path.resolve(resolve('dist/index.html')));
 });

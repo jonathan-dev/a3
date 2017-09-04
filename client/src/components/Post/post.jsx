@@ -8,9 +8,11 @@ export default class Post extends Component {
         <h3>{this.props.post.title}</h3>
         <p>11.11.2016</p>
         {
-          this.props.post.imageId?
-            <img src={window.location.origin+"/images/"+this.props.post.imageId+".png"} />
-          :""
+          <img src={
+            this.props.post.imageId
+              ?window.location.origin+"/images/"+this.props.post.imageId+".png"
+              :window.location.origin+"/images/sanic_crop.png"
+          }/>
 
         }
         <div>
@@ -23,3 +25,13 @@ export default class Post extends Component {
     );
   }
 }
+
+/**
+ * TODO: replace date with dynamic data
+ *
+ * TODO: do proper error checking (for null/undefined)
+ *
+ * TODO: add proper placeholder img which is show when
+ *       no image is found or the image is still loading
+ *       maybe it would be nice to use an svg
+ */
