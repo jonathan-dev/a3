@@ -91,8 +91,16 @@ export default {
   getTag(id) {
     return Tag.findById(id)
   },
+  getTagByName(name) {
+    return Tag.findOne({name:name})
+  },
   getTags(page) {
     return Tag.find()
+  },
+  createTag(name){
+    return new Tag({
+      name: name
+    }).save()
   },
   createPost(postInput) {
     if (postInput.title && postInput.imageId) {
@@ -107,7 +115,7 @@ export default {
         voteup: 0,
         votedown: 0,
         view: 0,
-        tags: [] // TODO: revert to: postInput.tags.map(x => x.id) if testing is done
+        tags: postInput.tags
       }).save()
     }
   },

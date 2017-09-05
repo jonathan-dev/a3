@@ -116,7 +116,7 @@ var PostInputType = new GraphQLInputObjectType({
       type: new GraphQLNonNull(GraphQLString)
     },
     tags: {
-      type: new GraphQLNonNull(new GraphQLList(PostAttributesInputType))
+      type: new GraphQLNonNull(new GraphQLList(GraphQLString))
     }
   })
 })
@@ -172,11 +172,38 @@ const PostMutation = new GraphQLObjectType({
           type: PostInputType
         }
       },
-      resolve: (root, {
+      resolve: async (root, {
         post
       }) => {
         console.log(post);
-        return mongo.createPost(post).then(x => x)
+        let querytags = post.tags;
+        post.tags=[];
+        let promiseArray = []
+        querytags.forEach(tag =>{
+          console.log(tag)
+          promiseArray.push(mongo.getTagByName(tag)
+          .then(t => {
+            console.log('t',t)
+            if(t) {
+              post.tags.push(t._id)
+            }else {
+              console.log('create', tag);
+              promiseArray.push(mongo.createTag(tag)
+              .then(t => {
+                console.log('created',t)
+                post.tags.push(t._id)
+              })
+              .catch(e => console.log(e))
+            )
+            }
+            })
+          .catch( e=> console.log(e))
+          )
+        })
+        Promise.all(promiseArray).then(e =>{
+          console.log('post: ', post)
+          return mongo.createPost(post).then(x => x)
+        })
       }
     },
     updatePost: {

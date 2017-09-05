@@ -46,10 +46,8 @@ class createPost extends React.Component {
   }
 
   onClick() {
-    console.log('click')
     this.props.mutate({
-      variables: { post: {title:this.state.title, imageId: this.state.imageId, tags: []} }
-      //TODO: hadle tags
+      variables: { post: {title:this.state.title, imageId: this.state.imageId, tags: this.state.tags} }
     })
       .then(({ data }) => {
         console.log('got data', data);
