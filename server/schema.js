@@ -43,9 +43,9 @@ const PostType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: (post) => post._id
     },
-    imagePath: {
+    imageId: {
       type: GraphQLString,
-      resolve: (post) => post.imagePath
+      resolve: (post) => post.imageId
     },
     title: {
       type: GraphQLString,
@@ -112,6 +112,9 @@ var PostInputType = new GraphQLInputObjectType({
     title: {
       type: new GraphQLNonNull(GraphQLString)
     },
+    imageId: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
     tags: {
       type: new GraphQLNonNull(new GraphQLList(PostAttributesInputType))
     }
@@ -172,6 +175,7 @@ const PostMutation = new GraphQLObjectType({
       resolve: (root, {
         post
       }) => {
+        console.log(post);
         return mongo.createPost(post).then(x => x)
       }
     },

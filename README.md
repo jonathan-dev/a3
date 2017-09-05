@@ -1,12 +1,55 @@
 # Assignment 3 - Project Harrismus
 
-Welcome to the repository for Project Harrismus. We are making a 'imgur-like' project, 
-which allows users to upload images as a post, view filtered feeds of user's posts, 
-and vote posts up or down within the feeds. 
+Welcome to the repository for Project Harrismus. We are making a 'imgur-like' project,
+which allows users to upload images as a post, view filtered feeds of user's posts,
+and vote posts up or down within the feeds.
 
 # Set-up
-This project needs NodeJS including a package manager like npm and MongoDB installed 
+### Required programs
+This project requires you to install:
+- NodeJS
+- A package manager like npm
+- MongoDB (standalone or running in a docker container)
 
+### Installing dependencies
+1. Open a terminal in the project folder.
+
+2. Install dependencies for client:
+```
+cd client
+npm install
+```
+
+3. Install dependencies for server:
+```
+cd ..\server
+npm install
+```
+
+## Development (NEW)
+### Starting the client
+The client will automatically be **rebuilt** when changes are made to the source files.
+
+```bash
+# Terminal 1
+cd client
+npm run watch
+```
+
+### Starting the server
+The commands below will start the mongo db and the server.
+Do this in a separate terminal window.
+The server will automatically restart when the source files are changed
+```bash
+# Terminal 2
+cd server
+# start mongo db container and detaches output
+# alternatively you can run a mongodb on port 27017 (default)
+docker-compose -d
+npm start
+```
+
+## OLD
 1. Install the dependencies:
 ```
 # use the corresponding install command of your package manager
@@ -23,7 +66,7 @@ $ npm run build
 ```
 $ npm start
 ```
-    
+
 **Note:** Starting the server with
 ```
 # do not start your server like this:
@@ -42,7 +85,7 @@ or the correpsonding start command of your package manager.
 # Structure
 
 ### Routes
-All main routes are held in the *index.js* file. 
+All main routes are held in the *index.js* file.
 
 ### Views
 All main views are held in `public/views`
@@ -50,12 +93,19 @@ All main views are held in `public/views`
 ### Database access
 Configured in `mongo.js`
 
+# Links to used struff
+progress bar:
+https://github.com/react-component/progress
+
+drop zone:
+https://react-dropzone.js.org/
+
 # Coding conventions
 1. CamelCase throughout code
     - Variables
     - Function names capitalized
     - When in doubt, camelcase it out
-2. Filenames should be all lowercase, words separated by underscore 
+2. Filenames should be all lowercase, words separated by underscore
   e.g. `hot_page_post_list.jsx`
 3. Use two spaces for indenting.
 4. Have a comment on every function that describes it purpose.
@@ -68,46 +118,46 @@ Configured in `mongo.js`
 // FIXME: so is this fixme statement.
 ```
 9. Make use of semicolons on every line
-10. Expand route callback functions: 
+10. Expand route callback functions:
 ```
 function(route, callback(){
-    // callback code here    
+    // callback code here
 });
 ```
 
 11. Use newline for each method in method chaining **and** place dot in new line:
 ```
 # good:
-    
+
     call()
     .thenFuncA()
     .thenFuncB()
     .thenFuncC();
-    
+
 #bad:
-    
+
     call().thenFuncA().thenFuncB().thenFuncC();
 ```
 12. Don't put a comma after the last json key value pair.
 13. Expand assignment when giving a json object its key value pairs.
 ```
 #good:
-    
+
 
     let human = {
         name: 'Kevin',
         age: 21
     };
-    
-        
+
+
 #bad (unnecessary comma after last key value pair):
-    
+
     let human = {
         name: "Kevin",
         age: 21,
     };
-    
-    
+
+
 #bad (not expanded):
 
     let human = {name = "Kevin", age: 21};
@@ -120,7 +170,7 @@ function(route, callback(){
 function myFunction () {
     // space between function-name, parenthesis and brackets
 }
-    
+
 #bad
 function myFunction(){
     // no space between function-name, parenthesis and brackets

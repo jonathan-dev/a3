@@ -17,7 +17,7 @@ db.once('open', function () {
 
 let postSchema = mongoose.Schema({
   title: String,
-  imagePath: String,
+  imageId: String,
   voteup: Number,
   votedown: Number,
   view: Number,
@@ -95,14 +95,15 @@ export default {
     return Tag.find()
   },
   createPost(postInput) {
-    if (postInput.title && postInput.imagePath) {
+    if (postInput.title && postInput.imageId) {
       postInput.date = new Date();
       postInput.voteup = 0;
       postInput.vote = 0;
+      console.log('postinput', postInput);
 
       return new Post({
         title: postInput.title,
-        imagePath: postInput.imagePath,
+        imageId: postInput.imageId,
         voteup: 0,
         votedown: 0,
         view: 0,
@@ -112,7 +113,7 @@ export default {
   },
   updatePost(postInput) {
     console.log("update post1: ", postInput)
-    if(postInput.id && postInput.title) {
+    if(postInput.id && postInput.title && postInput.imageId) {
       console.log("update post2: ", postInput)
       postInput.tags = postInput.tags.map(x => x.id)
       return Post.findByIdAndUpdate(postInput.id,postInput)
