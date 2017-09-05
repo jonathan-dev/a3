@@ -69,6 +69,7 @@ class AutocompleteTagsInput extends React.Component {
 
   handleChange (tags) {
     this.setState({tags})
+    this.props.updateTags(tags)
   }
 
   autocompleteRenderInput ({addTag, ...props}) {
@@ -83,8 +84,7 @@ class AutocompleteTagsInput extends React.Component {
     const inputValue = (props.value && props.value.trim().toLowerCase()) || ''
     const inputLength = inputValue.length
 
-    let suggestions = states().filter((state) => {
-      console.log(state,this.state.tags)
+    let suggestions = this.props.tags().filter((state) => {
       return state.name.toLowerCase().slice(0, inputLength) === inputValue && !this.state.tags.includes(state.name)
     })
 
@@ -105,12 +105,12 @@ class AutocompleteTagsInput extends React.Component {
       suggestion: {
         display: 'block',
         background: 'white',
-        'font-family': 'sans-serif',
-        'font-size': '13px',
-        'font-weight': '400',
-        'margin-bottom': '5px',
-        'margin-right': '5px',
-        'padding': '5px'
+        fontFamily: 'sans-serif',
+        fontSize: '13px',
+        fontWeight: '400',
+        marginBottom: '5px',
+        marginRight: '5px',
+        padding: '5px'
       },
       suggestionsList: {
         margin: 0,
@@ -144,7 +144,6 @@ class AutocompleteTagsInput extends React.Component {
   }
 
   render () {
-    console.log(this.props)
     return <TagsInput renderInput={this.autocompleteRenderInput} value={this.state.tags} onChange={this.handleChange} onlyUnique={true} />
   }
 }

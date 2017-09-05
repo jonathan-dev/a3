@@ -37,6 +37,7 @@ class createPost extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.getTags = this.getTags.bind(this);
+    this.updateTags = this.updateTags.bind(this);
   }
 
   handleChange(event) {
@@ -55,6 +56,10 @@ class createPost extends React.Component {
       }).catch((error) => {
         console.log('there was an error sending the query', error);
       });
+  }
+
+  updateTags(tags){
+    this.setState({tags})
   }
 
   getTags() {
@@ -121,7 +126,7 @@ class createPost extends React.Component {
           </ul>
         </aside>
         <input type="text" onChange={this.handleChange} />
-        <AutocompleteTagsInput/>
+        <AutocompleteTagsInput updateTags={this.updateTags} tags={this.getTags}/>
         <button onClick={this.onClick}>post</button>
       </section>
     );
