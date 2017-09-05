@@ -84,9 +84,46 @@ class AutocompleteTagsInput extends React.Component {
     const inputLength = inputValue.length
 
     let suggestions = states().filter((state) => {
-      return state.name.toLowerCase().slice(0, inputLength) === inputValue
+      console.log(state,this.state.tags)
+      return state.name.toLowerCase().slice(0, inputLength) === inputValue && !this.state.tags.includes(state.name)
     })
 
+    const styles = {
+      container: {
+        flexGrow: 1,
+        position: 'relative',
+        display: 'inline-block'
+      },
+      suggestionsContainerOpen: {
+        position: 'absolute',
+        // marginTop: 10,
+        // marginBottom: 10 * 3,
+        left: 0,
+        right: 0,
+        // 'border-color': 'black'
+      },
+      suggestion: {
+        display: 'block',
+        background: 'white',
+        'font-family': 'sans-serif',
+        'font-size': '13px',
+        'font-weight': '400',
+        'margin-bottom': '5px',
+        'margin-right': '5px',
+        'padding': '5px'
+      },
+      suggestionsList: {
+        margin: 0,
+        padding: 0,
+        listStyleType: 'none',
+      },
+      textField: {
+        width: '100%',
+      },
+      suggestionHighlighted: {
+        background:'grey'
+      }
+    }
 
     return (
       <Autosuggest
@@ -94,19 +131,21 @@ class AutocompleteTagsInput extends React.Component {
         suggestions={suggestions}
         shouldRenderSuggestions={(value) => value && value.trim().length > 0}
         getSuggestionValue={(suggestion) => suggestion.name}
-        renderSuggestion={(suggestion) => <span>{suggestion.name} {suggestion.abbr}</span>}
+        renderSuggestion={(suggestion) => <span>{suggestion.name}</span>}
         inputProps={{...props, onChange: handleOnChange}}
         onSuggestionSelected={(e, {suggestion}) => {
           addTag(suggestion.name)
         }}
         onSuggestionsClearRequested={() => {}}
         onSuggestionsFetchRequested={() => {}}
+        theme={styles}
       />
     )
   }
 
   render () {
-    return <TagsInput renderInput={this.autocompleteRenderInput} value={this.state.tags} onChange={this.handleChange} />
+    console.log(this.props)
+    return <TagsInput renderInput={this.autocompleteRenderInput} value={this.state.tags} onChange={this.handleChange} onlyUnique={true} />
   }
 }
 
