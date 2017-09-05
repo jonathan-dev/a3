@@ -172,36 +172,40 @@ const PostMutation = new GraphQLObjectType({
           type: PostInputType
         }
       },
-      resolve: async (root, {
+      resolve: (root, {
         post
       }) => {
+        //iterate over the tags array and find corresponding ids or create new tag
         console.log(post);
         let querytags = post.tags;
         post.tags=[];
         let promiseArray = []
         querytags.forEach(tag =>{
           console.log(tag)
-          promiseArray.push(mongo.getTagByName(tag)
-          .then(t => {
-            console.log('t',t)
-            if(t) {
-              post.tags.push(t._id)
-            }else {
-              console.log('create', tag);
-              promiseArray.push(mongo.createTag(tag)
+          promiseArray.push(
+            new Promise ((resolve, reject) => {
+              mongo.getTagByName(tag)
               .then(t => {
-                console.log('created',t)
-                post.tags.push(t._id)
-              })
-              .catch(e => console.log(e))
-            )
-            }
+                if(t) {
+                  console.log('found tag',t)
+                  post.tags.push(t._id);
+                  resolve();
+                }else {
+                  console.log('create', tag);
+                  mongo.createTag(tag)
+                  .then(t => {
+                    console.log('created',t)
+                    post.tags.push(t._id)
+                    resolve()
+                  })
+                  .catch(e => reject(e))
+                }
+                })
+              .catch( e=> reject(e))
             })
-          .catch( e=> console.log(e))
           )
         })
         Promise.all(promiseArray).then(e =>{
-          console.log('post: ', post)
           return mongo.createPost(post).then(x => x)
         })
       }

@@ -1,9 +1,9 @@
 import mongoose from 'mongoose' // connection to the mongodb
 import casual from 'casual' // creating mock data
-
+import bluebird from 'bluebird'
 // location of the mongodb
 const MONGO = 'mongodb://localhost/a3'
-
+mongoose.Promise = bluebird
 mongoose.connect(MONGO, {
   useMongoClient: true // needed to get rid of a error message
 })
