@@ -100,6 +100,12 @@ https://github.com/react-component/progress
 drop zone:
 https://react-dropzone.js.org/
 
+react-autosuggest:
+https://github.com/moroshko/react-autosuggest
+
+react-tagsinput:
+https://github.com/olahol/react-tagsinput
+
 # Coding conventions
 1. CamelCase throughout code
     - Variables
