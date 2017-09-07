@@ -20,8 +20,9 @@ function resolve (dir) {
 var jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: 'tasmanianDevil'
-
 }
+
+//Authorization: Bearer <Token>
 
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
   console.log('payload received', jwt_payload);
