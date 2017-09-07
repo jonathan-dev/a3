@@ -1,7 +1,9 @@
 import mongoose from 'mongoose' // connection to the mongodb
 import casual from 'casual' // creating mock data
 import bluebird from 'bluebird'
-import bcrypt from 'bcryptjs'
+
+import User from './user'
+
 // location of the mongodb
 const MONGO = 'mongodb://localhost/a3'
 mongoose.Promise = bluebird
@@ -31,127 +33,11 @@ let postSchema = mongoose.Schema({
 let tagSchema = mongoose.Schema({
   name: String
 })
-let userSchema = mongoose.Schema({
-  username: { type: String, required: true, index: { unique: true } },
-  password: { type: String, required: true },
-  loginAttempts: { type: Number, required: true, default: 0 },
-  lockUntil: { type: Number }
-})
-const LOCK_TIME = 2 * 60 * 60 * 1000;
-
-userSchema.virtual('isLocked').get(
-  // check for a future lockUntil timestamp
-  () => !!(this.lockUntil && this.lockUntil > Date.now())
-);
-
-userSchema.statics.failedLogin = {
-  NOT_FOUND: 0,
-  PASSWORD_INCORRECT: 1,
-  MAX_ATTEMPTS: 2
-};
-
-userSchema.pre('save', function(next) {
-  var user = this;
-
-  // only hash the password if it has been modified (or is new)
-  if (!user.isModified('password')) return next();
-
-  // generate a salt
-  bcrypt.genSalt(10)
-  .then(salt => {
-    // hash the password along with our new salt
-    bcrypt.hash(user.password, salt)
-    .then(hash => {
-      // override the cleartext password with the hashed one
-      user.password = hash;
-      next();
-    })
-    .catch(err => next(err))
-  })
-  .catch(err => next(err))
-});
-
-userSchema.methods.comparePassword = (candidatePassword) => {
-  return new Promise((resolve, reject) => {
-  bcrypt.compare(candidatePassword, this.password)
-  .then(isMatch => resolve(isMatch))
-  .catch(err => reject(err))
-  })
-};
-
-userSchema.methods.incLoginAttempts = () => {
-  return new Promise((resolve, reject) => {
-    // if we have a previous lock that has expired, restart at 1
-    if (this.lockUntil && this.lockUntil < Date.now()) {
-      this.update({
-          $set: { loginAttempts: 1 },
-          $unset: { lockUntil: 1 }
-      })
-      .then(res => resolve(res))
-      .catch(err => reject(err))
-    }
-    // otherwise we're incrementing
-    var updates = { $inc: { loginAttempts: 1 } };
-    // lock the account if we've reached max attempts and it's not locked already
-    if (this.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked) {
-        updates.$set = { lockUntil: Date.now() + LOCK_TIME };
-    }
-    this.update(updates)
-    .then(res => resolve(res))
-    .catch(err => reject(err))
-  })
-
-};
-
-
-userSchema.statics.getAuthenticated = (username, password) => {
-  return new Promise((resolve, reject) => {
-    this.findOne({ username: username })
-    .then(user => {
-      // make sure the user exists
-      if (!user) resolve(null,reasons.NOT_FOUND)
-
-      // check if the account is currently locked
-      if (user.isLocked) {
-          // just increment login attempts if account is already locked
-          user.incLoginAttempts()
-          .then(()=>resolve(null, reasons.MAX_ATTEMPTS))
-          .catch(err => reject(err))
-      }
-
-      // test for a matching password
-      user.comparePassword(password)
-      .then(isMatch => {
-        // check if the password was a match
-        if (isMatch) {
-          // if there's no lock or failed attempts, just return the user
-          if (!user.loginAttempts && !user.lockUntil) return cb(null, user);
-          // reset attempts and lock info
-          var updates = {
-              $set: { loginAttempts: 0 },
-              $unset: { lockUntil: 1 }
-          };
-          user.update(updates)
-          .then(()=> resolve(user))
-          .catch(err => resolve(err))
-        }
-
-        // password is incorrect, so increment login attempts before responding
-        user.incLoginAttempts()
-        .then(()=>resolve(null, reasons.PASSWORD_INCORRECT))
-        .catch(err => resolve(err))
-      })
-      .catch(err => resolve(err))
-    })
-    .catch(err => resolve(err))
-  })
-}
 
 
 
 let Post = mongoose.model('Post', postSchema)
 let Tag = mongoose.model('Tag', tagSchema)
-let User = mongoose.model('User', userSchema)
 
 
 
@@ -193,6 +79,60 @@ async function initDatabase() {
     }
     await Promise.all(ps)
   }
+
+  User.remove({})
+  .then(() => {
+    // create a user a new user
+  var testUser = new User({
+    username: 'jmar777',
+    password: 'Password123'
+  });
+
+  // save user to database
+  testUser.save()
+  .catch(err=>console.log(err))
+  .then(async()=> {
+    // // attempt to authenticate user
+    // User.getAuthenticated('jmar777', 'Password123')
+    // .then(data => {
+    //   let user = data.user
+    //   let reason = data.reason
+    //   // login was successful if we have a user
+    //   if (user) {
+    //       // handle login success
+    //       console.log('login success');
+    //       return;
+    //   }
+
+    //   // otherwise we can determine why we failed
+    //   var reasons = User.failedLogin;
+    //   switch (reason) {
+    //       case reasons.NOT_FOUND:
+    //       case reasons.PASSWORD_INCORRECT:
+    //           // note: these cases are usually treated the same - don't tell
+    //           // the user *why* the login failed, only that it did
+    //           break;
+    //       case reasons.MAX_ATTEMPTS:
+    //           // send email or otherwise notify user that account is
+    //           // temporarily locked
+    //           break;
+    //   }
+  // })
+
+    await User.getAuthenticated('jmar777', 'Password123')
+    await User.getAuthenticated('jmar777', 'Password123')
+    await User.getAuthenticated('jmar777', 'Password123')
+    await User.getAuthenticated('jmar777', 'Password1234')
+    await User.getAuthenticated('jmar777', 'Password1234')
+    await User.getAuthenticated('jmar777', 'Password1234')
+    await User.getAuthenticated('jmar777', 'Password1234')
+    await User.getAuthenticated('jmar777', 'Password1234')
+
+
+    .catch(err => console.log(err))
+  })
+  .catch(err => console.log(err))
+  })
 }
 initDatabase()
 
