@@ -69,7 +69,7 @@ app.use('/', express.static(resolve('dist')))
 
 
 app.post("/login", function(req, res) {
-  console.log('login', name, password)
+  console.log('login', req.body.name, req.body.password);
   if(req.body.name && req.body.password){
     var name = req.body.name;
     var password = req.body.password;
