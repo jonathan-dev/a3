@@ -14,6 +14,7 @@ import {
 import HotPage from '@/HotPage/hot_page';
 import CreatePost from '@/CreatePost/create_post';
 import LoginPage from '@/LoginPage/login_page';
+import RegisterPage from '@/RegisterPage/register_page';
 
 const networkInterface = createNetworkInterface({
   uri: window.location.origin+'/graphql'
@@ -32,11 +33,13 @@ render(
           <li><Link to="/create">create</Link></li>
           <li><Link to="/hot">hot</Link></li>
           <li><Link to="/login">login</Link></li>
+          <li><Link to="/register">register</Link></li>
         </ul>
         <Switch>
           <Route exact path="/" component={HotPage}/>
           <Route path="/create" component={CreatePost}/>
           <Route path="/login" component={LoginPage}/>
+          <Route path="/register" component={RegisterPage}/>
         </Switch>
       </div>
     </Router>
