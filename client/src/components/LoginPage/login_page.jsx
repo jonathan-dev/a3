@@ -24,8 +24,12 @@ class LoginPage extends React.Component {
   }
 
   handleSubmit(event) {
-    // call this when form gets send to destination
-    console.log("Submit has been called in Login Page!");
+    event.preventDefault();
+
+    // TODO: remove console statements and implement actual login
+    console.log("Submitted following data: ");
+    console.log("Username: " + this.state.username);
+    console.log("Password: " + this.state.password);
   }
 
   render () {
@@ -46,3 +50,5 @@ class LoginPage extends React.Component {
     );
   }
 }
+
+export default LoginPage;

@@ -20,10 +20,12 @@ query tagListQuery {
     name
   }
 }
-`
+`;
+
 class createPost extends React.Component {
   constructor() {
-    super()
+    super();
+
     this.state = {
       accepted: [],
       rejected: [],
@@ -31,7 +33,7 @@ class createPost extends React.Component {
       title: '',
       imageId: '',
       tags: []
-    }
+    };
 
     this.onDropHandler = this.onDropHandler.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -63,7 +65,7 @@ class createPost extends React.Component {
 
   getTags() {
     if(this.props && this.props.data && this.props.data.tags)
-      return this.props.data.tags
+      return this.props.data.tags;
     return []
   }
 
