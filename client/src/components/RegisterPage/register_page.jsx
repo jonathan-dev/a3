@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import axios from 'axios';
 
 class RegisterPage extends React.Component {
 
@@ -38,6 +39,18 @@ class RegisterPage extends React.Component {
   handleSubmit (event) {
     event.preventDefault(); //Stops page refresh
 
+    if(this.state.password.localeCompare(this.state.password2)===0){
+      axios.post(window.location.origin+'/register', {
+        name: this.state.username,
+        password: this.state.password
+      })
+      .then(e => console.log(e))
+      .catch(err => console.log(err))
+    } else {
+      console.log('passwords dont match')
+      // TODO: give visual feedback
+    }
+
     //TODO: remove log statements
     console.log("Submitted registration request", )
   }
@@ -65,6 +78,7 @@ class RegisterPage extends React.Component {
           Re-enter your password:
           <input name="password2" type="password" value={this.state.password2} onChange={this.handleChange} />
         </label>
+        <button type="submit">register</button>
       </form>
     );
   }

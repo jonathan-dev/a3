@@ -87,22 +87,26 @@ app.post("/login", function(req, res) {
     })
     .catch(err => console.log(err))
   }
-
-  // // usually this would be a database call:
-  // var user = users[_.findIndex(users, {name: name})];
-  // if( ! user ){
-  //   res.status(401).json({message:"no such user found"});
-  // }
-
-  // if(user.password === req.body.password) {
-  //   // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
-  //   var payload = {id: user.id};
-  //   var token = jwt.sign(payload, jwtOptions.secretOrKey);
-  //   res.json({message: "ok", token: token});
-  // } else {
-  //   res.status(401).json({message:"passwords did not match"});
-  // }
 });
+
+app.post("/register", function(req, res){
+  console.log('register', req.body.name, req.body.password);
+  if(req.body.name && req.body.password){
+    var name = req.body.name;
+    var password = req.body.password;
+
+    mongo.createUser(name, password)
+    .then(e => {
+      res.statusCode = 200
+      res.send('OK')
+    })
+    .catch(err => {
+      res.statusCode = 500
+      res.send('err')
+    })
+
+  }
+})
 
 // GraphqQL server route
 app.use('/graphql', graphQLHTTP(req => {
