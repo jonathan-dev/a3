@@ -90,12 +90,16 @@ app.post("/login", function(req, res) {
 });
 
 app.post("/register", function(req, res){
-  console.log('register', req.body.name, req.body.password);
-  if(req.body.name && req.body.password){
+  console.log('register', req.body.name, req.body.email, req.body.password);
+  if(
+    req.body.name &&
+    req.body.email &&
+    req.body.password){
     var name = req.body.name;
+    var email = req.body.email;
     var password = req.body.password;
 
-    mongo.createUser(name, password)
+    mongo.createUser(name, email, password)
     .then(e => {
       res.statusCode = 200
       res.send('OK')

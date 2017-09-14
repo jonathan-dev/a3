@@ -42,6 +42,7 @@ class RegisterPage extends React.Component {
     if(this.state.password.localeCompare(this.state.password2)===0){
       axios.post(window.location.origin+'/register', {
         name: this.state.username,
+        email: this.state.email,
         password: this.state.password
       })
       .then(e => console.log(e))
