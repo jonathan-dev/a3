@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {render} from 'react-dom';
+import axios from 'axios';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -25,6 +26,17 @@ class LoginPage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
+    axios.post(window.location.origin+'/login', {
+      name: this.state.username,
+      password: this.state.password
+    })
+    .then(e => {
+      console.log(e)
+      localStorage.setItem('token', e.data.token);
+      e.data.token
+    })
+    .catch(err => console.log(err))
 
     // TODO: remove console statements and implement actual login
     console.log("Submitted following data: ");

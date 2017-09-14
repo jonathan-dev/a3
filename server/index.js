@@ -64,8 +64,20 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cors())
 
 // serve images statically
-app.use('/images', passport.authenticate('jwt', { session: false }), express.static(resolve(IMAGES_URL)))
+app.use('/images', express.static(resolve(IMAGES_URL)))
 app.use('/', express.static(resolve('dist')))
+
+app.use(function(req, res, next) {
+  passport.authenticate('jwt', function(err, user, info) {
+    req.user = user;
+    next();
+  })(req, res, next);
+})
+
+app.use(function(req,res,next){
+  console.log("user", req.user);
+  next();
+})
 
 
 app.post("/login", function(req, res) {
@@ -75,6 +87,7 @@ app.post("/login", function(req, res) {
     var password = req.body.password;
     mongo.getAuthenticated(name, password)
     .then(data => {
+      console.log(data)
       if(data.user){
         console.log('user', data.user)
         var payload = {id: data.user._id};

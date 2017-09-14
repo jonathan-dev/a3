@@ -20,6 +20,18 @@ const networkInterface = createNetworkInterface({
   uri: window.location.origin+'/graphql'
 });
 
+networkInterface.use([{
+  applyMiddleware(req, next) {
+    if (!req.options.headers) {
+      req.options.headers = {};  // Create the header object if needed.
+    }
+    // get the authentication token from local storage if it exists
+    const token = localStorage.getItem('token');
+    req.options.headers.authorization = token ? `Bearer ${token}` : null;
+    next();
+  }
+}]);
+
 const client = new ApolloClient({
   networkInterface
 });
