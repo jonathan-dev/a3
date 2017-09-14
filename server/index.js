@@ -1,17 +1,19 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import mongo from './mongo'
-import formidable from 'formidable'
+
 import path from 'path'
 import cors from 'cors'
 import graphQLHTTP from 'express-graphql'
 import schema from './schema'
 import DataLoader from 'dataloader'
-import md5 from 'md5'
+
 
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt'
+
+import upload from './upload'
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -26,16 +28,9 @@ var jwtOptions = {
 
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
   console.log('payload received', jwt_payload);
-  // usually this would be a database call:
-  // var user = users[_.findIndex(users, {id: jwt_payload.id})];
-  // if (user) {
-  //   next(null, user);
-  // } else {
-  //   next(null, false);
-  // }
   mongo.getUserById(jwt_payload.id)
   .then(user => {
-    console.log('user', user)
+    // console.log('user', user)
     next(null, user)
   })
   .catch(err => next(null,false))
@@ -67,6 +62,7 @@ app.use(cors())
 app.use('/images', express.static(resolve(IMAGES_URL)))
 app.use('/', express.static(resolve('dist')))
 
+// makes user object available on request if a user is logged in
 app.use(function(req, res, next) {
   passport.authenticate('jwt', function(err, user, info) {
     req.user = user;
@@ -74,10 +70,11 @@ app.use(function(req, res, next) {
   })(req, res, next);
 })
 
-app.use(function(req,res,next){
-  console.log("user", req.user);
-  next();
-})
+// log user to console
+// app.use(function(req,res,next){
+//   console.log("user", req.user);
+//   next();
+// })
 
 
 app.post("/login", function(req, res) {
@@ -142,40 +139,7 @@ app.use('/graphql', graphQLHTTP(req => {
   }
 }))
 
-// image upload
-app.post('/upload', function(req, res) {
-	let form = new formidable.IncomingForm();
-	let imgId;
-
-	form.parse(req);
-
-	form.on('field', function(name, value) {
-    console.log('field: ',name,value)
-	});
-
-	form.on('fileBegin', function(name, file) {
-    console.log('fileBegin')
-    // generate img id
-    imgId  = md5(file.name+new Date().toString());
-    file.path = __dirname + '/public/uploads/images/' + imgId+'.png';
-	});
-
-	form.on('file', function(name, file) {
-    console.log('file')
-	});
-
-	form.on('end', function() {
-    console.log('end')
-		res.json({
-			imageId: imgId
-		});
-	});
-
-	form.on('error', function () {
-    console.log('error')
-		res.end('Something went wrong on ther server side. Your file may not have yet uploaded.');
-	});
-});
+upload(app);
 
 // serve the index page if nothing else fits (fix for client side routing)
 app.get('/*', function (req, res) {
