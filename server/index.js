@@ -108,9 +108,9 @@ app.post("/register", function(req, res){
     req.body.name &&
     req.body.email &&
     req.body.password){
-    var name = req.body.name;
-    var email = req.body.email;
-    var password = req.body.password;
+    let name = req.body.name;
+    let email = req.body.email;
+    let password = req.body.password;
 
     mongo.createUser(name, email, password)
     .then(e => {
@@ -118,12 +118,14 @@ app.post("/register", function(req, res){
       res.send('OK')
     })
     .catch(err => {
-      res.statusCode = 500
-      res.send('err')
+      console.log("Registration failed: ");
+      console.log(err);
+      res.statusCode = 500;
+      res.send('err');
     })
 
   }
-})
+});
 
 // GraphqQL server route
 app.use('/graphql', graphQLHTTP(req => {
