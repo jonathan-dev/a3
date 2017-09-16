@@ -31,7 +31,6 @@ class RegisterPage extends React.Component {
       errormessages: []
     });
 
-    //TODO: Check username not already in use
     //TODO: Check passwords match, display error message if not
     //TODO: Check password complexity
   }
@@ -72,6 +71,19 @@ class RegisterPage extends React.Component {
       console.log('passwords dont match')
       // TODO: give visual feedback
     }
+  }
+
+  // Method will check whether current typed password is accepted
+  passwordIsValid() {
+    return this.getPasswordErrors().length == 0;
+  }
+
+  // Collects all recogized errors in current typed password and returns them in an array of strings
+  getPasswordErrors() {
+    let passwordErrors = []; // array of all recognized password errors
+    // TODO: implement password checking, e. g. atleast 8 characters, upper- and lowercase only allowed characters
+
+    return passwordErrors;
   }
 
   //Render HTML register form
