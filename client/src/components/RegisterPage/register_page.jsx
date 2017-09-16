@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+import React from 'react';
 import axios from 'axios';
 
 class RegisterPage extends React.Component {
