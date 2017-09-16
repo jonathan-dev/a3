@@ -19,34 +19,41 @@ class RegisterPage extends React.Component {
     //Bind events to class methods
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.formInputIsValid = this.formInputIsValid.bind(this);
+    this.usernameIsValid = this.usernameIsValid.bind(this);
+    this.getUsernameErrors = this.getUsernameErrors.bind(this);
+    this.emailIsValid = this.emailIsValid.bind(this);
+    this.getEmailInputErrors = this.getEmailInputErrors.bind(this);
+    this.passwordIsValid = this.passwordIsValid.bind(this);
+    this.getPasswordErrors = this.getPasswordErrors.bind(this);
   }
 
   //Handles changes in the input fields on the page
   handleChange (event) {
     const name = event.target.name;
     const value = event.target.value;
+    let errors = [];
+
+    errors.concat(this.getUsernameErrors(), this.getEmailInputErrors(), this.getPasswordErrors());
 
     this.setState({
       [name]: value,
-      errormessages: []
+      errormessages: errors.slice(0)
     });
-
-    //TODO: Check passwords match, display error message if not
-    //TODO: Check password complexity
   }
 
   //Handles submission of register form
   handleSubmit (event) {
     event.preventDefault(); //Stops page refresh
 
-    if(this.state.password.localeCompare(this.state.password2)===0){
+    if(this.formInputIsValid()) {
       axios.post(window.location.origin+'/register', {
         name: this.state.username,
         email: this.state.email,
         password: this.state.password
       })
       .then(event => {
-        console.log(event); // TODO: refactor, make use of event properly, e. g. reroute to login with given details and automatically log user in
+        console.log(event); // TODO: refactor, make use of event properly, e. g. reroute to login with given details and automatically login
       })
       .catch(error => {
         console.log('Käse'); // Very important console information, do not delete under any circumstances! TODO: doublecheck
@@ -67,21 +74,50 @@ class RegisterPage extends React.Component {
           errorMessages: errorMessagesList.slice(0)
         });
       });
-    } else {
-      console.log('passwords dont match')
-      // TODO: give visual feedback
     }
   }
 
+  // checks whether all input is correct and valid for submission
+  formInputIsValid () {
+    return this.usernameIsValid() && this.passwordIsValid() && this.emailIsValid();
+  }
+
+  // Checks if username is allowed
+  usernameIsValid () {
+    return this.getUsernameErrors().length == 0;
+  }
+
+  // Collects all recognized errors in currently typed username and returns them as array of strings
+  getUsernameErrors () {
+    let usernameErrors = [];
+
+    // TODO: implement logic of legit username, e. g. accepted length, no special characters, etc...
+    return usernameErrors;
+  }
+
+  // Checks whether the currently typed email is accepted
+  emailIsValid () {
+    return this.getEmailInputErrors().length == 0;
+  }
+
+  // Collects all recognized errors in currently typed email and returns them as array of strings
+  getEmailInputErrors () {
+    let emailErrors = [];
+
+    // TODO: implement validation
+
+    return emailErrors;
+  }
+
   // Method will check whether current typed password is accepted
-  passwordIsValid() {
+  passwordIsValid () {
     return this.getPasswordErrors().length == 0;
   }
 
-  // Collects all recogized errors in current typed password and returns them in an array of strings
-  getPasswordErrors() {
+  // Collects all recognized errors in current typed password and returns them in an array of strings
+  getPasswordErrors () {
     let passwordErrors = []; // array of all recognized password errors
-    // TODO: implement password checking, e. g. atleast 8 characters, upper- and lowercase only allowed characters
+    // TODO: implement password checking, e. g. atleast 8 characters, upper- and lowercase only allowed characters, password matching!, ...
 
     return passwordErrors;
   }
@@ -90,6 +126,7 @@ class RegisterPage extends React.Component {
   render () {
     return (
       <div>
+        <!-- Registration Form -->
         <form onSubmit={this.handleSubmit}>
           <label>
             Username:
@@ -113,6 +150,7 @@ class RegisterPage extends React.Component {
           <button type="submit">register</button>
         </form>
 
+        <!-- List of error messages -->
         <ul>{this.state.errorMessages}</ul>
       </div>
     );
