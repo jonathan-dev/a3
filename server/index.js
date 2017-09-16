@@ -114,14 +114,16 @@ app.post("/register", function(req, res){
 
     mongo.createUser(name, email, password)
     .then(() => { // user was created successfully
-      res.sendStatus(200);
+      res.statusCode = 200;
+      res.send('OK');
     })
     .catch(error => { // error occurred while creating the user
+      let errorMessages = [];
       if (error.name === 'ValidationError') {
-        res.status(409); // Conflict
-        console.log("Error 409: ");
-        console.log(error.errors)
-        res.send(error.message);
+        res.status(409); // request was valid, but data is already in use, append error data at request TODO: doublecheck
+        if (error.errors.email) errorMessages.push('Email already in use');
+        if (error.errors.username) errorMessages.push('Username already in use');
+        res.send (errorMessages);
       } else {
         res.statusCode = 500;
         console.log("Error occurred while creating user");

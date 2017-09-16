@@ -36,7 +36,7 @@ let userSchema = mongoose.Schema({
   resetPasswordExpires: Date
 });
 
-userSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' });
+userSchema.plugin(uniqueValidator);
 
 userSchema.virtual('isLocked').get(
   // check for a future lockUntil timestamp

@@ -12,7 +12,8 @@ class RegisterPage extends React.Component {
       username: '',
       email: '',
       password: '',
-      password2: ''
+      password2: '',
+      errorMessages: []
     };
 
     //Bind events to class methods
@@ -26,7 +27,8 @@ class RegisterPage extends React.Component {
     const value = event.target.value;
 
     this.setState({
-      [name]: value
+      [name]: value,
+      errormessages: []
     });
 
     //TODO: Check username not already in use
@@ -44,8 +46,21 @@ class RegisterPage extends React.Component {
         email: this.state.email,
         password: this.state.password
       })
-      .then(event => console.log(event))
-      .catch(error => console.log(error))
+      .then(event => {
+        console.log(event); // TODO: refactor, make use of event properly
+      })
+      .catch(error => {
+        console.log('Käse'); // Very important console information, do not delete under any circumstances! TODO: doublecheck
+        let errorMessagesStrings = error.response.data.slice(0);
+        let errorMessagesList = [];
+
+        errorMessagesStrings.forEach((errorMessage, index) => {
+          errorMessagesList.push(<li key={index}>{errorMessage}</li>);
+        });
+        this.setState({
+          errorMessages: errorMessagesList.slice(0)
+        });
+      });
     } else {
       console.log('passwords dont match')
       // TODO: give visual feedback
@@ -58,28 +73,32 @@ class RegisterPage extends React.Component {
   //Render HTML register form
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Username:
-          <input name="username" type="text" value={this.state.username} onChange={this.handleChange} />
-        </label>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Username:
+            <input name="username" type="text" value={this.state.username} onChange={this.handleChange} />
+          </label>
 
-        <label>
-          Email address:
-          <input name="email" type="text" value={this.state.email} onChange={this.handleChange} />
-        </label>
+          <label>
+            Email address:
+            <input name="email" type="text" value={this.state.email} onChange={this.handleChange} />
+          </label>
 
-        <label>
-          Password:
-          <input name="password" type="password" value={this.state.password} onChange={this.handleChange} />
-        </label>
+          <label>
+            Password:
+            <input name="password" type="password" value={this.state.password} onChange={this.handleChange} />
+          </label>
 
-        <label>
-          Re-enter your password:
-          <input name="password2" type="password" value={this.state.password2} onChange={this.handleChange} />
-        </label>
-        <button type="submit">register</button>
-      </form>
+          <label>
+            Re-enter your password:
+            <input name="password2" type="password" value={this.state.password2} onChange={this.handleChange} />
+          </label>
+          <button type="submit">register</button>
+        </form>
+
+        <ul>{this.state.errorMessages}</ul>
+      </div>
     );
   }
 }
