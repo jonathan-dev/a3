@@ -126,7 +126,6 @@ class RegisterPage extends React.Component {
   render () {
     return (
       <div>
-        <!-- Registration Form -->
         <form onSubmit={this.handleSubmit}>
           <label>
             Username:
@@ -150,7 +149,6 @@ class RegisterPage extends React.Component {
           <button type="submit">register</button>
         </form>
 
-        <!-- List of error messages -->
         <ul>{this.state.errorMessages}</ul>
       </div>
     );
