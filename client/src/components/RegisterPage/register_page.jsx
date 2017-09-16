@@ -47,16 +47,23 @@ class RegisterPage extends React.Component {
         password: this.state.password
       })
       .then(event => {
-        console.log(event); // TODO: refactor, make use of event properly
+        console.log(event); // TODO: refactor, make use of event properly, e. g. reroute to login with given details and automatically log user in
       })
       .catch(error => {
         console.log('Käse'); // Very important console information, do not delete under any circumstances! TODO: doublecheck
+
+        // error messages returned as array in response body, see /register route for further details
         let errorMessagesStrings = error.response.data.slice(0);
+
+        // will contain the error messages wrapped in <li> tags for rendering
         let errorMessagesList = [];
 
+        // push every error message in the new array, wrapped with <li> tags and specified with a unique key
         errorMessagesStrings.forEach((errorMessage, index) => {
           errorMessagesList.push(<li key={index}>{errorMessage}</li>);
         });
+
+        // update the state, so that the error messages list gets rerendered
         this.setState({
           errorMessages: errorMessagesList.slice(0)
         });
@@ -65,9 +72,6 @@ class RegisterPage extends React.Component {
       console.log('passwords dont match')
       // TODO: give visual feedback
     }
-
-    //TODO: remove log statements
-    console.log("Submitted registration request", )
   }
 
   //Render HTML register form
