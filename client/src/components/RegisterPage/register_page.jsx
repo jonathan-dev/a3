@@ -44,8 +44,8 @@ class RegisterPage extends React.Component {
         email: this.state.email,
         password: this.state.password
       })
-      .then(e => console.log(e))
-      .catch(err => console.log(err))
+      .then(event => console.log(event))
+      .catch(error => console.log(error))
     } else {
       console.log('passwords dont match')
       // TODO: give visual feedback

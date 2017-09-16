@@ -113,15 +113,21 @@ app.post("/register", function(req, res){
     let password = req.body.password;
 
     mongo.createUser(name, email, password)
-    .then(e => {
-      res.statusCode = 200
-      res.send('OK')
+    .then(() => { // user was created successfully
+      res.sendStatus(200);
     })
-    .catch(err => {
-      console.log("Registration failed: ");
-      console.log(err);
-      res.statusCode = 500;
-      res.send('err');
+    .catch(error => { // error occurred while creating the user
+      if (error.name === 'ValidationError') {
+        res.status(409); // Conflict
+        console.log("Error 409: ");
+        console.log(error.errors)
+        res.send(error.message);
+      } else {
+        res.statusCode = 500;
+        console.log("Error occurred while creating user");
+        console.log(error);
+        res.send('Server Error');
+      }
     })
 
   }

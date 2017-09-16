@@ -36,7 +36,7 @@ let userSchema = mongoose.Schema({
   resetPasswordExpires: Date
 });
 
-userSchema.plugin(uniqueValidator); // make use of the unique validator
+userSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' });
 
 userSchema.virtual('isLocked').get(
   // check for a future lockUntil timestamp
@@ -52,8 +52,8 @@ var reasons = userSchema.statics.failedLogin = {
   MAX_ATTEMPTS: 2
 };
 
-userSchema.pre('save', function(user, next) {
-
+userSchema.pre('save', function(next) {
+  let user = this;
   // only hash the password if it has been modified (or is new)
   if (!user.isModified('password')) return next();
 
