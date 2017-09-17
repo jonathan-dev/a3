@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import {
+  Redirect
+} from 'react-router-dom'
 
 class RegisterPage extends React.Component {
 
@@ -54,6 +57,10 @@ class RegisterPage extends React.Component {
       })
       .then(event => {
         console.log(event); // TODO: refactor, make use of event properly, e. g. reroute to login with given details and automatically login
+        console.log("You have successfully created a user");
+        this.setState({
+          redirectToReferrer: true
+        })
       })
       .catch(error => {
         console.log('Käse'); // Very important console information, do not delete under any circumstances! TODO: doublecheck
@@ -124,6 +131,12 @@ class RegisterPage extends React.Component {
 
   //Render HTML register form
   render () {
+    if (this.state.redirectToReferrer) {
+      return (
+        <Redirect to='/'/>
+      )
+    }
+
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
