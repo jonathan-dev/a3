@@ -1,12 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
 import {
   Redirect
 } from 'react-router-dom'
-=======
-import Redirect from 'react-router';
->>>>>>> 62853e3e3f047653468b3d9e4deafc3f33a256e5
+
 
 class RegisterPage extends React.Component {
 
@@ -63,13 +60,9 @@ class RegisterPage extends React.Component {
       .then(event => {
         console.log(event); // TODO: refactor, make use of event properly, e. g. reroute to login with given details and automatically login
         console.log("You have successfully created a user");
-<<<<<<< HEAD
         this.setState({
           redirectToReferrer: true
         })
-=======
-        this.setState({registrationAccomplished: true});
->>>>>>> 62853e3e3f047653468b3d9e4deafc3f33a256e5
       })
       .catch(error => {
         console.log('Käse'); // Very important console information, do not delete under any circumstances! TODO: doublecheck
@@ -140,20 +133,10 @@ class RegisterPage extends React.Component {
 
   //Render HTML register form
   render () {
-<<<<<<< HEAD
     if (this.state.redirectToReferrer) {
       return (
         <Redirect to='/'/>
       )
-=======
-    const { from } = this.props.location.state || { from: { pathname: '/' } }
-
-    if (this.state.registrationAccomplished) {
-      console.log("I tried to redirect you,  hope it works");
-      return (
-        <Redirect to={from}/>
-      );
->>>>>>> 62853e3e3f047653468b3d9e4deafc3f33a256e5
     }
 
     return (
