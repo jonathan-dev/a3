@@ -136,14 +136,14 @@ export default {
   getAuthenticated(name, password){
     return User.getAuthenticated(name, password)
   },
-  createUser(username, email, password){
+  createUser (username, email, password) {
     return new User({
       username: username,
       email: email,
       password: password
     }).save()
   },
-  getUserById(id) {
+  getUserById (id) {
     return User.findById(id)
   }
 }

@@ -1,22 +1,48 @@
 import mongoose from 'mongoose' // connection to the mongodb
+import uniqueValidator from 'mongoose-unique-validator' // pre save validation plugin for unique fields
 import bcrypt from 'bcryptjs'
 
-const MAX_LOGIN_ATTEMPTS = 5
+const MAX_LOGIN_ATTEMPTS = 5;
 const LOCK_TIME = 2 * 60 * 60 * 1000;
 
 let userSchema = mongoose.Schema({
-  username: { type: String, required: true, index: { unique: true } },
-  email: { type: String, required: true, index: { unique: true } },
-  password: { type: String, required: true },
-  loginAttempts: { type: Number, required: true, default: 0 },
-  lockUntil: { type: Number },
+  username: {
+    type: String,
+    required: true,
+    index: {
+      unique: true
+    }
+  },
+  email: {
+    type: String,
+    required: true,
+    index: {
+      unique: true
+    }
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  loginAttempts: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  lockUntil: {
+    type: Number
+  },
   resetPasswordToken: String,
   resetPasswordExpires: Date
-})
+});
+
+userSchema.plugin(uniqueValidator);
 
 userSchema.virtual('isLocked').get(
   // check for a future lockUntil timestamp
-  function(){return !!(this.lockUntil && this.lockUntil > Date.now())}
+  function () {
+    return (this.lockUntil && this.lockUntil < Date.now())
+  }
 );
 
 // expose enum on the model, and provide an internal convenience reference
@@ -27,8 +53,7 @@ var reasons = userSchema.statics.failedLogin = {
 };
 
 userSchema.pre('save', function(next) {
-  var user = this;
-
+  let user = this;
   // only hash the password if it has been modified (or is new)
   if (!user.isModified('password')) return next();
 
@@ -89,7 +114,7 @@ userSchema.statics.getAuthenticated = function(username, password) {
     this.findOne({ username: username })
     .then(user => {
       // make sure the user exists
-      if (!user) resolve({reason: reasons.NOT_FOUND})
+      if (!user) resolve({reason: reasons.NOT_FOUND});
 
       // check if the account is currently locked
       if (user.isLocked) {
@@ -125,6 +150,6 @@ userSchema.statics.getAuthenticated = function(username, password) {
     })
     .catch(err => reject(err))
   })
-}
+};
 
 export default mongoose.model('User', userSchema);
