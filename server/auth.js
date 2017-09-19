@@ -4,7 +4,8 @@ import {
   ExtractJwt,
   Strategy as JwtStrategy
 } from 'passport-jwt'
-// import mailgun from 'mailgun-js'
+import mailgun from 'mailgun-js'
+import mailgunConfig from './config/mailgun'
 
 import mongo from './mongo'
 
@@ -90,19 +91,19 @@ app.post("/register", function(req, res){
 })
 
 
-var api_key = 'pubkey-d86a3650bbb4614239254a917b34a592';
+var api_key = mailgunConfig.key;
 var domain = 'sandboxa9461c2dc5d64c618caaec296ca33955.mailgun.org';
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 var data = {
-  from: 'Excited User <me@samples.mailgun.org>',
+  from: 'Excited User <jonathan.drude@gmail.com>',
   to: 'jonathan.drude@gmail.com',
   subject: 'Hello',
   text: 'Testing some Mailgun awesomness!'
 };
 
-mailgun.messages().send(data, function (error, body) {
-  console.log(body);
-});
+// mailgun.messages().send(data, function (error, body) {
+//   console.log(body);
+// });
 
 }
