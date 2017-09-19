@@ -31,16 +31,12 @@ class LoginPage extends React.Component {
       password: this.state.password
     })
     .then(event => {
-      console.log(event)
+      console.log(event);
+      console.log("Logged in as : " + this.state.username);
       localStorage.setItem('token', event.data.token);
-      event.data.token
+      localStorage.setItem('username', this.state.username);
     })
     .catch(error => console.log(error));
-
-    // TODO: remove console statements and implement actual login
-    console.log("Submitted following data: ");
-    console.log("Username: " + this.state.username);
-    console.log("Password: " + this.state.password);
   }
 
   render () {

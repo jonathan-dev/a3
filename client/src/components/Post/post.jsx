@@ -22,8 +22,8 @@ export default class Post extends Component {
           {this.props.post.voteup} {languages[currentLanguage]["upvotes"]}, {this.props.post.votedown} {languages[currentLanguage]["downvotes"]}
         </p>
         <div>
-          {this.props.post.tags.map(tag =>{
-            return <Tag key={tag.id} tag={tag} />
+          {this.props.post.tags.map((tag, index) =>{
+            return <Tag key={index} tag={tag} />
           })
         }
         </div>

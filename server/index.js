@@ -32,11 +32,11 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 // allow Cross-Origin Resource Sharing (CORS)
 // required when using webpack dev server to serve the client
-app.use(cors())
+app.use(cors());
 
 // serve images statically
-app.use('/images', express.static(resolve(IMAGES_URL)))
-app.use('/', express.static(resolve('dist')))
+app.use('/images', express.static(resolve(IMAGES_URL)));
+app.use('/', express.static(resolve('dist')));
 
 auth(app)
 upload(app);
@@ -56,7 +56,7 @@ app.use('/graphql', graphQLHTTP(req => {
     schema,
     graphiql: true
   }
-}))
+}));
 
 
 // serve the index page if nothing else fits (fix for client side routing)
