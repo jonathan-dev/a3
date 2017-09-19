@@ -20,7 +20,7 @@ function resolve (dir) {
 var jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: 'tasmanianDevil'
-}
+};
 
 //Authorization: Bearer <Token>
 
@@ -35,7 +35,7 @@ var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
   // }
   mongo.getUserById(jwt_payload.id)
   .then(user => {
-    console.log('user', user)
+    console.log('user', user);
     next(null, user)
   })
   .catch(err => next(null,false))
@@ -61,18 +61,18 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 // allow Cross-Origin Resource Sharing (CORS)
 // required when using webpack dev server to serve the client
-app.use(cors())
+app.use(cors());
 
 // serve images statically
-app.use('/images', express.static(resolve(IMAGES_URL)))
-app.use('/', express.static(resolve('dist')))
+app.use('/images', express.static(resolve(IMAGES_URL)));
+app.use('/', express.static(resolve('dist')));
 
 app.use(function(req, res, next) {
   passport.authenticate('jwt', function(err, user, info) {
     req.user = user;
     next();
   })(req, res, next);
-})
+});
 
 app.use(function(req,res,next){
   console.log("user", req.user);
@@ -87,9 +87,9 @@ app.post("/login", function(req, res) {
     var password = req.body.password;
     mongo.getAuthenticated(name, password)
     .then(data => {
-      console.log(data)
+      console.log(data);
       if(data.user){
-        console.log('user', data.user)
+        console.log('user', data.user);
         var payload = {id: data.user._id};
         var token = jwt.sign(payload, jwtOptions.secretOrKey);
         res.json({message: "ok", token: token});
@@ -150,7 +150,7 @@ app.use('/graphql', graphQLHTTP(req => {
     schema,
     graphiql: true
   }
-}))
+}));
 
 // image upload
 app.post('/upload', function(req, res) {
