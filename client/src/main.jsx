@@ -13,10 +13,8 @@ import {
 } from 'react-apollo';
 
 import HeaderBar from '@/HeaderBar/header_bar';
-import HotPage from '@/HotPage/hot_page';
-import CreatePost from '@/CreatePost/create_post';
-import LoginPage from '@/LoginPage/login_page';
-import RegisterPage from '@/RegisterPage/register_page';
+import Routes from './routes';
+
 
 const networkInterface = createNetworkInterface({
   uri: window.location.origin+'/graphql'
@@ -43,12 +41,7 @@ render(
     <Router>
       <div>
         <HeaderBar/>
-        <Switch>
-          <Route exact path="/" component={HotPage}/>
-          <Route path="/create" component={CreatePost}/>
-          <Route path="/login" component={LoginPage}/>
-          <Route path="/register" component={RegisterPage}/>
-        </Switch>
+        <Routes/>
       </div>
     </Router>
   </ApolloProvider>,
