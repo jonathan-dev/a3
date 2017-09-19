@@ -11,6 +11,8 @@ import {
   createNetworkInterface,
   ApolloClient
 } from 'react-apollo';
+
+import HeaderBar from '@/HeaderBar/header_bar';
 import HotPage from '@/HotPage/hot_page';
 import CreatePost from '@/CreatePost/create_post';
 import LoginPage from '@/LoginPage/login_page';
@@ -40,13 +42,7 @@ render(
   <ApolloProvider client={client}>
     <Router>
       <div>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/create">create</Link></li>
-          <li><Link to="/hot">hot</Link></li>
-          <li><Link to="/login">login</Link></li>
-          <li><Link to="/register">register</Link></li>
-        </ul>
+        <HeaderBar/>
         <Switch>
           <Route exact path="/" component={HotPage}/>
           <Route path="/create" component={CreatePost}/>
