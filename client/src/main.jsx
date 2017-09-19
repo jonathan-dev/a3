@@ -1,11 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch
-} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import {
   ApolloProvider,
   createNetworkInterface,
@@ -47,7 +42,3 @@ render(
   </ApolloProvider>,
   document.getElementById('root')
 );
-
-/**
- * TODO: make navigation bar component out of link list
- */
