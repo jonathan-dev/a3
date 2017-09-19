@@ -1,15 +1,13 @@
 import {
-  ApolloClient,
   gql,
   graphql,
-  ApolloProvider
 } from 'react-apollo';
 import React, { Component } from 'react';
-import {render} from 'react-dom'
 
 import Post from '@/Post/post';
 
 class HotPage extends Component {
+
   render(){
     if(this.props.data && this.props.data.loading){
       return <div>Loading</div>
@@ -19,7 +17,6 @@ class HotPage extends Component {
     }
 
     const posts = this.props.data.posts;
-    // return <Post post={posts[]} />
     return (
       <div>
         {posts.map(post =>{
