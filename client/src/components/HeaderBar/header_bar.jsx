@@ -5,12 +5,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const headerBarLinks = [
+// links that will only be displayed when user not logged in
+const authenticationHeaderBarLinks = [
+  <Link to="/login">login</Link>,
+  <Link to="/register">register</Link>
+];
+
+const logOutLink =
+
+// links that will always be displayed
+const standardHeaderBarLinks = [
   <Link to="/">Home</Link>,
   <Link to="/create">create</Link>,
   <Link to="/hot">hot</Link>,
-  <Link to="/login">login</Link>,
-  <Link to="/register">register</Link>
 ];
 
 class HeaderBar extends React.Component {
