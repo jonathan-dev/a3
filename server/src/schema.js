@@ -8,7 +8,7 @@ import {
   GraphQLNonNull,
   GraphQLInputObjectType
 } from 'graphql' // GraphQL and GraphQL types
-import mongo from './mongo' // Database
+import mongo from './database/mongo' // Database
 
 const TagType = new GraphQLObjectType({
   name: 'Tag',

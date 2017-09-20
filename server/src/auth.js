@@ -5,14 +5,14 @@ import {
   Strategy as JwtStrategy
 } from 'passport-jwt'
 import mailgun from 'mailgun-js'
-import mailgunConfig from './config/mailgun'
+import mailgunConfig from '../config/mailgun'
 
-import mongo from './mongo'
+import mongo from './database/mongo'
 
 module.exports = function (app) {
   var jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'tasmanianDevil'
+    secretOrKey: 'tasmanianDevil' // TODO: change put in config
   }
 
   //Authorization: Bearer <Token>

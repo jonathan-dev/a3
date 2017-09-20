@@ -18,7 +18,7 @@ module.exports = function (app) {
       console.log('fileBegin')
       // generate img id
       imgId = md5(file.name + new Date().toString());
-      file.path = __dirname + '/public/uploads/images/' + imgId + '.png';
+      file.path = __dirname + '/../public/uploads/images/' + imgId + '.png';
     });
 
     form.on('file', function (name, file) {

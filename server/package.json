@@ -2,7 +2,7 @@
   "name": "graphql",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.0",
@@ -28,7 +28,7 @@
     "nodemon": "^1.11.0"
   },
   "scripts": {
-    "start": "nodemon ./index.js --exec babel-node -e js"
+    "start": "nodemon ./src/index.js --exec babel-node -e js"
   },
   "keywords": [],
   "author": "",

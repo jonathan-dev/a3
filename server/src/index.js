@@ -1,6 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import mongo from './mongo'
+import mongo from './database/mongo'
 
 import path from 'path'
 import cors from 'cors'
@@ -19,7 +19,7 @@ function resolve (dir) {
 // Constants
 //------------------------------------------
 const PORT = 8000;
-const IMAGES_URL = 'public/uploads/images/';
+const IMAGES_URL = '../public/uploads/images/';
 //------------------------------------------
 
 const app = express();
@@ -36,7 +36,7 @@ app.use(cors());
 
 // serve images statically
 app.use('/images', express.static(resolve(IMAGES_URL)));
-app.use('/', express.static(resolve('dist')));
+app.use('/', express.static(resolve('../dist')));
 
 auth(app)
 upload(app);
@@ -61,7 +61,7 @@ app.use('/graphql', graphQLHTTP(req => {
 
 // serve the index page if nothing else fits (fix for client side routing)
 app.get('/*', function (req, res) {
-  res.sendFile(path.resolve(resolve('dist/index.html')));
+  res.sendFile(path.resolve(resolve('../dist/index.html')));
 });
 
 app.listen(PORT, () => {
