@@ -34,7 +34,7 @@ module.exports = function (app) {
 
     form.on('error', function () {
       console.log('error')
-      res.end('Something went wrong on ther server side. Your file may not have yet uploaded.');
+      res.end('Something went wrong on there server side. Your file may not have yet uploaded.');
     });
   });
 }
