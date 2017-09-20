@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import * as UserAuthentication from '../../UserAuthenticaton/user_authentication';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -31,10 +32,9 @@ class LoginPage extends React.Component {
       password: this.state.password
     })
     .then(event => {
-      console.log(event);
-      console.log("Logged in as : " + this.state.username);
-      localStorage.setItem('token', event.data.token);
-      localStorage.setItem('username', this.state.username);
+      UserAuthentication.logIn(this.state.username, event.data.token);
+      // TODO: implement react like reroute
+      window.location.replace('/');
     })
     .catch(error => console.log(error));
   }
