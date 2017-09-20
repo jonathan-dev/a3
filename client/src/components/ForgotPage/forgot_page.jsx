@@ -1,13 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
-class LoginPage extends React.Component {
+class ForgotPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      password1: '',
-      password2: '',
+      email: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,7 +25,6 @@ class LoginPage extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    // TODO: change
     axios.post(window.location.origin+'/login', {
       name: this.state.email,
     })
@@ -38,12 +36,8 @@ class LoginPage extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Password:
-          <input name="password1" type="password" value={this.state.password1} onChange={this.handleChange} />
-        </label>
-        <label>
-          Password:
-          <input name="password2" type="password" value={this.state.password2} onChange={this.handleChange} />
+          Email:
+          <input name="email" type="email" value={this.state.email} onChange={this.handleChange} />
         </label>
         <input type="submit" value="submit" />
       </form>
@@ -51,4 +45,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+export default ForgotPage;

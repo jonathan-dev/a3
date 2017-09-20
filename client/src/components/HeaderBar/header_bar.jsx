@@ -10,7 +10,8 @@ const headerBarLinks = [
   <Link to="/create">create</Link>,
   <Link to="/hot">hot</Link>,
   <Link to="/login">login</Link>,
-  <Link to="/register">register</Link>
+  <Link to="/register">register</Link>,
+  <Link to="/reset/21">reset</Link>
 ];
 
 class HeaderBar extends React.Component {

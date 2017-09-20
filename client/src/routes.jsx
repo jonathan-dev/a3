@@ -9,6 +9,12 @@ import HotPage from '@/HotPage/hot_page';
 import CreatePost from '@/CreatePost/create_post';
 import LoginPage from '@/LoginPage/login_page';
 import RegisterPage from '@/RegisterPage/register_page';
+import ResetPage from '@/ResetPage/reset_page';
+import ForgotPage from '@/ForgotPage/forgot_page';
+
+const Reset = ({ match }) => (
+  <h1>{match.params.id}</h1>
+)
 
 class Routes extends React.Component {
   // enter all routes for the application here
@@ -19,6 +25,8 @@ class Routes extends React.Component {
         <Route path="/create" component={CreatePost}/>
         <Route path="/login" component={LoginPage}/>
         <Route path="/register" component={RegisterPage}/>
+        <Route path="/forgot" component={ForgotPage}/>
+        <Route path="/reset/:id" component={ResetPage}/>
       </Switch>
     );
   }
