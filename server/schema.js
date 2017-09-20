@@ -30,7 +30,7 @@ var TagAttributesInputType = new GraphQLInputObjectType({
   fields: () => ({
     id: {
       type: GraphQLString
-    },
+    }
   })
 })
 
@@ -74,7 +74,7 @@ const PostType = new GraphQLObjectType({
       )
     }
   })
-})
+});
 
 var PostAttributesInputType = new GraphQLInputObjectType({
   name: 'PostAttributes',
@@ -101,7 +101,7 @@ var PostAttributesInputType = new GraphQLInputObjectType({
       type: new GraphQLList(TagAttributesInputType)
     },
   })
-})
+});
 
 var PostInputType = new GraphQLInputObjectType({
   name: 'PostInput',
@@ -119,7 +119,7 @@ var PostInputType = new GraphQLInputObjectType({
       type: new GraphQLNonNull(new GraphQLList(GraphQLString))
     }
   })
-})
+});
 
 const QueryType = new GraphQLObjectType({
   name: 'Query',
@@ -158,7 +158,7 @@ const QueryType = new GraphQLObjectType({
       }
     }
   })
-})
+});
 
 const PostMutation = new GraphQLObjectType({
   name: 'PostMutations',
@@ -204,7 +204,7 @@ const PostMutation = new GraphQLObjectType({
               .catch( e=> reject(e))
             })
           )
-        })
+        });
         Promise.all(promiseArray).then(e =>{
           return mongo.createPost(post).then(x => x)
         })
@@ -226,7 +226,7 @@ const PostMutation = new GraphQLObjectType({
       }
     }
   })
-})
+});
 
 export default new GraphQLSchema({
   query: QueryType,
