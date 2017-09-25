@@ -3,6 +3,8 @@ import casual from 'casual' // creating mock data
 import bluebird from 'bluebird'
 
 import User from './user'
+import Post from './post'
+import Tag from './tag'
 
 // location of the mongodb
 const MONGO = 'mongodb://localhost/a3'
@@ -17,29 +19,6 @@ db.once('open', function () {
   // we're connected!
   console.log(`connected to mongodb at: ${MONGO}`)
 })
-
-let postSchema = mongoose.Schema({
-  title: String,
-  imageId: String,
-  voteup: Number,
-  votedown: Number,
-  view: Number,
-  tags: [String],
-  date: {
-    type: Date,
-    default: Date.now
-  }
-})
-let tagSchema = mongoose.Schema({
-  name: String
-})
-
-
-
-let Post = mongoose.model('Post', postSchema)
-let Tag = mongoose.model('Tag', tagSchema)
-
-
 
 // This method initializes the database if it is empty
 async function initDatabase() {
