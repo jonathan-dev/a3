@@ -113,20 +113,6 @@ const QueryType = new GraphQLObjectType({
         return mongo.getTags()
           .then(x => x)
       }
-    },
-    deletePost: {
-      type: PostType,
-      description: 'Delete an post with id and return the post that was deleted.',
-      args: {
-        id: {
-          type: new GraphQLNonNull(GraphQLString)
-        }
-      },
-      resolve: (value, {
-        id
-      }) => {
-        return mongo.deletePost(id)
-      }
     }
   })
 });
@@ -194,6 +180,20 @@ const PostMutation = new GraphQLObjectType({
       }) => {
         console.log('resolve: ', post)
         return mongo.updatePost(post).then(x => x)
+      }
+    },
+    deletePost: {
+      type: PostType,
+      description: 'Delete an post with id and return the post that was deleted.',
+      args: {
+        id: {
+          type: new GraphQLNonNull(GraphQLString)
+        }
+      },
+      resolve: (value, {
+        id
+      }) => {
+        return mongo.deletePost(id)
       }
     }
   })
