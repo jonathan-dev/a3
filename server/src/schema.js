@@ -76,33 +76,6 @@ const PostType = new GraphQLObjectType({
   })
 });
 
-var PostAttributesInputType = new GraphQLInputObjectType({
-  name: 'PostAttributes',
-  fields: () => ({
-    id: {
-      type: GraphQLString
-    },
-    title: {
-      type: GraphQLString
-    },
-    date: {
-      type: GraphQLString
-    },
-    votedown: {
-      type: GraphQLInt
-    },
-    voteup: {
-      type: GraphQLInt
-    },
-    view: {
-      type: GraphQLInt
-    },
-    tags: {
-      type: new GraphQLList(TagAttributesInputType)
-    },
-  })
-});
-
 var PostInputType = new GraphQLInputObjectType({
   name: 'PostInput',
   fields: () => ({
