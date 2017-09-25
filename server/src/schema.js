@@ -129,7 +129,6 @@ const QueryType = new GraphQLObjectType({
     posts: {
       type: new GraphQLList(PostType),
       resolve: (x, args) => {
-        console.log("args: ", args)
         return mongo.getPosts()
           .then(x => x)
       }
@@ -138,7 +137,6 @@ const QueryType = new GraphQLObjectType({
       type: new GraphQLList(TagType),
       description: 'Get a list of all tags that have been used',
       resolve: (x, args) => {
-        console.log("args: ", args)
         return mongo.getTags()
           .then(x => x)
       }
