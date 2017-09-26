@@ -129,14 +129,18 @@ const CommentType = new GraphQLObjectType({
   })
 })
 
-// var CommentAttributesInputType = new GraphQLInputObjectType({
-//   name: 'PostAttributes',
-//   fields: () => ({
-//     id: {
-//       type: GraphQLString
-//     }
-//   })
-// })
+var CommentInputType = new GraphQLInputObjectType({
+  name: 'CommentAttributes',
+  description: "Comment input type",
+  fields: () => ({
+    postId: {
+      type: GraphQLString
+    },
+    comment: {
+      type: GraphQLString
+    }
+  })
+})
 
 //Defines all queries that can be done, and their details
 const QueryType = new GraphQLObjectType({
@@ -226,7 +230,7 @@ const PostMutation = new GraphQLObjectType({
                   console.log('found tag',t)
                   post.tags.push(t._id);
                   resolve();
-                }else {
+                } else {
                   console.log('create', tag);
                   mongo.createTag(tag)
                   .then(t => {
@@ -244,6 +248,37 @@ const PostMutation = new GraphQLObjectType({
         Promise.all(promiseArray).then(e =>{
           return mongo.createPost(post).then(x => x)
         })
+      }
+    },
+    createComment: {
+      type: CommentType,
+      description: "Create a new comment on a post",
+      args: {
+        comment: {
+          type: CommentInputType
+        }
+      },
+      resolve: (root, {comment}, context) => {
+        //Get the user from the request
+        var userId = context.req.user._id;
+        //NOTE: For testing only
+        //TODO: remove completely
+        //var userId = "59be0a53336d4e22cca74840";
+
+        /* HOW TO QUERY using Graphiql
+        mutation CreateCommentForPost($comment: CommentAttributes!) {
+          createComment(comment: $comment) {
+            id
+            comment
+          }
+        }
+        *****query variables*****
+        "comment": {
+          "postId": "599c47e39694f605c06dc5f",
+          "comment": "Comment text"
+        }
+        */
+        return mongo.createComment(userId, comment.postId, comment.comment);
       }
     },
     //Updates post with details

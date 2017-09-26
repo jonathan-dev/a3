@@ -51,7 +51,8 @@ app.use('/graphql', graphQLHTTP(req => {
   }
   return {
     context: {
-      loaders
+      loaders,
+      req
     },
     schema,
     graphiql: true

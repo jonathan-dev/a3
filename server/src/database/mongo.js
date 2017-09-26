@@ -127,6 +127,18 @@ export default {
       userId: userIdArg
     })
   },
+  createComment(userId, postId, comment) {
+    console.log("Creating comment: ");
+    console.log("    userId: ", userId);
+    console.log("    postId: ", userId);
+    console.log("   comment: ", comment);
+    //Validation
+      return new Comment({
+        comment: comment,
+        postId: postId,
+        userId: userId
+      }).save();
+  },
   getAuthenticated(name, password){
     return User.getAuthenticated(name, password)
   },
