@@ -5,6 +5,7 @@ import bluebird from 'bluebird'
 import User from './user'
 import Post from './post'
 import Tag from './tag'
+import Comment from './comment'
 
 // location of the mongodb
 const MONGO = 'mongodb://localhost/a3'
@@ -13,6 +14,7 @@ mongoose.connect(MONGO, {
   useMongoClient: true // needed to get rid of a error message
 })
 
+//Open connection to mongodb
 let db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function () {
@@ -111,6 +113,19 @@ export default {
       postInput.tags = postInput.tags.map(x => x.id)
       return Post.findByIdAndUpdate(postInput.id,postInput)
     }
+  },
+  getComment(id) {
+    return Comment.findById(id);
+  },
+  getCommentsPost(postIdArg) {
+    return Comment.find({
+      postId: postIdArg
+    })
+  },
+  getCommentsUser(userIdArg) {
+    return Comment.find({
+      userId: userIdArg
+    })
   },
   getAuthenticated(name, password){
     return User.getAuthenticated(name, password)
