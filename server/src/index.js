@@ -5,7 +5,7 @@ import mongo from './database/mongo'
 import path from 'path'
 import cors from 'cors'
 import graphQLHTTP from 'express-graphql'
-import schema from './schema'
+import schema from './graphqlSchema'
 import DataLoader from 'dataloader'
 
 import upload from './upload'
