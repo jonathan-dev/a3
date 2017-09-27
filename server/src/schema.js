@@ -9,6 +9,7 @@ import {
   GraphQLInputObjectType
 } from 'graphql' // GraphQL and GraphQL types
 import mongo from './database/mongo' // Database
+import actions from './actions'
 
 const TagType = new GraphQLObjectType({
   name: 'Tag',
@@ -214,40 +215,15 @@ const PostMutation = new GraphQLObjectType({
       },
       resolve: (root, {
         post
-      }) => {
+      }, context) => {
         //iterate over the tags array and find corresponding ids or create new tag
-        console.log(post);
-        let querytags = post.tags;
-        post.tags=[];
-        let promiseArray = []
-        querytags.forEach(tag =>{
-          console.log(tag)
-          promiseArray.push(
-            new Promise ((resolve, reject) => {
-              mongo.getTagByName(tag)
-              .then(t => {
-                if(t) {
-                  console.log('found tag',t)
-                  post.tags.push(t._id);
-                  resolve();
-                } else {
-                  console.log('create', tag);
-                  mongo.createTag(tag)
-                  .then(t => {
-                    console.log('created',t)
-                    post.tags.push(t._id)
-                    resolve()
-                  })
-                  .catch(e => reject(e))
-                }
-                })
-              .catch( e=> reject(e))
-            })
-          )
-        });
-        Promise.all(promiseArray).then(e =>{
-          return mongo.createPost(post).then(x => x)
-        })
+        if(context.req.user){
+          let userId = context.req.user._id
+          return actions.createPost(userId,post)
+        }else {
+          console.error('no auth')
+          throw new Error('you need to be authorized to create a post')
+        }
       }
     },
     createComment: {

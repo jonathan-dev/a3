@@ -30,7 +30,9 @@ class AutocompleteTagsInput extends React.Component {
     const inputLength = inputValue.length
 
     let suggestions = this.props.tags().filter((state) => {
-      return state.name.toLowerCase().slice(0, inputLength) === inputValue && !this.state.tags.includes(state.name)
+      if (state.name) {
+        return state.name.toLowerCase().slice(0, inputLength) === inputValue && !this.state.tags.includes(state.name)
+      }
     })
 
     const styles = {

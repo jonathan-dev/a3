@@ -90,21 +90,7 @@ export default {
     }).save()
   },
   createPost(postInput) {
-    if (postInput.title && postInput.imageId) {
-      postInput.date = new Date();
-      postInput.voteup = 0;
-      postInput.vote = 0;
-      console.log('postinput', postInput);
-
-      return new Post({
-        title: postInput.title,
-        imageId: postInput.imageId,
-        voteup: 0,
-        votedown: 0,
-        view: 0,
-        tags: postInput.tags
-      }).save()
-    }
+    return new Post(postInput).save()
   },
   updatePost(postInput) {
     console.log("update post1: ", postInput)
