@@ -9,7 +9,7 @@ import {
     GraphQLInputObjectType
 } from 'graphql' // GraphQL and GraphQL types
 import mongo from './database/mongo' // Database
-import actions from './actions'
+import * as actions from './actions'
 import * as types from './graphqlTypes'
 
 //Defines all queries that can be done, and their details
