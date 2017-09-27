@@ -6,13 +6,12 @@ import path from 'path'
 import cors from 'cors'
 import graphQLHTTP from 'express-graphql'
 import schema from './graphqlSchema'
-import DataLoader from 'dataloader'
 
 import upload from './upload'
 import auth from './auth'
 
-function resolve (dir) {
-  return path.join(__dirname, dir)
+function resolve(dir) {
+    return path.join(__dirname, dir)
 }
 
 //------------------------------------------
@@ -29,7 +28,9 @@ const app = express();
 //------------------------------------------
 
 app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.urlencoded({
+    extended: true
+})); // support encoded bodies
 // allow Cross-Origin Resource Sharing (CORS)
 // required when using webpack dev server to serve the client
 app.use(cors());
@@ -43,28 +44,21 @@ upload(app);
 
 // GraphqQL server route
 app.use('/graphql', graphQLHTTP(req => {
-  const postLoader = new DataLoader(
-    keys => Promise.all(keys.map(mongo.getPosts))
-  )
-  const loaders = {
-    person: postLoader,
-  }
-  return {
-    context: {
-      loaders,
-      req
-    },
-    schema,
-    graphiql: true
-  }
+    return {
+        context: {
+            req
+        },
+        schema,
+        graphiql: true
+    }
 }));
 
 
 // serve the index page if nothing else fits (fix for client side routing)
 app.get('/*', function (req, res) {
-  res.sendFile(path.resolve(resolve('../dist/index.html')));
+    res.sendFile(path.resolve(resolve('../dist/index.html')));
 });
 
 app.listen(PORT, () => {
-  console.log(`server listening on http://localhost:${PORT}`);
+    console.log(`server listening on http://localhost:${PORT}`);
 });
