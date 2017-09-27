@@ -81,8 +81,8 @@ export default {
   getTagByName(name) {
     return Tag.findOne({name:name})
   },
-  getTags(page) {
-    return Tag.find()
+  getTags(ids) {
+    return Tag.find({_id: {"$in": ids}})
   },
   createTag(name){
     return new Tag({

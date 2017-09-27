@@ -69,9 +69,7 @@ export const PostType = new GraphQLObjectType({
         },
         tags: {
             type: new GraphQLList(TagType),
-            resolve: (post) => {
-                return post.tags.map(tagId => mongo.getTag(tagId))
-            }
+            resolve: (post) => mongo.getTags(post.tags)
         }
     })
 });
