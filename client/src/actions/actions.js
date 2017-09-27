@@ -5,13 +5,22 @@
  * */
 
 import {
-  LOGOUT_USER,
-  LOGIN_USER
+  LOGIN_USER,
+  LOGOUT_USER
 } from './actionTypes';
 
-export function logOutUser () {
+export function logoutUser () {
   return {
     type: LOGOUT_USER
   };
 }
+
+export function loginUser (userData) {
+  return {
+    type: LOGIN_USER,
+    userData
+  }
+}
+
+
 

@@ -1,7 +1,7 @@
 import { combineReducers } from'redux';
 
-const app = combineReducers({
+const harrismusApp = combineReducers({
   // add reducers here
 });
 
-export default app;
+export default harrismusApp;

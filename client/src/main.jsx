@@ -6,12 +6,16 @@ import {
   createNetworkInterface,
   ApolloClient
 } from 'react-apollo';
+import { createStore } from 'redux';
+import { harrismusApp } from './reducers'
 
 
 
 import HeaderBar from '@/HeaderBar/header_bar';
 import Routes from './routes';
 
+
+let store = createStore(harrismusApp);
 
 const networkInterface = createNetworkInterface({
   uri: window.location.origin+'/graphql'
@@ -34,7 +38,7 @@ const client = new ApolloClient({
 });
 
 render(
-  <ApolloProvider client={client}>
+  <ApolloProvider client={client} store={store}>
     <Router>
       <div>
         <HeaderBar/>
