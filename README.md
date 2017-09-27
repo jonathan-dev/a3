@@ -113,7 +113,7 @@ https://github.com/olahol/react-tagsinput
     - When in doubt, camelcase it out
 2. Filenames should be all lowercase, words separated by underscore
   e.g. `hot_page_post_list.jsx`
-3. Use two spaces for indenting.
+3. Use four spaces for indenting.
 4. Have a comment on every function that describes it purpose.
 5. Don't abbreviate local variables.
 6. Embedded function comments in //.
