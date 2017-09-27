@@ -36,7 +36,6 @@ class HeaderBar extends React.Component {
         isAuthenticated: false
       }
     }
-
     console.log("Is authenticated: " + this.state.isAuthenticated);
   }
 
