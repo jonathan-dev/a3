@@ -72,6 +72,9 @@ export default {
     getPosts(page) {
         return Post.find()
     },
+    getPostsByOwner(ownerId) {
+        return Post.find({owner: ownerId})
+    },
     deletePost(id) {
         return Post.findByIdAndRemove(id)
     },
@@ -143,5 +146,8 @@ export default {
     },
     getUserById(id) {
         return User.findById(id)
+    },
+    getUserNameById(id) {
+        return User.findById(id,{username:1})
     }
 }

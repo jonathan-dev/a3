@@ -51,6 +51,10 @@ export const PostType = new GraphQLObjectType({
             type: GraphQLString,
             resolve: (post) => post.title
         },
+        owner: {
+            type: UserType,
+            resolve: (post) => mongo.getUserNameById(post.owner)
+        },
         voteup: {
             type: GraphQLInt,
             resolve: (post) => post.voteup
@@ -92,6 +96,21 @@ export const PostInputType = new GraphQLInputObjectType({
     })
 });
 
+export const UserType = new GraphQLObjectType({
+    name: 'User',
+    description: 'User',
+    fields: () => ({
+        id: {
+            type: GraphQLString,
+            resolve: (user) => user._id
+        },
+        username: {
+            type: GraphQLString,
+            resolve: (user) => user.username
+        }
+    })
+})
+
 export const CommentType = new GraphQLObjectType({
     name: 'Comment',
     description: 'A comment by a user on a post',
@@ -123,7 +142,7 @@ export const CommentType = new GraphQLObjectType({
         date: {
             type: GraphQLString,
             resolve: (comment) => comment.date
-        },
+        }
     })
 })
 
