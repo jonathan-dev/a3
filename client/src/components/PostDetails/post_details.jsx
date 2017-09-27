@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { render } from 'react-dom';
-
+import {gql} from "react-apollo";
+ /*
 //Query for an individual post
 const postQuery = gql`
   query postQuery {
@@ -14,7 +15,7 @@ const commentsQuery = gql`
   query postQuery {
 
   }
-`;
+`;*/
 
 class PostDetailsPage extends React.Component {
   //Query for retrieving a list of image posts
@@ -23,4 +24,13 @@ class PostDetailsPage extends React.Component {
 
   }
 
+  render () {
+    // TODO: implement actual page
+    return (
+      <h1>Im the Post details page!</h1>
+    );
+  }
+
 }
+
+export default PostDetailsPage;

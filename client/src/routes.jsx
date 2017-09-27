@@ -14,10 +14,6 @@ import RegisterPage from '@/RegisterPage/register_page';
 import ResetPage from '@/ResetPage/reset_page';
 import ForgotPage from '@/ForgotPage/forgot_page';
 
-const Reset = ({ match }) => (
-  <h1>{match.params.id}</h1>
-)
-
 class Routes extends React.Component {
   // enter all routes for the application here
   render () {
