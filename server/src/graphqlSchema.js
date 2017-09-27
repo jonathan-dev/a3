@@ -19,7 +19,15 @@ const QueryType = new GraphQLObjectType({
     fields: () => ({
         posts: {
             type: new GraphQLList(types.PostType),
+            args: {
+                owner: {
+                    type: GraphQLString
+                }
+            },
             resolve: (x, args) => {
+                if (args.owner) {
+                    return mongo.getPostsByOwner(args.owner)
+                }
                 return mongo.getPosts();
             }
         },
