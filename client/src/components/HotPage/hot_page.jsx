@@ -33,6 +33,10 @@ query postListQuery {
   posts {
     id
     title
+    owner {
+        id
+        username
+    }
     imageId
     voteup
     votedown
