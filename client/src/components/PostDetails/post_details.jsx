@@ -18,7 +18,6 @@ const commentsQuery = gql`
 `;*/
 
 class PostDetailsPage extends React.Component {
-  //Query for retrieving a list of image posts
   constructor(props) {
     super(props);
 
