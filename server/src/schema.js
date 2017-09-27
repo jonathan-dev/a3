@@ -95,16 +95,70 @@ var PostInputType = new GraphQLInputObjectType({
   })
 });
 
+const CommentType = new GraphQLObjectType({
+  name: 'Comment',
+  description: 'A comment by a user on a post',
+  fields: () => ({
+    id: {
+      type: GraphQLString,
+      resolve: (comment) => comment._id
+    },
+    userId: {
+      type: GraphQLString,
+      resolve: (comment) => comment.userId
+    },
+    postId: {
+      type: GraphQLString,
+      resolve: (comment) => comment.postId
+    },
+    comment: {
+      type: GraphQLString,
+      resolve: (comment) => comment.comment
+    },
+    voteup: {
+      type: GraphQLInt,
+      resolve: (comment) => comment.voteup
+    },
+    votedown: {
+      type: GraphQLInt,
+      resolve: (comment) => comment.votedown
+    },
+    date: {
+      type: GraphQLString,
+      resolve: (comment) => comment.date
+    },
+  })
+})
+
+// var CommentAttributesInputType = new GraphQLInputObjectType({
+//   name: 'PostAttributes',
+//   fields: () => ({
+//     id: {
+//       type: GraphQLString
+//     }
+//   })
+// })
+
+//Defines all queries that can be done, and their details
 const QueryType = new GraphQLObjectType({
   name: 'Query',
   description: 'Perform a query on the database using one of the following:',
-
   fields: () => ({
     posts: {
       type: new GraphQLList(PostType),
       resolve: (x, args) => {
         return mongo.getPosts()
-          .then(x => x)
+          .then(x => x);
+      }
+    },
+    post: {
+      type: PostType,
+      description: 'Get a specific post. Pass in post id as an argument.',
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve: (_, args) => {
+        return mongo.getPost(args.id);
       }
     },
     tags: {
@@ -112,7 +166,31 @@ const QueryType = new GraphQLObjectType({
       description: 'Get a list of all tags that have been used',
       resolve: (x, args) => {
         return mongo.getTags()
-          .then(x => x)
+          .then(x => x);
+      }
+    },
+    comments: {
+      type: new GraphQLList(CommentType),
+      description: 'Get a list of comments for a specific post',
+      args: {
+        postId: { type: GraphQLString },
+        userId: { type: GraphQLString }
+      },
+      resolve: (x, args) => {
+        //check which argument is passed, and return appropriate method
+        if (args.postId) {
+          mongo.getCommentsPost(args.postId).then(value => {
+            console.log(value);
+            return;
+          })
+          return mongo.getCommentsPost(args.postId);
+        } else if (args.userId) {
+          mongo.getCommentsUser(args.postId).then(value => {
+            console.log(value);
+            return;
+          })
+          return mongo.getCommentsUser(args.userId);
+        }
       }
     }
   })
@@ -122,6 +200,7 @@ const PostMutation = new GraphQLObjectType({
   name: 'PostMutations',
   description: 'Post API Mutations',
   fields: () => ({
+    //Creates a new post
     createPost: {
       type: PostType,
       description: 'Create a new post.',
@@ -143,6 +222,7 @@ const PostMutation = new GraphQLObjectType({
         }
       }
     },
+    //Updates post with details
     updatePost: {
       type: PostType,
       description: 'Update an post, and optionally any related posts.',
@@ -158,6 +238,7 @@ const PostMutation = new GraphQLObjectType({
         return mongo.updatePost(post).then(x => x)
       }
     },
+    //Deletes a given post
     deletePost: {
       type: PostType,
       description: 'Delete an post with id and return the post that was deleted.',
