@@ -2,7 +2,7 @@
  * Authentication reducers
  * */
 
-import {LOGIN_USER, LOGOUT_USER, headerBarVisibilityFilters} from '../actions/actionTypes';
+import {LOGIN_USER, LOGOUT_USER, headerBarVisibilityFilters} from '../constants/actionTypes';
 
 // unpack the object attributes
 let { SHOW_AUTHENTICATED, SHOW_UNAUTHENTICATED } = headerBarVisibilityFilters;

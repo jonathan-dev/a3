@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { headerBarVisibilityFilters } from '../actions/actionTypes';
+import { headerBarVisibilityFilters } from '../constants/actionTypes';
 import HeaderBar from '../components/HeaderBar/header_bar';
 
 

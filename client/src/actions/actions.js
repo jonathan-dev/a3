@@ -5,21 +5,28 @@
  * */
 
 import {
-  LOGIN_USER,
-  LOGOUT_USER
-} from './actionTypes';
+    LOGIN_USER,
+    LOGOUT_USER,
+    SUBMIT_LOGIN_INFORMATION,
+} from '../constants/actionTypes';
 
-export function createLogoutUserAction () {
-  return {
-    type: LOGOUT_USER
-  };
+export function createLogoutUserAction() {
+    return {
+        type: LOGOUT_USER
+    };
 }
 
-export function createLoginUserAction (userData) {
-  return {
-    type: LOGIN_USER,
-    userData
-  }
+export function createSubmitLoginInformationAction () {
+    return {
+      type: SUBMIT_LOGIN_INFORMATION
+    };
+}
+
+export function createLoginUserAction(userData) {
+    return {
+        type: LOGIN_USER,
+        userData
+    }
 }
 
 
