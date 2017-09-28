@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
+import { commentListQuery } from '@/CommentBox/comment_box'
 
 class createComment extends Component {
     constructor() {
@@ -25,7 +26,8 @@ class createComment extends Component {
                     comment: this.state.comment,
                     postId: this.props.post
                 }
-            }
+            },
+            refetchQueries: [{query:commentListQuery,variables: {postId: this.props.post}}]
         })
             .then(({ data }) => {
                 console.log('got data', data);

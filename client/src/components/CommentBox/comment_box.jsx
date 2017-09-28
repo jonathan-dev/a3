@@ -33,19 +33,19 @@ class CommentBox extends Component {
     }
 }
 
-const commentListQuery = gql`
-query commentListQuery($postId: String) {
-  comments (postId: $postId){
-    id
-    comment
-    owner {
-        id
-        username
+export const commentListQuery = gql`
+    query commentListQuery($postId: String) {
+        comments (postId: $postId){
+            id
+            comment
+            owner {
+                id
+                username
+            }
+            voteup
+            votedown
+        }
     }
-    voteup
-    votedown
-  }
-}
 `;
 
 export default graphql(commentListQuery, {
