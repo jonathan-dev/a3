@@ -3,10 +3,14 @@ import {
     graphql,
 } from 'react-apollo';
 import React, { Component } from 'react';
-
 import Post from '@/Post/post';
 
-class HotPage extends Component {
+
+class ProfilePage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
 
     render() {
         if (this.props.data && this.props.data.loading) {
@@ -17,8 +21,10 @@ class HotPage extends Component {
         }
 
         const posts = this.props.data.posts;
+        const username = this.props.data.user.username;
         return (
             <div>
+                <h1>{username}</h1>
                 {posts.map(post => {
                     return <Post key={post.id} post={post} />
                 })}
@@ -27,10 +33,9 @@ class HotPage extends Component {
     }
 }
 
-//Query for retrieving a list of image posts
 const postsListQuery = gql`
-query postListQuery {
-  posts {
+query postListQuery ($owner: String) {
+  posts(owner: $owner) {
     id
     title
     owner {
@@ -45,9 +50,17 @@ query postListQuery {
       name
     }
   }
+  user(userId: $owner){
+    id
+    username
+  }
 }
 `;
 
 export default graphql(postsListQuery, {
-    options: { pollInterval: 2000 },
-})(HotPage);
+    options: (props) => ({
+        variables: {
+            owner: props.match.params.id
+        }
+    })
+})(ProfilePage);

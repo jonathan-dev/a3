@@ -50,6 +50,18 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getTags();
             }
         },
+        user: {
+            type: types.UserType,
+            description: 'Get User',
+            args: {
+                userId: {
+                    type: GraphQLString
+                }
+            },
+            resolve: (x, args) => {
+                return mongo.getUserNameById(args.userId)
+            }
+        },
         comments: {
             type: new GraphQLList(types.CommentType),
             description: 'Get a list of comments for a specific post',
@@ -138,7 +150,6 @@ const PostMutation = new GraphQLObjectType({
                 return mongo.createComment(userId, comment.postId, comment.comment);
             }
         },
-        //Updates post with details
         updatePost: {
             type: types.PostType,
             description: 'Update an post, and optionally any related posts.',
@@ -154,7 +165,6 @@ const PostMutation = new GraphQLObjectType({
                 return mongo.updatePost(post);
             }
         },
-        //Deletes a given post
         deletePost: {
             type: types.PostType,
             description: 'Delete an post with id and return the post that was deleted.',

@@ -13,6 +13,7 @@ import LogoutPage from '@/LogoutPage/logout_page';
 import RegisterPage from '@/RegisterPage/register_page';
 import ResetPage from '@/ResetPage/reset_page';
 import ForgotPage from '@/ForgotPage/forgot_page';
+import ProfilePage from '@/ProfilePage/profile_page';
 
 class Routes extends React.Component {
   // enter all routes for the application here
@@ -27,6 +28,7 @@ class Routes extends React.Component {
         <Route path="/forgot" component={ForgotPage}/>
         <Route path="/reset/:id" component={ResetPage}/>
         <Route path="/post/:id" component={PostDetailsPage}/>
+        <Route path="/user/:id" component={ProfilePage}/>
       </Switch>
     );
   }

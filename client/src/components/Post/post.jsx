@@ -12,8 +12,6 @@ export default class Post extends Component {
         <p>11.11.2016</p>
         <p>{this.props.post.owner.username}</p>
 
-        {console.log(this.props.post.owner)}
-        {console.log(this.props.post.owner.username)}
         {
           <img src={
             this.props.post.imageId
