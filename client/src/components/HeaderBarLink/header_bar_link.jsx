@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 
-class HeaderBarLink extends React.Component {
+class HeaderBarLink extends Component {
   constructor (props) {
     super (props);
   }

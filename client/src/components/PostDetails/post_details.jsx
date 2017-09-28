@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import { render } from 'react-dom';
 import {gql} from "react-apollo";
@@ -17,7 +17,7 @@ const commentsQuery = gql`
   }
 `;*/
 
-class PostDetailsPage extends React.Component {
+class PostDetailsPage extends Component {
   constructor(props) {
     super(props);
 

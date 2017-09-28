@@ -2,7 +2,7 @@
  * This file contains all the routes for the react application
  * */
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import HotPage from '@/HotPage/hot_page';
@@ -27,7 +27,7 @@ import {
   USER_PROFILE_PATH
 } from './paths';
 
-class Routes extends React.Component {
+class Routes extends Component {
   // enter all routes for the application here
   render () {
     return (

@@ -22,7 +22,7 @@ query tagListQuery {
 }
 `;
 
-class createPost extends React.Component {
+class createPost extends Component {
   constructor() {
     super();
 
