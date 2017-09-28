@@ -6,20 +6,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import * as UserAuthentication from '../../UserAuthenticaton/user_authentication';
 
-// links that will only be displayed when user not logged in
-const authenticationHeaderBarLinks = [
-  <Link to="/login">login</Link>,
-  <Link to="/register">register</Link>,
-  <Link to="/reset/21">reset</Link>
-];
 
-const logOutLink = <Link to="/logout">logout</Link>;
-
-// links that will always be displayed
-const standardHeaderBarLinks = [
-  <Link to="/">Home</Link>,
-  <Link to="/create">create</Link>,
-];
 
 class HeaderBar extends React.Component {
 
@@ -44,7 +31,7 @@ class HeaderBar extends React.Component {
     headerBarLinks = headerBarLinks.concat(standardHeaderBarLinks);
 
     if (UserAuthentication.userIsLoggedIn()) headerBarLinks.push(logOutLink);
-    else headerBarLinks = headerBarLinks.concat(authenticationHeaderBarLinks);
+    else headerBarLinks = headerBarLinks.concat(unauthenticatedUserHeaderBarLinks);
 
     headerBarLinks = headerBarLinks.map((link, index) => <li key={index}>{link}</li>);
 
