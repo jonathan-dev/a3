@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom'
 
 
-class RegisterPage extends React.Component {
+class RegisterPage extends Component {
 
   //Prepare class
   constructor (props) {

@@ -3,7 +3,7 @@ import './autocomplete_tags_input.sass'
 import TagsInput from 'react-tagsinput'
 import Autosuggest from 'react-autosuggest';
 
-class AutocompleteTagsInput extends React.Component {
+class AutocompleteTagsInput extends Component {
   constructor () {
     super()
     this.state = {tags: []}

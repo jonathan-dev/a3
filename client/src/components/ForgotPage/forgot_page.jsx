@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 
-class ForgotPage extends React.Component {
+class ForgotPage extends Component {
   constructor(props) {
     super(props);
 

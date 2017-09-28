@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import * as UserAuthentication from '../../UserAuthenticaton/user_authentication';
 
-class LoginPage extends React.Component {
+class LoginPage extends Component {
   constructor(props) {
     super(props);
 
