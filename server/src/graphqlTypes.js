@@ -119,9 +119,9 @@ export const CommentType = new GraphQLObjectType({
             type: GraphQLString,
             resolve: (comment) => comment._id
         },
-        userId: {
-            type: GraphQLString,
-            resolve: (comment) => comment.userId
+        owner: {
+            type: UserType,
+            resolve: (comment) => mongo.getUserNameById(comment.userId)
         },
         postId: {
             type: GraphQLString,

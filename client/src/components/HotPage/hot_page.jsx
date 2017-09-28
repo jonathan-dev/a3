@@ -9,21 +9,25 @@ import Post from '@/Post/post';
 class HotPage extends Component {
 
     render() {
-        if (this.props.data && this.props.data.loading) {
-            return <div>Loading</div>
-        }
-        if (this.props.data && this.props.data.error) {
-            return <div>Error</div>
-        }
+        const {data} = this.props;
+        if(data){
+            const {loading, error, posts} = data;
 
-        const posts = this.props.data.posts;
-        return (
-            <div>
-                {posts.map(post => {
-                    return <Post key={post.id} post={post} />
-                })}
-            </div>
-        )
+            if (loading) {
+                return <div>Loading</div>
+            }
+            if (error) {
+                return <div>Error</div>
+            }
+
+            return (
+                <section>
+                    {posts.map(post => {
+                        return <Post key={post.id} post={post} />
+                    })}
+                </section>
+            )
+        }
     }
 }
 
