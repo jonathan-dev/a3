@@ -9,7 +9,7 @@ import {
 import { createStore } from 'redux';
 import { harrismusApp } from './reducers/index'
 
-import HeaderBar from './containers/visibleHeaderBarLinks';
+import HeaderBar from './containers/header_bar_container';
 import Routes from './routes';
 
 
