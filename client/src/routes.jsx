@@ -15,20 +15,32 @@ import ResetPage from '@/ResetPage/reset_page';
 import ForgotPage from '@/ForgotPage/forgot_page';
 import ProfilePage from '@/ProfilePage/profile_page';
 
+import {
+  HOME_PATH,
+  CREATE_POST_PATH,
+  LOGIN_PATH,
+  LOGOUT_PATH,
+  REGISTER_PATH,
+  FORGOT_PASSWORD_PATH,
+  RESET_PASSWORD_PATH,
+  POST_DETAIL_PATH,
+  USER_PROFILE_PATH
+} from './paths';
+
 class Routes extends React.Component {
   // enter all routes for the application here
   render () {
     return (
       <Switch>
-        <Route exact path="/" component={HotPage}/>
-        <Route path="/create" component={CreatePost}/>
-        <Route path="/login" component={LoginPage}/>
-        <Route path="/logout" component={LogoutPage}/>
-        <Route path="/register" component={RegisterPage}/>
-        <Route path="/forgot" component={ForgotPage}/>
-        <Route path="/reset/:id" component={ResetPage}/>
-        <Route path="/post/:id" component={PostDetailsPage}/>
-        <Route path="/user/:id" component={ProfilePage}/>
+        <Route exact path={HOME_PATH} component={HotPage}/>
+        <Route path={CREATE_POST_PATH} component={CreatePost}/>
+        <Route path={LOGIN_PATH} component={LoginPage}/>
+        <Route path={LOGOUT_PATH} component={LogoutPage}/>
+        <Route path={REGISTER_PATH} component={RegisterPage}/>
+        <Route path={FORGOT_PASSWORD_PATH} component={ForgotPage}/>
+        <Route path={RESET_PASSWORD_PATH} component={ResetPage}/>
+        <Route path={POST_DETAIL_PATH} component={PostDetailsPage}/>
+        <Route path={USER_PROFILE_PATH} component={ProfilePage}/>
       </Switch>
     );
   }
