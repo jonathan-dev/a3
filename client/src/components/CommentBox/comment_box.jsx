@@ -9,7 +9,7 @@ class CommentBox extends Component {
     render() {
         return (
             <section>
-                <CreateComment/>
+                <CreateComment post={this.props.post}/>
             </section>
         );
     }

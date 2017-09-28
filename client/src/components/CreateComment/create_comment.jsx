@@ -23,7 +23,7 @@ class createComment extends Component {
             variables: {
                 comment: {
                     comment: this.state.comment,
-                    postId: this.state.postId
+                    postId: this.props.post
                 }
             }
         })
@@ -44,12 +44,12 @@ class createComment extends Component {
     }
 }
 
-const PostMutations = gql`
-mutation CommentMutations($comment: CommentInputType!) {
+const CommentMutations = gql`
+mutation CommentMutations($comment: CommentInput!) {
     createComment(comment: $comment) {
         comment
     }
 }
-`;
+`
 
-export default graphql(PostMutations)(createComment)
+export default graphql(CommentMutations)(createComment)
