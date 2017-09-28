@@ -7,11 +7,9 @@ import {
   ApolloClient
 } from 'react-apollo';
 import { createStore } from 'redux';
-import { harrismusApp } from './reducers'
+import { harrismusApp } from './reducers/index'
 
-
-
-import HeaderBar from '@/HeaderBar/header_bar';
+import HeaderBar from './containers/visibleHeaderBarLinks';
 import Routes from './routes';
 
 

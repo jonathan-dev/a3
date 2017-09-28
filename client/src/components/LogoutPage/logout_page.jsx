@@ -1,11 +1,12 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom'
 import * as UserAuthentication from '../../UserAuthenticaton/user_authentication';
+import {createLogoutUserAction} from "../../actions/actions";
 
 class LogoutPage extends React.Component {
   constructor (props) {
     super(props);
-    UserAuthentication.logOut();
+    store.dispatch(createLogoutUserAction())
   }
 
   render () {
