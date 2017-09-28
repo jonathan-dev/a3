@@ -13,7 +13,7 @@ class HeaderBar extends React.Component {
 
   render () {
     if (this.props.headerBarLinks) {
-      let headerBarLinks = this.props.headerBarLinks.map(link => <Link to={link.path}>{link.text}  </Link>);
+      let headerBarLinks = this.props.headerBarLinks.map((link, index) => <Link to={link.path} key={index}>{link.text}  </Link>);
       return (
         <div>
           {headerBarLinks}
