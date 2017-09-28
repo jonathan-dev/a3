@@ -5,10 +5,10 @@
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 
-export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
+export const SET_HEADER_BAR_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
 
 // visibility filter types for the application
-export const visibilityFilters = {
-  SHOW_ALL: 'SHOW_ALL',
-  SHOW_FILTERED: 'SHOW_FILTERED'
+export const headerBarVisibilityFilters = {
+  SHOW_AUTHENTICATED: 'SHOW_AUTHENTICATED',
+  SHOW_UNAUTHENTICATED: 'SHOW_UNAUTHENTICATED'
 };
