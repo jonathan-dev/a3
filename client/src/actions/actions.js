@@ -9,13 +9,13 @@ import {
   LOGOUT_USER
 } from './actionTypes';
 
-export function logoutUser () {
+export function createLogoutUserAction () {
   return {
     type: LOGOUT_USER
   };
 }
 
-export function loginUser (userData) {
+export function createLoginUserAction (userData) {
   return {
     type: LOGIN_USER,
     userData
