@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { withRouter } from 'react-router';
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+import { ConnectedRouter } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
 import {
   ApolloProvider,
@@ -12,22 +12,22 @@ import axios from 'axios';
 import { createStore, applyMiddleware } from 'redux';
 import axiosMiddleware from 'redux-axios-middleware';
 import { harrismusApp } from './reducers/index'
-
+import { routerMiddleware, push } from 'react-router-redux';
 import App from './components/app';
 
-const NonBlockApp = withRouter(App);
 
 const axiosClient = axios.create({ // all axios can be used, shown in axios documentation
    baseURL: window.location.origin,
 });
+const browserHistory = createBrowserHistory();
+const middleWare = routerMiddleware(browserHistory);
 
-const history = createBrowserHistory();
 
 let store = createStore(
     harrismusApp,
     applyMiddleware( // apply all middlewares
-        routerMiddleware(history),
-        axiosMiddleware(axiosClient) //second parameter options can optionally contain onSuccess, onError, onComplete, successSuffix, errorSuffix
+        axiosMiddleware(axiosClient) //second parameter options can optionally contain onSuccess, onError, onComplete, successSuffix, errorSuffix,
+        , middleWare
     )
 );
 
@@ -57,12 +57,12 @@ const apolloClient = new ApolloClient({
   networkInterface
 });
 
-const browserHistory = createBrowserHistory();
+const NoBlockApp = withRouter(App);
 
 render(
   <ApolloProvider client={apolloClient} store={store}>
     <ConnectedRouter history={browserHistory}>
-      <NonBlockApp/>
+      <NoBlockApp/>
     </ConnectedRouter>
   </ApolloProvider>,
   document.getElementById('root')
