@@ -160,7 +160,9 @@ export default {
             })
     },
     isValidResetToken(token) {
-        User.findOne({resetPasswordToken},{resetPasswordExpires:1, username:1})
-            .then(user => console.log(user))
+        return User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } },{resetPasswordExpires:1, username:1});
+    },
+    resetPassword(token,password) {
+        return User.findOneAndUpdate({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } },{password:password});
     }
 }

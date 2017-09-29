@@ -130,9 +130,17 @@ module.exports = function (app) {
     })
 
     app.post('/reset', (req, res) => {
-        const {token} = req.body
+        const {token, password} = req.body
         if (token) {
-            
+            if (password) {
+                mongo.resetPassword(token, password)
+                .then(user => res.send(user))
+                .catch(err => res.status(401).send('Unauthorized'))
+            }
+
+            mongo.isValidResetToken(token)
+                .then(user => {user?res.json(user):res.status(401).send('Unauthorized')})
+                .catch(err => res.status(500).send('Internal Error'))
         }
     })
 }

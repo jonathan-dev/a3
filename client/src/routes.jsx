@@ -5,13 +5,13 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import LoginPage from './containers/login_page_container';
+import ResetPage from './containers/reset_page_container';
 import HotPage from '@/hot_page';
 import PostDetailsPage from '@/post_details';
 import CreatePost from '@/create_post';
-import LoginPage from './containers/login_page_container';
 import LogoutPage from '@/logout_page';
 import RegisterPage from '@/register_page';
-import ResetPage from '@/reset_page';
 import ForgotPage from '@/forgot_page';
 import ProfilePage from '@/profile_page';
 
