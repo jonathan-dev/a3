@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
+import crypto from 'crypto'
 import {
     ExtractJwt,
     Strategy as JwtStrategy
@@ -39,7 +40,7 @@ module.exports = function (app) {
         })(req, res, next);
     })
 
-    app.post("/login", function (req, res) {
+    app.post('/login', (req, res) => {
         console.log('login', req.body.name, req.body.password);
         if (req.body.name && req.body.password) {
             var name = req.body.name;
@@ -66,7 +67,7 @@ module.exports = function (app) {
         }
     });
 
-    app.post("/register", function (req, res) {
+    app.post('/register', (req, res) => {
         console.log('register', req.body.name, req.body.email, req.body.password);
         if (
             req.body.name &&
@@ -87,6 +88,18 @@ module.exports = function (app) {
                 })
 
         }
+    })
+
+    app.post('/forgot', (req, res) => {
+        const buf = crypto.randomBytes(20);
+        const token = buf.toString('hex');
+
+        const resetPasswordToken = token;
+        const resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        mongo.setResetToken(req.body.email,resetPasswordToken, resetPasswordExpires)
+            .then(e => res.send('send'))
+            .catch(err => console.log(err))
     })
 
 

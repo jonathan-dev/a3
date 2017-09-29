@@ -150,6 +150,13 @@ export default {
         return User.findById(id,{username:1})
     },
     setResetToken(email,resetPasswordToken,resetPasswordExpires) {
-        return User.findOneAndUpdate({email:email},{})
+        return User.findOneAndUpdate(
+            {
+                email:email
+            },
+            {
+                resetPasswordToken:resetPasswordToken,
+                resetPasswordExpires:resetPasswordExpires
+            })
     }
 }
