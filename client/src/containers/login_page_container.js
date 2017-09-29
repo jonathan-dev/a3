@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import LoginPage from '../components/LoginPage/login_page'
-import React from 'react';
 import { createLoginFormInputChangedAction, postLoginInformation, createLoginUserAction } from '../actions/actions';
 import { push } from 'react-router-redux';
 

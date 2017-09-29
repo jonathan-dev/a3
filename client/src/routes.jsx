@@ -8,7 +8,7 @@ import { Route, Switch } from 'react-router-dom';
 import HotPage from '@/HotPage/hot_page';
 import PostDetailsPage from '@/PostDetails/post_details';
 import CreatePost from '@/CreatePost/create_post';
-import LoginPage from './containers/login_page_container';
+import LoginPage from './containers/login_page_container.js';
 import LogoutPage from '@/LogoutPage/logout_page';
 import RegisterPage from '@/RegisterPage/register_page';
 import ResetPage from '@/ResetPage/reset_page';
