@@ -158,5 +158,9 @@ export default {
                 resetPasswordToken:resetPasswordToken,
                 resetPasswordExpires:resetPasswordExpires
             })
+    },
+    isValidResetToken(token) {
+        User.findOne({resetPasswordToken},{resetPasswordExpires:1, username:1})
+            .then(user => console.log(user))
     }
 }
