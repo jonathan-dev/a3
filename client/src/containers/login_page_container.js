@@ -9,9 +9,9 @@ import LoginPage from '@/login_page'
 import { push } from 'react-router-redux';
 import { HOME_PATH } from '../paths';
 import {
-    createLoginFormInputChangedAction,
+    loginFormInputChanged,
     postLoginInformation,
-    createLoginUserAction
+    loginSucceeded
 } from '../actions/actions';
 
 // Handle input change in login form
@@ -25,7 +25,7 @@ const handleInputChange = (dispatch, event) => {
         [name]: value
     };
 
-    dispatch(createLoginFormInputChangedAction(changedInput));
+    dispatch(loginFormInputChanged(changedInput));
 };
 
 // handle submission of login information
@@ -67,7 +67,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onInputChanged: event => handleInputChange(dispatch, event),
         handleSubmit: event => handleSubmit(dispatch, event),
-        rerouteToHome: () => dispatch(createLoginUserAction(null))
+        rerouteToHome: () => dispatch(loginSucceeded(null))
     }
 };
 

@@ -8,23 +8,18 @@ import {
     LOGIN_SUCCEEDED,
     LOGOUT_USER,
     LOGIN_FORM_INPUT_CHANGED,
-    POST_LOGIN_INFORMATION,
-    REROUTE
+    POST_LOGIN_INFORMATION
 } from '../constants/actionTypes';
 
-export function createLogoutUserAction() {
-    return {
-        type: LOGOUT_USER
-    };
-}
-
-export function createLoginFormInputChangedAction (changedInput) {
+// action generator for a change of values in login page form
+export function loginFormInputChanged (changedInput) {
     return {
         type: LOGIN_FORM_INPUT_CHANGED,
         changedInput
     };
 }
 
+// action generator for posting login information
 export function postLoginInformation (loginData) {
     return {
         type: POST_LOGIN_INFORMATION,
@@ -38,19 +33,18 @@ export function postLoginInformation (loginData) {
     }
 }
 
-export function reroute (path) {
-    return {
-        type: REROUTE,
-        path
-    }
-}
-
-export function createLoginUserAction (userData) {
+// action generator for a succeeded login
+export function loginSucceeded (userData) {
     return {
         type: LOGIN_SUCCEEDED,
         userData
     }
 }
 
-
+// action generator for a logout action
+export function logoutUser () {
+    return {
+        type: LOGOUT_USER
+    };
+}
 
