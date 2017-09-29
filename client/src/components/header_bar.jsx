@@ -24,7 +24,7 @@ class HeaderBar extends Component {
 }
 
 HeaderBar.proptypes = {
-    headerBarLinks: PropTypes.element.isRequired
+    headerBarLinks: PropTypes.array
 };
 
 export default HeaderBar;
