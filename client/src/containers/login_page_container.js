@@ -1,30 +1,60 @@
+/**
+ * Container for the login page. This file handles all the logic behind the
+ * login page and maps the current state to the props which will get rendered
+ * by the login page
+ * */
+
 import { connect } from 'react-redux';
 import LoginPage from '@/login_page'
-import React from 'react';
-import { createLoginFormInputChangedAction, postLoginInformation, createLoginUserAction } from '../actions/actions';
 import { push } from 'react-router-redux';
+import { HOME_PATH } from '../paths';
+import {
+    formInputChanged,
+    postLoginInformation,
+    loginSucceeded
+} from '../actions/actions';
 
+// Handle input change in login form
+const handleInputChange = (dispatch, event) => {
+    // name of form field which changed value
+    let name = event.target.name;
+
+    // changed value
+    let value = event.target.value;
+    let changedInput = {
+        [name]: value
+    };
+
+    dispatch(formInputChanged(changedInput));
+};
+
+// handle submission of login information
 const handleSubmit = (dispatch, event) => {
+    // prevent reloading of page
     event.preventDefault();
+
+    // extract the form data into object
     let formData = {
         username: event.target.username.value,
         password: event.target.password.value
     };
-    console.log("Attempting login with data:");
-    console.log(formData);
+
+    // dispatch postLoginInformation with the extracted form data
     dispatch(postLoginInformation(formData))
-        .then(e => {
-            console.log("succeeded in login!");
-            console.log("Rerouting to home page");
-            console.log(e);
-            dispatch(push('/'));
+        .then(event => {
+            // login succeeded TODO: implement on success functionality after login
+            dispatch(loginSucceeded());
+
+            // reroute to home page
+            dispatch(push(HOME_PATH));
         })
-        .catch(err => {
+        .catch(error => {
+            // TODO: give visual feedback to user
             console.log("failed to login");
-            console.log(err)
         });
 };
 
+// redux function to map the current state to props passable to the login page component for rendering
 const mapStateToProps = state => {
     return {
         username: state.username,
@@ -33,21 +63,15 @@ const mapStateToProps = state => {
     };
 };
 
+// redux function to map dispatch functions to props to invoke callback in login page component from props
 const mapDispatchToProps = dispatch => {
     return {
-        onInputChanged: event => {
-            let name = event.target.name;
-            let value = event.target.value;
-            let changedInput = {
-                [name]: value
-            };
-            dispatch(createLoginFormInputChangedAction(changedInput));
-        },
-        handleSubmit: event => handleSubmit(dispatch, event),
-        rerouteToHome: () => dispatch(createLoginUserAction(null))
+        onInputChanged: event => handleInputChange(dispatch, event),
+        handleSubmit: event => handleSubmit(dispatch, event)
     }
 };
 
+// connect the redux functionality to the UI representation
 const LoginPageContainer = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
 
 export default LoginPageContainer;

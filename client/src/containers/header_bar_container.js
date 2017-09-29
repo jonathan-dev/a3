@@ -3,7 +3,7 @@ import {
 } from 'react-redux';
 import {
     headerBarVisibilityFilters
-} from '../constants/actionTypes';
+} from '../constants/action_types';
 import HeaderBar from '@/header_bar';
 
 
@@ -64,7 +64,8 @@ const getVisibleHeaderBarLinks = filter => {
 
 const mapStateToProps = state => {
     return {
-        headerBarLinks: getVisibleHeaderBarLinks(state.headerBarVisibilityFilter)
+        headerBarLinks: getVisibleHeaderBarLinks(state.headerBarVisibilityFilter),
+        username: state.isAuthenticated ? state.username : null
     }
 };
 

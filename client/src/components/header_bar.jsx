@@ -17,6 +17,7 @@ class HeaderBar extends Component {
 
         return (
             <div>
+                <h1>{ this.props.username }</h1>
                 {headerBarLinks}
             </div>
         );

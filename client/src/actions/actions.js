@@ -7,36 +7,34 @@
 import {
     LOGIN_SUCCEEDED,
     LOGOUT_USER,
-    LOGIN_FORM_INPUT_CHANGED,
     POST_LOGIN_INFORMATION,
     CHECK_RESET_ROUTE,
     RESET_PASSWORD,
     IS_VALID_RESET_ROUTE,
     IS_INVALID_RESET_ROUTE,
-    REROUTE
-} from '../constants/actionTypes';
+    FORM_INPUT_CHANGED
+} from '../constants/action_types';
 
-export function createLogoutUserAction() {
+// action generator for a change of values in form
+export function formInputChanged (changedInput) {
     return {
-        type: LOGOUT_USER
-    };
-}
-
-export function createLoginFormInputChangedAction (changedInput) {
-    return {
-        type: LOGIN_FORM_INPUT_CHANGED,
+        type: FORM_INPUT_CHANGED,
         changedInput
     };
 }
 
+// action generator for posting login information
 export function postLoginInformation (loginData) {
     return {
         type: POST_LOGIN_INFORMATION,
         payload: {
             request: {
                 url: '/login',
-                username: loginData.username,
-                password: loginData.password
+                method: 'POST',
+                data: {
+                    username: loginData.username,
+                    password: loginData.password
+                }
             }
         }
     }
@@ -72,20 +70,36 @@ export function resetPassword (token, password) {
         }
     }
 }
-
-export function reroute (path) {
+// action generator for posting login information
+export function postRegistrationInformation (registrationData) {
     return {
-        type: REROUTE,
-        path
+        type: POST_LOGIN_INFORMATION,
+        payload: {
+            request: {
+                url: '/register',
+                method: 'POST',
+                data: {
+                    username: registrationData.username,
+                    password: registrationData.password,
+                    email: registrationData.email
+                }
+            }
+        }
     }
 }
 
-export function createLoginUserAction (userData) {
+// action generator for a succeeded login
+export function loginSucceeded (userData) {
     return {
         type: LOGIN_SUCCEEDED,
         userData
     }
 }
 
-
+// action generator for a logout action
+export function logoutUser () {
+    return {
+        type: LOGOUT_USER
+    };
+}
 

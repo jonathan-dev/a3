@@ -41,26 +41,24 @@ module.exports = function (app) {
     })
 
     app.post('/login', (req, res) => {
-        console.log('login', req.body.name, req.body.password);
-        if (req.body.name && req.body.password) {
-            var name = req.body.name;
-            var password = req.body.password;
-            mongo.getAuthenticated(name, password)
+        let {username, password} = req.body;
+
+        if (username && password) {
+            mongo.getAuthenticated(username, password)
                 .then(data => {
-                    console.log(data)
                     if (data.user) {
-                        console.log('user', data.user)
                         var payload = {
                             id: data.user._id
                         };
                         var token = jwt.sign(payload, jwtOptions.secretOrKey);
+                        res.statusCode = 200;
                         res.json({
                             message: "ok",
                             token: token
                         });
                     }
-                    switch (data.reason) {
-
+                    else {
+                        res.sendStatus(401);
                     }
                 })
                 .catch(err => console.log(err))
