@@ -8,12 +8,9 @@ class ForgotPage extends Component {
     this.state = {
       email: '',
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
 
@@ -22,7 +19,7 @@ class ForgotPage extends Component {
     });
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     axios.post(window.location.origin+'/login', {

@@ -34,20 +34,14 @@ class createPost extends Component {
       imageId: '',
       tags: []
     };
-
-    this.onDropHandler = this.onDropHandler.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.getTags = this.getTags.bind(this);
-    this.updateTags = this.updateTags.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     console.log(event.target)
     this.setState({title: event.target.value});
   }
 
-  onClick() {
+  onClick = () => {
     this.props.mutate({
       variables: { post: {title:this.state.title, imageId: this.state.imageId, tags: this.state.tags} }
     })
@@ -59,17 +53,17 @@ class createPost extends Component {
       });
   }
 
-  updateTags(tags){
+  updateTags = (tags) => {
     this.setState({tags})
   }
 
-  getTags() {
+  getTags = () => {
     if(this.props && this.props.data && this.props.data.tags)
       return this.props.data.tags;
     return []
   }
 
-  onDropHandler(accepted, rejected) {
+  onDropHandler = (accepted, rejected) => {
     this.setState({ accepted, rejected});
     if(accepted) {
 

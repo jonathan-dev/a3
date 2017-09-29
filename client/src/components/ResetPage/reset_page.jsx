@@ -9,12 +9,9 @@ class ResetPage extends React.Component {
     //   password1: '',
     //   password2: '',
     // };
-
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // handleChange(event) {
+  // handleChange = (event) => {
   //   const name = event.target.name;
   //   const value = event.target.value;
 
@@ -23,7 +20,7 @@ class ResetPage extends React.Component {
   //   });
   // }
 
-  // handleSubmit(event) {
+  // handleSubmit = (event) => {
   //   event.preventDefault();
 
   //   // TODO: change

@@ -18,21 +18,10 @@ class RegisterPage extends Component {
       errorMessages: [],
       registrationAccomplished: false
     };
-
-    //Bind events to class methods
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.formInputIsValid = this.formInputIsValid.bind(this);
-    this.usernameIsValid = this.usernameIsValid.bind(this);
-    this.getUsernameErrors = this.getUsernameErrors.bind(this);
-    this.emailIsValid = this.emailIsValid.bind(this);
-    this.getEmailInputErrors = this.getEmailInputErrors.bind(this);
-    this.passwordIsValid = this.passwordIsValid.bind(this);
-    this.getPasswordErrors = this.getPasswordErrors.bind(this);
   }
 
   //Handles changes in the input fields on the page
-  handleChange (event) {
+  handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     let errors = [];
@@ -46,7 +35,7 @@ class RegisterPage extends Component {
   }
 
   //Handles submission of register form
-  handleSubmit (event) {
+  handleSubmit = (event) => {
     event.preventDefault(); //Stops page refresh
 
     if(this.formInputIsValid()) {
@@ -85,17 +74,17 @@ class RegisterPage extends Component {
   }
 
   // checks whether all input is correct and valid for submission
-  formInputIsValid () {
+  formInputIsValid = () => {
     return this.usernameIsValid() && this.passwordIsValid() && this.emailIsValid();
   }
 
   // Checks if username is allowed
-  usernameIsValid () {
+  usernameIsValid = () => {
     return this.getUsernameErrors().length == 0;
   }
 
   // Collects all recognized errors in currently typed username and returns them as array of strings
-  getUsernameErrors () {
+  getUsernameErrors = () => {
     let usernameErrors = [];
 
     // TODO: implement logic of legit username, e. g. accepted length, no special characters, etc...
@@ -103,12 +92,12 @@ class RegisterPage extends Component {
   }
 
   // Checks whether the currently typed email is accepted
-  emailIsValid () {
+  emailIsValid = () => {
     return this.getEmailInputErrors().length == 0;
   }
 
   // Collects all recognized errors in currently typed email and returns them as array of strings
-  getEmailInputErrors () {
+  getEmailInputErrors = () => {
     let emailErrors = [];
 
     // TODO: implement validation
@@ -117,12 +106,12 @@ class RegisterPage extends Component {
   }
 
   // Method will check whether current typed password is accepted
-  passwordIsValid () {
+  passwordIsValid = () => {
     return this.getPasswordErrors().length == 0;
   }
 
   // Collects all recognized errors in current typed password and returns them in an array of strings
-  getPasswordErrors () {
+  getPasswordErrors = () => {
     let passwordErrors = []; // array of all recognized password errors
     // TODO: implement password checking, e. g. atleast 8 characters, upper- and lowercase only allowed characters, password matching!, ...
 

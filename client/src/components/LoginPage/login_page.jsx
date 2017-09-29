@@ -10,14 +10,10 @@ class LoginPage extends Component {
       username: '',
       password: ''
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
+  handleChange = (event) => {
+    const {name, value} = event.target;
 
     this.setState({
       [name]: value

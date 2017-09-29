@@ -7,17 +7,14 @@ class AutocompleteTagsInput extends Component {
   constructor () {
     super()
     this.state = {tags: []}
-
-    this.handleChange = this.handleChange.bind(this);
-    this.autocompleteRenderInput = this.autocompleteRenderInput.bind(this);
   }
 
-  handleChange (tags) {
+  handleChange = (tags) => {
     this.setState({tags})
     this.props.updateTags(tags)
   }
 
-  autocompleteRenderInput ({addTag, ...props}) {
+  autocompleteRenderInput = ({addTag, ...props}) => {
     const handleOnChange = (e, {newValue, method}) => {
       if (method === 'enter') {
         e.preventDefault()
