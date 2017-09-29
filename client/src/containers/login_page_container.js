@@ -43,6 +43,7 @@ const handleSubmit = (dispatch, event) => {
     dispatch(postLoginInformation(formData))
         .then(event => {
             // login succeeded TODO: implement on success functionality after login
+            dispatch(loginSucceeded());
 
             // reroute to home page
             dispatch(push(HOME_PATH));
@@ -66,8 +67,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onInputChanged: event => handleInputChange(dispatch, event),
-        handleSubmit: event => handleSubmit(dispatch, event),
-        rerouteToHome: () => dispatch(loginSucceeded(null))
+        handleSubmit: event => handleSubmit(dispatch, event)
     }
 };
 

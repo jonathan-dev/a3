@@ -26,8 +26,11 @@ export function postLoginInformation (loginData) {
         payload: {
             request: {
                 url: '/login',
-                username: loginData.username,
-                password: loginData.password
+                method: 'POST',
+                data: {
+                    username: loginData.username,
+                    password: loginData.password
+                }
             }
         }
     }

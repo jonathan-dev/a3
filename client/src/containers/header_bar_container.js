@@ -64,7 +64,8 @@ const getVisibleHeaderBarLinks = filter => {
 
 const mapStateToProps = state => {
     return {
-        headerBarLinks: getVisibleHeaderBarLinks(state.headerBarVisibilityFilter)
+        headerBarLinks: getVisibleHeaderBarLinks(state.headerBarVisibilityFilter),
+        username: state.isAuthenticated ? state.username : null
     }
 };
 

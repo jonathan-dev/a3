@@ -30,7 +30,7 @@ const initialState = logoutUserState;
 export function UserAuthentication(state = initialState, action) {
     switch (action.type) {
         case LOGIN_SUCCEEDED:
-            return Object.assign({}, state, action.userData, {
+            return Object.assign({}, state, {
                 headerBarVisibilityFilter: SHOW_AUTHENTICATED,
                 isAuthenticated: true
             });
