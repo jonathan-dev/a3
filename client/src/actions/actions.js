@@ -7,14 +7,14 @@
 import {
     LOGIN_SUCCEEDED,
     LOGOUT_USER,
-    LOGIN_FORM_INPUT_CHANGED,
-    POST_LOGIN_INFORMATION
+    POST_LOGIN_INFORMATION,
+    FORM_INPUT_CHANGED
 } from '../constants/action_types';
 
-// action generator for a change of values in login page form
-export function loginFormInputChanged (changedInput) {
+// action generator for a change of values in form
+export function formInputChanged (changedInput) {
     return {
-        type: LOGIN_FORM_INPUT_CHANGED,
+        type: FORM_INPUT_CHANGED,
         changedInput
     };
 }
