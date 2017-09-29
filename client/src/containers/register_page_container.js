@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formInputChanged } from '../actions/actions';
+import { formInputChanged, postRegistrationInformation } from '../actions/actions';
 // THIS FILE HAS NOT BEEN UPDATED ENTIRELY FOR REDUX USAGE TODO: implement container
 
     //Handles changes in the input fields on the page
@@ -17,16 +17,30 @@ import { formInputChanged } from '../actions/actions';
     };
 
     //Handles submission of register form TODO: NOT IMPLEMENTED YET, CORRECT IMPLEMENTATION
-    const handleSubmit = (event, formInputIsValid) => {
+    const handleSubmit = (dispatch, event, formInputIsValid) => {
         event.preventDefault(); //Stops page refresh
 
-        let username = event.target.username.value;
-        let email = event.target.email.value;
-        let password = event.target.password.value;
-        let password2 = event.target.password2.value;
+        let formData = {
+            username: event.target.username.value;
+            email: event.target.email.value;
+            password: event.target.password.value;
+            password2: event.target.password2.value;
+        }
 
-        if(formInputIsValid()) {
-            // dispatch
+        if(formInputIsValid(formData)) {
+            // trim to only relevant data for request
+            let trimmedFormData = {
+                username: formData.username,
+                password: formData.password,
+                email: formData.email
+            };
+            dispatch(postRegistrationInformation(trimmedFormData))
+                .then(event => {
+                    // do stuff TODO: implement
+                })
+                .catch(error => {
+                    // something went wrong TODO: implement error handling
+                })
         }
     };
 
