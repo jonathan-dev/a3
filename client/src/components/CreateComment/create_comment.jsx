@@ -5,21 +5,23 @@ import { commentListQuery } from '@/CommentBox/comment_box'
 class createComment extends Component {
     constructor() {
         super();
-
         this.state = {
             comment: ''
         };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.onClick = this.onClick.bind(this);
     }
 
-    handleChange(event) {
+    handleKeyUp = (event) => {
+        if (evt.keyCode === 13) {
+            this.postComment();
+        }
+    }
+
+    handleChange = (event) => {
         console.log(event.target)
         this.setState({ comment: event.target.value });
     }
 
-    onClick() {
+    postComment = () => {
         this.props.mutate({
             variables: {
                 comment: {
@@ -30,6 +32,7 @@ class createComment extends Component {
             refetchQueries: [{query:commentListQuery,variables: {postId: this.props.post}}]
         })
             .then(({ data }) => {
+                this.setState({comment: ''});
                 console.log('got data', data);
             }).catch((error) => {
                 console.log('there was an error sending the query', error);
@@ -39,8 +42,8 @@ class createComment extends Component {
     render() {
         return (
             <section>
-                <input type="comment" onChange={this.handleChange} />
-                <button onClick={this.onClick}>comment</button>
+                <input type="comment" onChange={this.handleChange} value={this.state.comment} />
+                <button onClick={this.postComment} >comment</button>
             </section>
         );
     }
