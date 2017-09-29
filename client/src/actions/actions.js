@@ -5,7 +5,7 @@
  * */
 
 import {
-    LOGIN_USER,
+    LOGIN_SUCCEEDED,
     LOGOUT_USER,
     LOGIN_FORM_INPUT_CHANGED,
     POST_LOGIN_INFORMATION,
@@ -47,7 +47,7 @@ export function reroute (path) {
 
 export function createLoginUserAction (userData) {
     return {
-        type: LOGIN_USER,
+        type: LOGIN_SUCCEEDED,
         userData
     }
 }

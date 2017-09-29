@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Redirect } from 'react-router-dom'
 
 // TODO: make code clean
 class LoginPage extends Component {
@@ -7,11 +8,6 @@ class LoginPage extends Component {
     }
 
     render() {
-        let formData = {
-            username: this.props.username,
-            password: this.props.password
-        };
-
         return (
             <form onSubmit={this.props.handleSubmit}>
                 <label>
