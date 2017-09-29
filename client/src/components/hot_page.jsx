@@ -4,7 +4,7 @@ import {
 } from 'react-apollo';
 import React, { Component } from 'react';
 
-import Post from '@/Post/post';
+import Post from '@/post';
 
 class HotPage extends Component {
 

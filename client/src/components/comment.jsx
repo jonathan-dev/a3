@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CreateComment from '@/CreateComment/create_comment'
+import CreateComment from '@/create_comment'
 
 class Comment extends Component {
     constructor() {

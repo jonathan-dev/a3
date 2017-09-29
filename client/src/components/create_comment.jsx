@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
-import { commentListQuery } from '@/CommentBox/comment_box'
+import { commentListQuery } from '@/comment_box'
 
 class createComment extends Component {
     constructor() {

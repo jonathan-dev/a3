@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './post.sass';
-import Tag from '@/Tag/tag';
-import CommentBox from '@/CommentBox/comment_box';
+import Tag from '@/tag';
+import CommentBox from '@/comment_box';
 import languages from 'src/language/language';
 
 let currentLanguage = "english"; // default, TODO: change when user changes his local language later on

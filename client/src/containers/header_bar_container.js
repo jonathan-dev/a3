@@ -4,7 +4,7 @@ import {
 import {
     headerBarVisibilityFilters
 } from '../constants/actionTypes';
-import HeaderBar from '../components/HeaderBar/header_bar';
+import HeaderBar from '@/header_bar';
 
 
 import {

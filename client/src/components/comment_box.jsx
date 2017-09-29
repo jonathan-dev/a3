@@ -3,8 +3,8 @@ import {
     gql,
     graphql,
 } from 'react-apollo';
-import CreateComment from '@/CreateComment/create_comment'
-import Comment from '@/Comment/comment'
+import CreateComment from '@/create_comment'
+import Comment from '@/comment'
 
 class CommentBox extends Component {
     constructor() {

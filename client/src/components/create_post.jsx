@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import { Line } from 'rc-progress';
 import { gql, graphql } from 'react-apollo';
-import AutocompleteTagsInput from '@/AutocompleteTagsInput/autocomplete_tags_input'
+import AutocompleteTagsInput from '@/autocomplete_tags_input'
 
 const PostMutations = gql`
 mutation PostMutations($post: PostInput!) {

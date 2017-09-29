@@ -5,15 +5,15 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import HotPage from '@/HotPage/hot_page';
-import PostDetailsPage from '@/PostDetails/post_details';
-import CreatePost from '@/CreatePost/create_post';
+import HotPage from '@/hot_page';
+import PostDetailsPage from '@/post_details';
+import CreatePost from '@/create_post';
 import LoginPage from './containers/login_page_container';
-import LogoutPage from '@/LogoutPage/logout_page';
-import RegisterPage from '@/RegisterPage/register_page';
-import ResetPage from '@/ResetPage/reset_page';
-import ForgotPage from '@/ForgotPage/forgot_page';
-import ProfilePage from '@/ProfilePage/profile_page';
+import LogoutPage from '@/logout_page';
+import RegisterPage from '@/register_page';
+import ResetPage from '@/reset_page';
+import ForgotPage from '@/forgot_page';
+import ProfilePage from '@/profile_page';
 
 import {
   HOME_PATH,
