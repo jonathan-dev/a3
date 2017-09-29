@@ -36,6 +36,24 @@ export function postLoginInformation (loginData) {
     }
 }
 
+// action generator for posting login information
+export function postRegistrationInformation (registrationData) {
+    return {
+        type: POST_LOGIN_INFORMATION,
+        payload: {
+            request: {
+                url: '/register',
+                method: 'POST',
+                data: {
+                    username: registrationData.username,
+                    password: registrationData.password,
+                    email: registrationData.email
+                }
+            }
+        }
+    }
+}
+
 // action generator for a succeeded login
 export function loginSucceeded (userData) {
     return {
