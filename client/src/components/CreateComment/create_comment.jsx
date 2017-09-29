@@ -11,7 +11,7 @@ class createComment extends Component {
     }
 
     handleKeyUp = (event) => {
-        if (evt.keyCode === 13) {
+        if (event.keyCode === 13) {
             this.postComment();
         }
     }
@@ -42,7 +42,7 @@ class createComment extends Component {
     render() {
         return (
             <section>
-                <input type="comment" onChange={this.handleChange} value={this.state.comment} />
+                <input type="comment" onChange={this.handleChange} onKeyUp={this.handleKeyUp} value={this.state.comment} />
                 <button onClick={this.postComment} >comment</button>
             </section>
         );
