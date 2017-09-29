@@ -1,6 +1,5 @@
 import mongoose from 'mongoose' // connection to the mongodb
 import casual from 'casual' // creating mock data
-import bluebird from 'bluebird'
 
 import User from './user'
 import Post from './post'
@@ -9,7 +8,7 @@ import Comment from './comment'
 
 // location of the mongodb
 const MONGO = 'mongodb://localhost/a3'
-mongoose.Promise = bluebird
+mongoose.Promise = Promise
 mongoose.connect(MONGO, {
     useMongoClient: true // needed to get rid of a error message
 })
@@ -149,5 +148,8 @@ export default {
     },
     getUserNameById(id) {
         return User.findById(id,{username:1})
+    },
+    setResetToken(email,resetPasswordToken,resetPasswordExpires) {
+        return User.findOneAndUpdate({email:email},{})
     }
 }
