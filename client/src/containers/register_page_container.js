@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 
+// THIS FILE HAS NOT BEEN UPDATED ENTIRELY FOR REDUX USAGE TODO: implement container
+
     //Handles changes in the input fields on the page
     const handleChange = (event, getUsernameErrors, getEmailInputErrors, getPasswordErrors) => {
         const name = event.target.name;
