@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
+import crypto from 'crypto'
 import {
     ExtractJwt,
     Strategy as JwtStrategy
@@ -39,7 +40,7 @@ module.exports = function (app) {
         })(req, res, next);
     })
 
-    app.post("/login", function (req, res) {
+    app.post('/login', (req, res) => {
         console.log('login', req.body.name, req.body.password);
         if (req.body.name && req.body.password) {
             var name = req.body.name;
@@ -66,7 +67,7 @@ module.exports = function (app) {
         }
     });
 
-    app.post("/register", function (req, res) {
+    app.post('/register', (req, res) => {
         console.log('register', req.body.name, req.body.email, req.body.password);
         if (
             req.body.name &&
@@ -89,23 +90,49 @@ module.exports = function (app) {
         }
     })
 
+    app.post('/forgot', (req, res) => {
+        const {
+            email
+        } = req.body;
+        if (email) {
+            const buf = crypto.randomBytes(20);
+            const token = buf.toString('hex');
 
-    var api_key = mailgunConfig.key;
-    var domain = 'sandboxa9461c2dc5d64c618caaec296ca33955.mailgun.org';
-    var mailgun = require('mailgun-js')({
-        apiKey: api_key,
-        domain: domain
-    });
+            const resetPasswordToken = token;
+            const resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
-    var data = {
-        from: 'Excited User <jonathan.drude@gmail.com>',
-        to: 'jonathan.drude@gmail.com',
-        subject: 'Hello',
-        text: 'Testing some Mailgun awesomness!'
-    };
+            mongo.setResetToken(email, resetPasswordToken, resetPasswordExpires)
+                .then(e => {
+                    var api_key = mailgunConfig.key;
+                    var domain = 'sandboxa9461c2dc5d64c618caaec296ca33955.mailgun.org';
+                    var mailgun = require('mailgun-js')({
+                        apiKey: api_key,
+                        domain: domain
+                    });
 
-    // mailgun.messages().send(data, function (error, body) {
-    //   console.log(body);
-    // });
+                    var data = {
+                        from: 'no reply<am@am.com>',
+                        to: email,
+                        subject: 'Password reset',
+                        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                    };
 
+                    mailgun.messages().send(data, function (error, body) {
+                        console.log(body);
+                    });
+                    res.send('send')
+                })
+                .catch(err => console.log(err))
+        }
+    })
+
+    app.post('/reset', (req, res) => {
+        const {token} = req.body
+        if (token) {
+            
+        }
+    })
 }

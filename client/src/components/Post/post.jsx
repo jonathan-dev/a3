@@ -30,7 +30,7 @@ export default class Post extends Component {
                     })
                     }
                 </div>
-                <CommentBox/>
+                <CommentBox post={this.props.post.id}/>
             </div>
         );
     }
