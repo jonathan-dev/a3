@@ -9,7 +9,7 @@ import {
     LOGOUT_USER,
     LOGIN_FORM_INPUT_CHANGED,
     POST_LOGIN_INFORMATION
-} from '../constants/actionTypes';
+} from '../constants/action_types';
 
 // action generator for a change of values in login page form
 export function loginFormInputChanged (changedInput) {

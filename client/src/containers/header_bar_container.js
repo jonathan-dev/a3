@@ -3,7 +3,7 @@ import {
 } from 'react-redux';
 import {
     headerBarVisibilityFilters
-} from '../constants/actionTypes';
+} from '../constants/action_types';
 import HeaderBar from '@/header_bar';
 
 

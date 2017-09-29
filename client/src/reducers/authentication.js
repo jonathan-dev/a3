@@ -2,7 +2,7 @@
  * Authentication reducers
  * */
 
-import {LOGIN_SUCCEEDED, LOGOUT_USER, headerBarVisibilityFilters, LOGIN_FORM_INPUT_CHANGED} from '../constants/actionTypes';
+import {LOGIN_SUCCEEDED, LOGOUT_USER, headerBarVisibilityFilters, LOGIN_FORM_INPUT_CHANGED} from '../constants/action_types';
 
 
 // unpack the object attributes
