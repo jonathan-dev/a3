@@ -1,61 +1,35 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import * as UserAuthentication from '../../UserAuthenticaton/user_authentication';
+import React, {Component} from 'react';
 
+// TODO: make code clean
 class LoginPage extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
+    }
 
-    this.state = {
-      username: '',
-      password: ''
-    };
+    render() {
+        let formData = {
+            username: this.props.username,
+            password: this.props.password
+        };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+        return (
+            <form onSubmit={this.props.handleSubmit}>
+                <label>
+                    Username:
+                    <input name="username" type="text" value={this.props.username}
+                           onChange={this.props.onInputChanged}/>
+                </label>
 
-  handleChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
+                <label>
+                    Password:
+                    <input name="password" type="password" value={this.props.password}
+                           onChange={this.props.onInputChanged}/>
+                </label>
 
-    this.setState({
-      [name]: value
-    });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-
-    axios.post(window.location.origin+'/login', {
-      name: this.state.username,
-      password: this.state.password
-    })
-    .then(event => {
-      UserAuthentication.logIn(this.state.username, event.data.token);
-      // TODO: implement react like reroute
-      window.location.replace('/');
-    })
-    .catch(error => console.log(error));
-  }
-
-  render () {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Username:
-          <input name="username" type="text" value={this.state.username} onChange={this.handleChange} />
-        </label>
-
-        <label>
-          Password:
-          <input name="password" type="password" value={this.state.password} onChange={this.handleChange} />
-        </label>
-
-        <input type="submit" value="submit" />
-      </form>
-    );
-  }
+                <input type="submit" value="submit"/>
+            </form>
+        );
+    }
 }
 
 export default LoginPage;

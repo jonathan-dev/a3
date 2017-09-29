@@ -2,7 +2,7 @@
  * Authentication reducers
  * */
 
-import {LOGIN_USER, LOGOUT_USER, headerBarVisibilityFilters} from '../constants/actionTypes';
+import {LOGIN_USER, LOGOUT_USER, headerBarVisibilityFilters, LOGIN_FORM_INPUT_CHANGED} from '../constants/actionTypes';
 
 
 // unpack the object attributes
@@ -27,7 +27,7 @@ const initialState = logoutUserState;
  * ALWAYS use an empty object as first parameter and the original state as second
  * parameter with Object.assign, as we would overwrite the whole existing state otherwise.
  * */
-export function applyUserAuthentication(state = initialState, action) {
+export function UserAuthentication(state = initialState, action) {
     switch (action.type) {
         case LOGIN_USER:
             return Object.assign({}, state, action.userData, {
@@ -35,6 +35,8 @@ export function applyUserAuthentication(state = initialState, action) {
             });
         case LOGOUT_USER:
             return Object.assign({}, state, logoutUserState);
+        case LOGIN_FORM_INPUT_CHANGED:
+            return Object.assign({}, state, action.changedInput); // Note that changedInput is a key value pair
         default:
             return Object.assign({}, state, initialState);
     }

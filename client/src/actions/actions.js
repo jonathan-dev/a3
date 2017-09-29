@@ -7,7 +7,9 @@
 import {
     LOGIN_USER,
     LOGOUT_USER,
-    SUBMIT_LOGIN_INFORMATION,
+    LOGIN_FORM_INPUT_CHANGED,
+    POST_LOGIN_INFORMATION,
+    REROUTE
 } from '../constants/actionTypes';
 
 export function createLogoutUserAction() {
@@ -16,13 +18,34 @@ export function createLogoutUserAction() {
     };
 }
 
-export function createSubmitLoginInformationAction () {
+export function createLoginFormInputChangedAction (changedInput) {
     return {
-      type: SUBMIT_LOGIN_INFORMATION
+        type: LOGIN_FORM_INPUT_CHANGED,
+        changedInput
     };
 }
 
-export function createLoginUserAction(userData) {
+export function postLoginInformation (loginData) {
+    return {
+        type: POST_LOGIN_INFORMATION,
+        payload: {
+            request: {
+                url: '/login',
+                username: loginData.username,
+                password: loginData.password
+            }
+        }
+    }
+}
+
+export function reroute (path) {
+    return {
+        type: REROUTE,
+        path
+    }
+}
+
+export function createLoginUserAction (userData) {
     return {
         type: LOGIN_USER,
         userData

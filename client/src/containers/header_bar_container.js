@@ -68,6 +68,6 @@ const mapStateToProps = state => {
     }
 };
 
-const UpdatedHeaderBarLinks = connect(mapStateToProps)(HeaderBar);
+const HeaderBarContainer = connect(mapStateToProps)(HeaderBar);
 
-export default UpdatedHeaderBarLinks;
+export default HeaderBarContainer;

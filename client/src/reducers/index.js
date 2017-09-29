@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import { applyUserAuthentication } from './authentication';
+import { UserAuthentication } from './authentication';
+import { routerReducer } from 'react-router-redux'
 
 export const harrismusApp = combineReducers({
-  applyUserAuthentication
+    UserAuthentication,
+    routing: routerReducer
 });
