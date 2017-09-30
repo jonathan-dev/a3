@@ -10,8 +10,6 @@ import {
     POST_LOGIN_INFORMATION,
     CHECK_RESET_ROUTE,
     RESET_PASSWORD,
-    IS_VALID_RESET_ROUTE,
-    IS_INVALID_RESET_ROUTE,
     FORM_INPUT_CHANGED
 } from '../constants/action_types';
 

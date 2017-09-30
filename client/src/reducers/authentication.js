@@ -7,8 +7,6 @@ import {
     LOGOUT_USER,
     headerBarVisibilityFilters,
     LOGIN_FORM_INPUT_CHANGED,
-    IS_VALID_RESET_ROUTE,
-    IS_INVALID_RESET_ROUTE,
     CHECK_RESET_ROUTE_SUCCESS,
     CHECK_RESET_ROUTE_FAIL
 } from '../constants/action_types';
@@ -47,14 +45,6 @@ export function UserAuthentication(state = initialState, action) {
             return Object.assign({}, state, logoutUserState);
         case LOGIN_FORM_INPUT_CHANGED:
             return Object.assign({}, state, action.changedInput); // Note that changedInput is a key value pair
-        case IS_VALID_RESET_ROUTE:
-            return Object.assign({}, state, {
-                routeIsValid: true
-            });
-        case IS_INVALID_RESET_ROUTE:
-            return Object.assign({}, state, {
-                routeIsValid: false
-            });
         case CHECK_RESET_ROUTE_SUCCESS:
             console.log('---success---',action)
             return Object.assign({}, state, {
