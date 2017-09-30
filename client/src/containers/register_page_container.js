@@ -67,10 +67,10 @@ import RegisterPage from '@/register_page'
     };
 
     const mapStateToProps = state => {
+        let registrationErrors = state.UserAuthentication.registrationErrors;
         return {
             isAuthenticated: state.UserAuthentication.isAuthenticated || false,
-            registrationErrors: (state.UserAuthentication.registrationErrors) ?
-                state.UserAuthentication.registrationErrors.slice(0) : null
+            registrationErrors: (registrationErrors) ? registrationErrors.slice(0) : null
         }
     };
 

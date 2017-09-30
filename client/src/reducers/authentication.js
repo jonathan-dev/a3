@@ -10,7 +10,8 @@ import {
     CHECK_RESET_ROUTE_FAIL,
     PASSWORDS_DO_NOT_MATCH,
     POST_REGISTRATION_SUCCESS,
-    POST_REGISTRATION_FAIL, SHOW_REGISTRATION_FORM_ERORRS, CLEAR_REGISTRATION_FORM_ERRORS
+    POST_REGISTRATION_FAIL, SHOW_REGISTRATION_FORM_ERORRS, CLEAR_REGISTRATION_FORM_ERRORS, SHOW_LOGIN_FORM_ERRORS,
+    CLEAR_LOGIN_FORM_ERRORS
 } from '../constants/action_types';
 
 /**
@@ -31,7 +32,11 @@ export function UserAuthentication(state = {}, action) {
                 { isAuthenticated: true, username: action.payload.data.username }
             );
         case POST_LOGIN_FAIL:
-            return Object.assign({}, state, { isAuthenticated: false }); // TODO: implement error submission to state
+            return Object.assign({}, state, { loginErrors: action.error.response.data.errors.slice(0) });
+        case SHOW_LOGIN_FORM_ERRORS:
+            return Object.assign({}, state, { loginErrors: action.errors.slice(0) });
+        case CLEAR_LOGIN_FORM_ERRORS:
+            return Object.assign({}, state, { loginErrors: null} );
         case LOGOUT_USER:
             return Object.assign({}, state, { username: null, isAuthenticated: false });
 
@@ -46,8 +51,7 @@ export function UserAuthentication(state = {}, action) {
                 { isAuthenticated: true, username: action.payload.data.username, registrationErrors: null }
             );
         case POST_REGISTRATION_FAIL:
-            let errorMessages = action.error.response.data.errors;
-            return Object.assign({}, state, { registrationErrors: errorMessages.slice(0) });
+            return Object.assign({}, state, { registrationErrors: action.error.response.data.errors.slice(0) });
         case SHOW_REGISTRATION_FORM_ERORRS:
             return Object.assign({}, state, { registrationErrors: action.errors.slice(0) });
         case CLEAR_REGISTRATION_FORM_ERRORS:
