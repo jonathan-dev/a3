@@ -131,8 +131,9 @@ module.exports = function (app) {
         const {token, password} = req.body
         if (token) {
             if (password) {
+                console.log('reset password',password)
                 mongo.resetPassword(token, password)
-                .then(user => res.send(user))
+                .then(user => res.json(user))
                 .catch(err => res.status(401).send('Unauthorized'))
             }
 

@@ -10,7 +10,8 @@ import {
     POST_LOGIN_INFORMATION,
     CHECK_RESET_ROUTE,
     RESET_PASSWORD,
-    FORM_INPUT_CHANGED
+    FORM_INPUT_CHANGED,
+    PASSWORDS_DO_NOT_MATCH
 } from '../constants/action_types';
 
 // action generator for a change of values in form
@@ -66,6 +67,12 @@ export function resetPassword (token, password) {
                 }
             }
         }
+    }
+}
+
+export function passwordsDoNotMatch () {
+    return {
+        type: PASSWORDS_DO_NOT_MATCH
     }
 }
 // action generator for posting login information

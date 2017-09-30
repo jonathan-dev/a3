@@ -13,9 +13,14 @@ export const headerBarVisibilityFilters = {
     SHOW_AUTHENTICATED: 'SHOW_AUTHENTICATED',
     SHOW_UNAUTHENTICATED: 'SHOW_UNAUTHENTICATED'
 };
-// Password Reset
+
+//------------------------------------------
+// RESET PAGE
+//------------------------------------------
 export const CHECK_RESET_ROUTE = 'CHECK_RESET_ROUTE';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
+
+export const PASSWORDS_DO_NOT_MATCH = 'PASSWORDS_DO_NOT_MATCH';
 
 export const CHECK_RESET_ROUTE_SUCCESS = 'CHECK_RESET_ROUTE_SUCCESS';
 export const CHECK_RESET_ROUTE_FAIL = 'CHECK_RESET_ROUTE_FAIL';
