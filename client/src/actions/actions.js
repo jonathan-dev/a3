@@ -8,7 +8,8 @@ import {
     LOGOUT_USER,
     POST_LOGIN,
     CHECK_RESET_ROUTE,
-    RESET_PASSWORD
+    RESET_PASSWORD,
+    PASSWORDS_DO_NOT_MATCH
 } from '../constants/action_types';
 
 // action generator for posting login information
@@ -70,6 +71,11 @@ export function resetPassword (token, password) {
     }
 }
 
+export function passwordsDoNotMatch () {
+    return {
+        type: PASSWORDS_DO_NOT_MATCH
+    }
+}
 
 // action generator for a logout action
 export function logoutUser () {

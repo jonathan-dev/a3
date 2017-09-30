@@ -163,6 +163,19 @@ export default {
         return User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } },{resetPasswordExpires:1, username:1});
     },
     resetPassword(token,password) {
-        return User.findOneAndUpdate({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } },{password:password});
+        return new Promise ((resolve, reject) => {
+            User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } })
+            .then(user => {
+                if (user) {
+                    user.password = password;
+                    user.resetPasswordToken = undefined;
+                    user.resetPasswordExpires = undefined;
+                    user.save()
+                        .then(user => resolve(user))//TODO: not return all user info
+                        .catch(err => reject(err))
+                }
+            })
+            .catch(err => reject(err))
+        })
     }
 }

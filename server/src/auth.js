@@ -97,26 +97,11 @@ module.exports = function (app) {
 
             mongo.setResetToken(email, resetPasswordToken, resetPasswordExpires)
                 .then(e => {
-                    var api_key = mailgunConfig.key;
-                    var domain = 'sandboxa9461c2dc5d64c618caaec296ca33955.mailgun.org';
-                    var mailgun = require('mailgun-js')({
-                        apiKey: api_key,
-                        domain: domain
-                    });
-
-                    var data = {
-                        from: 'no reply<am@am.com>',
-                        to: email,
-                        subject: 'Password reset',
-                        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                    const text = 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
                             'http://' + req.headers.host + '/reset/' + token + '\n\n' +
                             'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-                    };
-
-                    mailgun.messages().send(data, function (error, body) {
-                        console.log(body);
-                    });
+                    sendMail(email, text);
                     res.send('send')
                 })
                 .catch(err => console.log(err))
@@ -127,8 +112,13 @@ module.exports = function (app) {
         const {token, password} = req.body
         if (token) {
             if (password) {
+                console.log('reset password',password)
                 mongo.resetPassword(token, password)
-                .then(user => res.send(user))
+                .then(user => {
+                    const text = 'password reset successfully!'
+                    sendMail(user.email, text)
+                    res.send()
+                })
                 .catch(err => res.status(401).send('Unauthorized'))
             }
 
@@ -137,4 +127,24 @@ module.exports = function (app) {
                 .catch(err => res.status(500).send('Internal Error'))
         }
     })
+
+    function sendMail(email, text) {
+        var api_key = mailgunConfig.key;
+                    var domain = 'sandboxa9461c2dc5d64c618caaec296ca33955.mailgun.org';
+                    var mailgun = require('mailgun-js')({
+                        apiKey: api_key,
+                        domain: domain
+                    });
+
+                    var data = {
+                        from: 'no reply<am@am.com>',
+                        to: email,
+                        subject: 'Password reset',
+                        text: text
+                    };
+
+                    mailgun.messages().send(data, function (error, body) {
+                        console.log(body);
+                    });
+    }
 }

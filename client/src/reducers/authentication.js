@@ -7,7 +7,8 @@ import {
     POST_LOGIN_FAIL,
     LOGOUT_USER,
     CHECK_RESET_ROUTE_SUCCESS,
-    CHECK_RESET_ROUTE_FAIL
+    CHECK_RESET_ROUTE_FAIL,
+    PASSWORDS_DO_NOT_MATCH
 } from '../constants/action_types';
 
 /**
@@ -40,6 +41,9 @@ export function UserAuthentication(state = {}, action) {
 
         case CHECK_RESET_ROUTE_FAIL:
             return Object.assign({}, state, { routeIsValid: false});
+
+        case PASSWORDS_DO_NOT_MATCH:
+            return Object.assign({}, state, {passwordsMatch: false})
 
         default:
             return state

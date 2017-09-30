@@ -11,25 +11,15 @@ import {
     push
 } from 'react-router-redux';
 
-const handleSubmit = (dispatch, event) => {
+const handleSubmit = (dispatch, event, token) => {
     event.preventDefault();
-    let formData = {
-        username: event.target.username.value,
-        password: event.target.password.value
-    };
-    console.log("Attempting login with data:");
-    console.log(formData);
-    dispatch(postLoginInformation(formData))
-        .then(e => {
-            console.log("succeeded in login!");
-            console.log("Rerouting to home page");
-            console.log(e);
-            dispatch(push('/'));
-        })
-        .catch(err => {
-            console.log("failed to login");
-            console.log(err)
-        });
+    const password = event.target.password.value;
+    const password2 = event.target.password2.value;
+    console.log('passwords: ', password, password2);
+    if (password === password2) {
+        console.log('reset password')
+        dispatch(resetPassword(token, password));
+    }
 };
 
 const mapStateToProps = state => {
@@ -42,7 +32,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        check: token => dispatch(checkResetRoute(token))
+        check: token => dispatch(checkResetRoute(token)),
+        handleSubmit: (event, token) => handleSubmit(dispatch, event, token)
     }
 };
 
