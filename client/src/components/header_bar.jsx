@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 class HeaderBar extends Component {
     render() {
+        console.log("this.props.logout: "); console.log(this.props.logout);
         let headerBarLinks = this.props.headerBarLinks.map((link, index) =>
             <div key={index}>
                 <Link to={link.path}>{link.text}</Link>
@@ -17,8 +18,9 @@ class HeaderBar extends Component {
 
         return (
             <div>
-                <h1>{ this.props.username }</h1>
+                {this.props.isAuthenticated ? <h1>{ this.props.username }</h1> : null}
                 {headerBarLinks}
+                {this.props.isAuthenticated ? <a href="" onClick={this.props.logout}>logout</a> : null}
             </div>
         );
     }

@@ -10,7 +10,7 @@ import ResetPage from './containers/reset_page_container';
 import HotPage from '@/hot_page';
 import PostDetailsPage from '@/post_details';
 import CreatePost from '@/create_post';
-import LogoutPage from '@/logout_page';
+import LogoutPage from './containers/logout_page_container';
 import RegisterPage from './containers/register_page_container';
 import ForgotPage from '@/forgot_page';
 import ProfilePage from '@/profile_page';

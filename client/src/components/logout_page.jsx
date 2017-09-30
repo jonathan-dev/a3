@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
 
 class LogoutPage extends Component {
-  constructor (props) {
-    super(props);
-  }
+    constructor(props) {
+        super (props);
+        this.props.logout();
+    }
 
-  render () {
-    return (
-      <Redirect to='/'/>
-    );
-  }
+    render() {
+        return (
+            <p>dings</p>
+        );
+    }
 }
 
 export default LogoutPage;

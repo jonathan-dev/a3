@@ -53,7 +53,8 @@ module.exports = function (app) {
                         var token = jwt.sign(payload, jwtOptions.secretOrKey);
                         res.statusCode = 200;
                         res.json({
-                            message: "ok",
+                            message: "login succeeded",
+                            username: username,
                             token: token
                         });
                     }

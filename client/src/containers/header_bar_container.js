@@ -1,38 +1,28 @@
-import {
-    connect
-} from 'react-redux';
-import {
-    headerBarVisibilityFilters
-} from '../constants/action_types';
+import { connect } from 'react-redux';
 import HeaderBar from '@/header_bar';
-
-
+import { push } from 'react-router-redux';
 import {
     HOME_PATH,
     CREATE_POST_PATH,
     LOGIN_PATH,
-    LOGOUT_PATH,
     REGISTER_PATH
 } from '../paths';
+
+import { logoutUser } from '../actions/actions';
 
 // standard links that should be displayed all the time
 let standardLinks = [{
         path: HOME_PATH,
         text: 'HOME'
     },
+];
+
+let authenticatedLinks = standardLinks.concat([
     {
         path: CREATE_POST_PATH,
         text: 'Create Post'
     }
-];
-
-// links that should only be displayed when user is authenticated
-let authenticatedLinks = standardLinks.concat(
-    [{
-        path: LOGOUT_PATH,
-        text: 'Logout'
-    }]
-);
+]);
 
 // links that will only be displayed when user is not authenticated
 let unauthenticatedLinks = standardLinks.concat([{
@@ -50,13 +40,26 @@ const getVisibleHeaderBarLinks = isAuthenticated => {
     return unauthenticatedLinks.slice(0);
 };
 
+const logout = (dispatch) => {
+    console.log("Im here");
+    dispatch(logoutUser());
+    dispatch(push(HOME_PATH));
+};
+
 const mapStateToProps = state => {
     return {
-        headerBarLinks: getVisibleHeaderBarLinks(state.isAuthenticated),
-        username: state.isAuthenticated ? state.username : null
+        headerBarLinks: getVisibleHeaderBarLinks(state.UserAuthentication.isAuthenticated),
+        username: state.UserAuthentication.isAuthenticated ? state.UserAuthentication.username : null,
+        isAuthenticated: state.UserAuthentication.isAuthenticated
     }
 };
 
-const HeaderBarContainer = connect(mapStateToProps)(HeaderBar);
+const mapDispatchToProps = dispatch => {
+    return {
+        logout: () => logout(dispatch)
+    }
+};
+
+const HeaderBarContainer = connect(mapStateToProps, mapDispatchToProps)(HeaderBar);
 
 export default HeaderBarContainer;
