@@ -6,7 +6,6 @@ import {
     LOGIN_SUCCEEDED,
     LOGOUT_USER,
     headerBarVisibilityFilters,
-    LOGIN_FORM_INPUT_CHANGED,
     CHECK_RESET_ROUTE_SUCCESS,
     CHECK_RESET_ROUTE_FAIL
 } from '../constants/action_types';
@@ -47,9 +46,6 @@ export function UserAuthentication(state = initialState, action) {
 
         case LOGOUT_USER:
             return Object.assign({}, state, logoutUserState);
-
-        case LOGIN_FORM_INPUT_CHANGED:
-            return Object.assign({}, state, action.changedInput); // Note that changedInput is a key value pair
 
         //------------------------------------------
         // RESET PAGE

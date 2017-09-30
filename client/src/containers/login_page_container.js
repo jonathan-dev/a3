@@ -9,22 +9,9 @@ import LoginPage from '@/login_page'
 import { push } from 'react-router-redux';
 import { HOME_PATH } from '../paths';
 import {
-    formInputChanged,
     postLoginInformation,
     loginSucceeded
 } from '../actions/actions';
-
-// Handle input change in login form
-const handleInputChange = (dispatch, event) => {
-    // name/value of form field which changed value
-    let {name, value} = event.target;
-
-    let changedInput = {
-        [name]: value
-    };
-
-    dispatch(formInputChanged(changedInput));
-};
 
 // handle submission of login information
 const handleSubmit = (dispatch, event) => {
@@ -64,7 +51,6 @@ const mapStateToProps = state => {
 // redux function to map dispatch functions to props to invoke callback in login page component from props
 const mapDispatchToProps = dispatch => {
     return {
-        onInputChanged: event => handleInputChange(dispatch, event),
         handleSubmit: event => handleSubmit(dispatch, event)
     }
 };

@@ -5,21 +5,11 @@
  * */
 
 import {
-    LOGIN_SUCCEEDED,
     LOGOUT_USER,
     POST_LOGIN_INFORMATION,
     CHECK_RESET_ROUTE,
-    RESET_PASSWORD,
-    FORM_INPUT_CHANGED
+    RESET_PASSWORD
 } from '../constants/action_types';
-
-// action generator for a change of values in form
-export function formInputChanged (changedInput) {
-    return {
-        type: FORM_INPUT_CHANGED,
-        changedInput
-    };
-}
 
 // action generator for posting login information
 export function postLoginInformation (loginData) {
@@ -83,14 +73,6 @@ export function postRegistrationInformation (registrationData) {
                 }
             }
         }
-    }
-}
-
-// action generator for a succeeded login
-export function loginSucceeded (userData) {
-    return {
-        type: LOGIN_SUCCEEDED,
-        userData
     }
 }
 
