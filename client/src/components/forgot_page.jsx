@@ -72,7 +72,6 @@ class ForgotPage extends Component {
                     {' '}
                 <Button type="submit" bsStyle="primary" disabled={this.state.formValid?false:true}>Send</Button>
             </Form>
-
         );
     }
 }

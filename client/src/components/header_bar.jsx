@@ -2,25 +2,63 @@
  * This file contains all links for the header bar of the react application
  * */
 
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import {
+    HOME_PATH,
+    CREATE_POST_PATH,
+    LOGIN_PATH,
+    REGISTER_PATH
+} from '../paths'
 
 class HeaderBar extends Component {
     render() {
-        let headerBarLinks = this.props.headerBarLinks.map((link, index) =>
-            <div key={index}>
-                <Link to={link.path}>{link.text}</Link>
-                <br/>
-            </div>
-        );
-
+        const { isAuthenticated, username } = this.props
+        console.log(username)
         return (
-            <div>
-                {this.props.isAuthenticated ? <h1>{ this.props.username }</h1> : null}
-                {headerBarLinks}
-                {this.props.isAuthenticated ? <a href="" onClick={this.props.logout}>logout</a> : null}
-            </div>
+            <Navbar inverse collapseOnSelect>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <LinkContainer to={HOME_PATH} >
+                            <a>Name</a>
+                        </LinkContainer>
+                    </Navbar.Brand>
+                    <Navbar.Toggle />
+                </Navbar.Header>
+                <Navbar.Collapse>
+                    <Nav>
+                        {isAuthenticated?
+                        <LinkContainer to={CREATE_POST_PATH} >
+                            <NavItem href={CREATE_POST_PATH}>{CREATE_POST_PATH}</NavItem>
+                        </LinkContainer>
+                        :
+                        null
+                        }
+                    </Nav>
+                    <Nav pullRight>
+                        {isAuthenticated ?
+                            [
+                            <LinkContainer to={username} >
+                                <NavItem href={username}>{username}</NavItem>
+                            </LinkContainer>,
+                            <NavItem onClick={this.props.logout}>Logout</NavItem>
+                            ]
+                            :
+                            [
+                                <LinkContainer to={REGISTER_PATH} >
+                                    <NavItem href={REGISTER_PATH}>{REGISTER_PATH}</NavItem>
+                                </LinkContainer>,
+                                <LinkContainer to={LOGIN_PATH} >
+                                    <NavItem href={LOGIN_PATH}>{LOGIN_PATH}</NavItem>
+                                </LinkContainer>
+                            ]
+                        }
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
         );
     }
 }

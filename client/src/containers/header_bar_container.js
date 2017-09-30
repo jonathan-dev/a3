@@ -10,35 +10,6 @@ import {
 
 import { logoutUser } from '../actions/actions';
 
-// standard links that should be displayed all the time
-let standardLinks = [{
-        path: HOME_PATH,
-        text: 'HOME'
-    },
-];
-
-let authenticatedLinks = standardLinks.concat([
-    {
-        path: CREATE_POST_PATH,
-        text: 'Create Post'
-    }
-]);
-
-// links that will only be displayed when user is not authenticated
-let unauthenticatedLinks = standardLinks.concat([{
-        path: LOGIN_PATH,
-        text: 'Login'
-    },
-    {
-        path: REGISTER_PATH,
-        text: 'Register'
-    }
-]);
-
-const getVisibleHeaderBarLinks = isAuthenticated => {
-    if (isAuthenticated) return authenticatedLinks.slice(0);
-    return unauthenticatedLinks.slice(0);
-};
 
 const logout = (dispatch) => {
     console.log("Im here");
@@ -48,7 +19,6 @@ const logout = (dispatch) => {
 
 const mapStateToProps = state => {
     return {
-        headerBarLinks: getVisibleHeaderBarLinks(state.UserAuthentication.isAuthenticated),
         username: state.UserAuthentication.isAuthenticated ? state.UserAuthentication.username : null,
         isAuthenticated: state.UserAuthentication.isAuthenticated
     }
