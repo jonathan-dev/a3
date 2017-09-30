@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
-
+import { Redirect } from 'react-router';
+import { HOME_PATH } from '../paths';
 
 class RegisterPage extends Component {
     //Render HTML register form
     render() {
+        // if logged in redirect to home TODO: check if works properly with saving stuff to local storage
+        if (this.props.isAuthenticated)
+            return <Redirect to={HOME_PATH}/>;
+
         return (
             <div>
                 <form onSubmit={this.props.handleSubmit}>

@@ -71,10 +71,8 @@ module.exports = function (app) {
         if (username && password && email) {
             mongo.createUser(username, email, password)
                 .then(e => {
-                    console.log("registration completed: ");
-                    console.log(username, password, email);
                     res.statusCode = 200;
-                    res.send('OK')
+                    res.json({username: username});
                 })
                 .catch(err => {
                     res.statusCode = 500;

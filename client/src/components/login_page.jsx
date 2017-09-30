@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
+import { Redirect } from 'react-router';
+import { HOME_PATH } from "../paths";
 
-// TODO: make code clean
 class LoginPage extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
+        // if already logged in, reroute to home
+        if (this.props.isAuthenticated)
+            return <Redirect to={HOME_PATH}/>;
+
         return (
             <form onSubmit={this.props.handleSubmit}>
                 <label>

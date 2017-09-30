@@ -5,12 +5,8 @@
  * */
 
 import { connect } from 'react-redux';
-import LoginPage from '@/login_page'
-import { push } from 'react-router-redux';
-import { HOME_PATH } from '../paths';
-import {
-    postLogin
-} from '../actions/actions';
+import LoginPage from '@/login_page';
+import { postLogin } from '../actions/actions';
 
 // handle submission of login information
 const handleSubmit = (dispatch, event) => {
@@ -30,9 +26,7 @@ const handleSubmit = (dispatch, event) => {
 // redux function to map the current state to props passable to the login page component for rendering
 const mapStateToProps = state => {
     return {
-        username: state.username,
-        password: state.password,
-        isAuthenticated: state.isAuthenticated
+        isAuthenticated: state.UserAuthentication.isAuthenticated
     };
 };
 
