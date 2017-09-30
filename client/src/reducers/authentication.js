@@ -3,7 +3,6 @@
  * */
 
 import {
-    POST_LOGIN,
     POST_LOGIN_SUCCESS,
     POST_LOGIN_FAIL,
     LOGOUT_USER,
@@ -41,7 +40,10 @@ export function UserAuthentication(state = initialState, action) {
         // LOGIN PAGE
         //------------------------------------------
         case POST_LOGIN_SUCCESS:
-            return Object.assign({}, state, {}); // TODO: implement
+            return Object.assign({}, state, {
+                isAuthenticated: true,
+
+            }); // TODO: implement
         case POST_LOGIN_FAIL:
             return Object.assign({}, state, {}); // TODO: implement
         case LOGOUT_USER:

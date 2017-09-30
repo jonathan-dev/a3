@@ -45,26 +45,14 @@ let unauthenticatedLinks = standardLinks.concat([{
     }
 ]);
 
-// unpack the attributes using array destructuring (ES6)
-let {
-    SHOW_AUTHENTICATED,
-    SHOW_UNAUTHENTICATED
-} = headerBarVisibilityFilters;
-
-const getVisibleHeaderBarLinks = filter => {
-    switch (filter) {
-        case SHOW_AUTHENTICATED:
-            return authenticatedLinks.slice(0);
-        case SHOW_UNAUTHENTICATED:
-            return unauthenticatedLinks.slice(0);
-        default:
-            return unauthenticatedLinks.slice(0);
-    }
+const getVisibleHeaderBarLinks = isAuthenticated => {
+    if (isAuthenticated) return authenticatedLinks.slice(0);
+    return unauthenticatedLinks.slice(0);
 };
 
 const mapStateToProps = state => {
     return {
-        headerBarLinks: getVisibleHeaderBarLinks(state.headerBarVisibilityFilter),
+        headerBarLinks: getVisibleHeaderBarLinks(state.isAuthenticated),
         username: state.isAuthenticated ? state.username : null
     }
 };
