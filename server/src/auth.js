@@ -70,15 +70,23 @@ module.exports = function (app) {
         let {username, password, email} = req.body;
         if (username && password && email) {
             mongo.createUser(username, email, password)
-                .then(e => {
+                .then(() => {
                     res.statusCode = 200;
                     res.json({username: username});
                 })
-                .catch(err => {
-                    res.statusCode = 500;
-                    res.send('err')
-                })
-
+                .catch(error => {
+                    if (error._message === 'User validation failed') {
+                        let errors = [];
+                        Object.keys(error.errors).forEach(key => errors.push(key + " " + error.errors[key].kind));
+                        res.statusCode = 401;
+                        res.json({errors: errors.slice(0)});
+                    } else {
+                        res.statusCode = 500;
+                        // send error as array of strings to be able to add additional error messages
+                        let serverError = `Server error, please try again later ${500}`;
+                        res.json([serverError].slice(0));
+                    }
+                });
         }
     });
 

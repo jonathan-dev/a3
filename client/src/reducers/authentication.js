@@ -8,7 +8,9 @@ import {
     LOGOUT_USER,
     CHECK_RESET_ROUTE_SUCCESS,
     CHECK_RESET_ROUTE_FAIL,
-    PASSWORDS_DO_NOT_MATCH, POST_REGISTRATION_SUCCESS, POST_REGISTRATION_FAIL
+    PASSWORDS_DO_NOT_MATCH,
+    POST_REGISTRATION_SUCCESS,
+    POST_REGISTRATION_FAIL, SHOW_REGISTRATION_FORM_ERORRS
 } from '../constants/action_types';
 
 /**
@@ -37,13 +39,18 @@ export function UserAuthentication(state = {}, action) {
         // REGISTRATION PAGE
         //------------------------------------------
         case POST_REGISTRATION_SUCCESS:
+            console.log("Success");
             return Object.assign(
                 {},
                 state,
-                { isAuthenticated: true, username: action.payload.data.username }
+                { isAuthenticated: true, username: action.payload.data.username, registrationErrors: null }
             );
         case POST_REGISTRATION_FAIL:
-            return Object.assign({}, state, { isAuthenticated: false }); // TODO: implement error submission to state
+            let errorMessages = action.error.response.data.errors;
+            return Object.assign({}, state, { registrationErrors: errorMessages.slice(0) });
+        case SHOW_REGISTRATION_FORM_ERORRS:
+            return Object.assign({}, state, { registrationErrors: action.errors.slice(0) });
+
         //------------------------------------------
         // RESET PAGE
         //------------------------------------------
