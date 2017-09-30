@@ -33,13 +33,7 @@ const handleSubmit = (dispatch, event) => {
         });
 };
 
-const checkIfExists = (dispatch, token) => {
-    dispatch(checkResetRoute(token))
-}
-
 const mapStateToProps = state => {
-    console.log('---state---', state)
-    console.log('---valid---', state.UserAuthentication.routeIsValid)
     return {
         username: state.username,
         password: state.password,
@@ -49,7 +43,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        check: token => checkIfExists(dispatch, token)
+        check: token => dispatch(checkResetRoute(token))
     }
 };
 
