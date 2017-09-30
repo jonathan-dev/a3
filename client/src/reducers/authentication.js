@@ -8,7 +8,7 @@ import {
     LOGOUT_USER,
     CHECK_RESET_ROUTE_SUCCESS,
     CHECK_RESET_ROUTE_FAIL,
-    PASSWORDS_DO_NOT_MATCH
+    PASSWORDS_DO_NOT_MATCH, POST_REGISTRATION_SUCCESS, POST_REGISTRATION_FAIL
 } from '../constants/action_types';
 
 /**
@@ -29,10 +29,21 @@ export function UserAuthentication(state = {}, action) {
                 { isAuthenticated: true, username: action.payload.data.username }
             );
         case POST_LOGIN_FAIL:
-            return Object.assign({}, state, { isAuthenticated: false }); // TODO: implement
+            return Object.assign({}, state, { isAuthenticated: false }); // TODO: implement error submission to state
         case LOGOUT_USER:
             return Object.assign({}, state, { username: null, isAuthenticated: false });
 
+        //------------------------------------------
+        // REGISTRATION PAGE
+        //------------------------------------------
+        case POST_REGISTRATION_SUCCESS:
+            return Object.assign(
+                {},
+                state,
+                { isAuthenticated: true, username: action.payload.data.username }
+            );
+        case POST_REGISTRATION_FAIL:
+            return Object.assign({}, state, { isAuthenticated: false }); // TODO: implement error submission to state
         //------------------------------------------
         // RESET PAGE
         //------------------------------------------

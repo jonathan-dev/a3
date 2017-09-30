@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 
 class HeaderBar extends Component {
     render() {
-        console.log("this.props.logout: "); console.log(this.props.logout);
         let headerBarLinks = this.props.headerBarLinks.map((link, index) =>
             <div key={index}>
                 <Link to={link.path}>{link.text}</Link>
