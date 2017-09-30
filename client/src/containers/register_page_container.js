@@ -21,10 +21,10 @@ import { formInputChanged, postRegistrationInformation } from '../actions/action
         event.preventDefault(); //Stops page refresh
 
         let formData = {
-            username: event.target.username.value;
-            email: event.target.email.value;
-            password: event.target.password.value;
-            password2: event.target.password2.value;
+            username: event.target.username.value,
+            email: event.target.email.value,
+            password: event.target.password.value,
+            password2: event.target.password2.value,
         }
 
         if(formInputIsValid(formData)) {
