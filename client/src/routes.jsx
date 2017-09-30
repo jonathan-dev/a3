@@ -10,7 +10,6 @@ import ResetPage from './containers/reset_page_container';
 import HotPage from '@/hot_page';
 import PostDetailsPage from '@/post_details';
 import CreatePost from '@/create_post';
-import LogoutPage from './containers/logout_page_container';
 import RegisterPage from './containers/register_page_container';
 import ForgotPage from '@/forgot_page';
 import ProfilePage from '@/profile_page';
@@ -19,7 +18,6 @@ import {
   HOME_PATH,
   CREATE_POST_PATH,
   LOGIN_PATH,
-  LOGOUT_PATH,
   REGISTER_PATH,
   FORGOT_PASSWORD_PATH,
   RESET_PASSWORD_PATH,
@@ -35,7 +33,6 @@ class Routes extends Component {
         <Route exact path={HOME_PATH} component={HotPage}/>
         <Route path={CREATE_POST_PATH} component={CreatePost}/>
         <Route path={LOGIN_PATH} component={LoginPage}/>
-        <Route path={LOGOUT_PATH} component={LogoutPage}/>
         <Route path={REGISTER_PATH} component={RegisterPage}/>
         <Route path={FORGOT_PASSWORD_PATH} component={ForgotPage}/>
         <Route path={RESET_PASSWORD_PATH} component={ResetPage}/>

@@ -69,7 +69,7 @@ import RegisterPage from '@/register_page'
 
     const mapStateToProps = state => {
         return {
-            // TODO implement
+            isAuthenticated: state.UserAuthentication.isAuthenticated || false
         }
     };
 
