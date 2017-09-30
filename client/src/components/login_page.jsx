@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { Redirect } from 'react-router-dom'
 
 // TODO: make code clean
 class LoginPage extends Component {
@@ -12,16 +11,13 @@ class LoginPage extends Component {
             <form onSubmit={this.props.handleSubmit}>
                 <label>
                     Username:
-                    <input name="username" type="text" value={this.props.username}
-                           onChange={this.props.onInputChanged}/>
+                    <input name="username" type="text"/>
                 </label>
 
                 <label>
                     Password:
-                    <input name="password" type="password" value={this.props.password}
-                           onChange={this.props.onInputChanged}/>
+                    <input name="password" type="password"/>
                 </label>
-
                 <input type="submit" value="submit"/>
             </form>
         );
