@@ -29,7 +29,11 @@ export function UserAuthentication(state = {}, action) {
             return Object.assign(
                 {},
                 state,
-                { isAuthenticated: true, username: action.payload.data.username }
+                {
+                    isAuthenticated: true,
+                    username: action.payload.data.username,
+                    token: action.payload.data.token
+                }
             );
         case POST_LOGIN_FAIL:
             return Object.assign({}, state, { loginErrors: ['Username or password is incorrect!'].slice(0) });
@@ -38,7 +42,7 @@ export function UserAuthentication(state = {}, action) {
         case CLEAR_LOGIN_FORM_ERRORS:
             return Object.assign({}, state, { loginErrors: null} );
         case LOGOUT_USER:
-            return Object.assign({}, state, { username: null, isAuthenticated: false });
+            return Object.assign({}, state, { username: null, isAuthenticated: false, token: null });
 
         //------------------------------------------
         // REGISTRATION PAGE
