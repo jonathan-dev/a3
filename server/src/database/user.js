@@ -36,7 +36,7 @@ let userSchema = mongoose.Schema({
     resetPasswordExpires: Date
 });
 
-userSchema.plugin(uniqueValidator);
+userSchema.plugin(uniqueValidator, {type: 'already in use'});
 
 userSchema.virtual('isLocked').get(
     // check for a future lockUntil timestamp

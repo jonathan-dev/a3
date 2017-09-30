@@ -9,7 +9,9 @@ import {
     POST_LOGIN,
     CHECK_RESET_ROUTE,
     RESET_PASSWORD,
-    PASSWORDS_DO_NOT_MATCH
+    PASSWORDS_DO_NOT_MATCH,
+    POST_REGISTRATION,
+    SHOW_REGISTRATION_FORM_ERORRS, CLEAR_REGISTRATION_FORM_ERRORS, SHOW_LOGIN_FORM_ERRORS, CLEAR_LOGIN_FORM_ERRORS
 } from '../constants/action_types';
 
 // action generator for posting login information
@@ -26,10 +28,23 @@ export function postLogin (loginData) {
     }
 }
 
+export function showLoginFormErrors (errors) {
+    return {
+        type: SHOW_LOGIN_FORM_ERRORS,
+        errors
+    }
+}
+
+export function clearLoginFormErrors () {
+    return {
+        type: CLEAR_LOGIN_FORM_ERRORS
+    }
+}
+
 // action generator for posting login information
 export function postRegistration (registrationData) {
     return {
-        type: POST_LOGIN,
+        type: POST_REGISTRATION,
         payload: {
             request: {
                 url: '/register',
@@ -37,6 +52,19 @@ export function postRegistration (registrationData) {
                 data: Object.assign({}, registrationData)
             }
         }
+    }
+}
+
+export function showRegistrationFormErrors (errors) {
+    return {
+        type: SHOW_REGISTRATION_FORM_ERORRS,
+        errors
+    }
+}
+
+export function clearRegistrationFormErrors () {
+    return {
+        type: CLEAR_REGISTRATION_FORM_ERRORS
     }
 }
 

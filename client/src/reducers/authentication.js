@@ -8,7 +8,10 @@ import {
     LOGOUT_USER,
     CHECK_RESET_ROUTE_SUCCESS,
     CHECK_RESET_ROUTE_FAIL,
-    PASSWORDS_DO_NOT_MATCH, POST_REGISTRATION_SUCCESS, POST_REGISTRATION_FAIL
+    PASSWORDS_DO_NOT_MATCH,
+    POST_REGISTRATION_SUCCESS,
+    POST_REGISTRATION_FAIL, SHOW_REGISTRATION_FORM_ERORRS, CLEAR_REGISTRATION_FORM_ERRORS, SHOW_LOGIN_FORM_ERRORS,
+    CLEAR_LOGIN_FORM_ERRORS
 } from '../constants/action_types';
 
 /**
@@ -26,24 +29,38 @@ export function UserAuthentication(state = {}, action) {
             return Object.assign(
                 {},
                 state,
-                { isAuthenticated: true, username: action.payload.data.username }
+                {
+                    isAuthenticated: true,
+                    username: action.payload.data.username,
+                    token: action.payload.data.token
+                }
             );
         case POST_LOGIN_FAIL:
-            return Object.assign({}, state, { isAuthenticated: false }); // TODO: implement error submission to state
+            return Object.assign({}, state, { loginErrors: ['Username or password is incorrect!'].slice(0) });
+        case SHOW_LOGIN_FORM_ERRORS:
+            return Object.assign({}, state, { loginErrors: action.errors.slice(0) });
+        case CLEAR_LOGIN_FORM_ERRORS:
+            return Object.assign({}, state, { loginErrors: null} );
         case LOGOUT_USER:
-            return Object.assign({}, state, { username: null, isAuthenticated: false });
+            return Object.assign({}, state, { username: null, isAuthenticated: false, token: null });
 
         //------------------------------------------
         // REGISTRATION PAGE
         //------------------------------------------
         case POST_REGISTRATION_SUCCESS:
+            console.log("Success");
             return Object.assign(
                 {},
                 state,
-                { isAuthenticated: true, username: action.payload.data.username }
+                { isAuthenticated: true, username: action.payload.data.username, registrationErrors: null }
             );
         case POST_REGISTRATION_FAIL:
-            return Object.assign({}, state, { isAuthenticated: false }); // TODO: implement error submission to state
+            return Object.assign({}, state, { registrationErrors: action.error.response.data.errors.slice(0) });
+        case SHOW_REGISTRATION_FORM_ERORRS:
+            return Object.assign({}, state, { registrationErrors: action.errors.slice(0) });
+        case CLEAR_REGISTRATION_FORM_ERRORS:
+            return Object.assign({}, state, { registrationErrors: null} );
+
         //------------------------------------------
         // RESET PAGE
         //------------------------------------------

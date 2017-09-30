@@ -3,11 +3,21 @@ import { Redirect } from 'react-router';
 import { HOME_PATH } from '../paths';
 
 class RegisterPage extends Component {
+
+    componentDidMount () {
+            this.props.clearFormErrors();
+    }
+
     //Render HTML register form
     render() {
+        let registrationErrors;
         // if logged in redirect to home TODO: check if works properly with saving stuff to local storage
         if (this.props.isAuthenticated)
             return <Redirect to={HOME_PATH}/>;
+
+        if (this.props.registrationErrors) {
+            registrationErrors = this.props.registrationErrors.map((error, index) => <li key={index}>{error}</li>);
+        }
 
         return (
             <div>
@@ -33,6 +43,10 @@ class RegisterPage extends Component {
                     </label>
                     <button type="submit">register</button>
                 </form>
+
+                <ul>
+                    {registrationErrors}
+                </ul>
             </div>
         );
     }
