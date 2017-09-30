@@ -11,7 +11,7 @@ import {
     RESET_PASSWORD,
     PASSWORDS_DO_NOT_MATCH,
     POST_REGISTRATION,
-    SHOW_REGISTRATION_FORM_ERORRS
+    SHOW_REGISTRATION_FORM_ERORRS, CLEAR_REGISTRATION_FORM_ERRORS
 } from '../constants/action_types';
 
 // action generator for posting login information
@@ -46,6 +46,12 @@ export function showRegistrationFormErrors (errors) {
     return {
         type: SHOW_REGISTRATION_FORM_ERORRS,
         errors
+    }
+}
+
+export function clearRegistrationFormErrors () {
+    return {
+        type: CLEAR_REGISTRATION_FORM_ERRORS
     }
 }
 

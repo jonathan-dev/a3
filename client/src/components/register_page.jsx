@@ -3,6 +3,11 @@ import { Redirect } from 'react-router';
 import { HOME_PATH } from '../paths';
 
 class RegisterPage extends Component {
+
+    componentDidMount () {
+            this.props.clearFormErrors();
+    }
+
     //Render HTML register form
     render() {
         let registrationErrors;

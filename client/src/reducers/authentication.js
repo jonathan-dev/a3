@@ -10,7 +10,7 @@ import {
     CHECK_RESET_ROUTE_FAIL,
     PASSWORDS_DO_NOT_MATCH,
     POST_REGISTRATION_SUCCESS,
-    POST_REGISTRATION_FAIL, SHOW_REGISTRATION_FORM_ERORRS
+    POST_REGISTRATION_FAIL, SHOW_REGISTRATION_FORM_ERORRS, CLEAR_REGISTRATION_FORM_ERRORS
 } from '../constants/action_types';
 
 /**
@@ -50,6 +50,8 @@ export function UserAuthentication(state = {}, action) {
             return Object.assign({}, state, { registrationErrors: errorMessages.slice(0) });
         case SHOW_REGISTRATION_FORM_ERORRS:
             return Object.assign({}, state, { registrationErrors: action.errors.slice(0) });
+        case CLEAR_REGISTRATION_FORM_ERRORS:
+            return Object.assign({}, state, { registrationErrors: null} );
 
         //------------------------------------------
         // RESET PAGE

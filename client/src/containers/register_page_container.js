@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import {postRegistration, showRegistrationFormErrors} from '../actions/actions';
+import {postRegistration, showRegistrationFormErrors, clearRegistrationFormErrors} from '../actions/actions';
 import RegisterPage from '@/register_page'
 // THIS FILE HAS NOT BEEN UPDATED ENTIRELY FOR REDUX USAGE TODO: implement container
 
@@ -76,7 +76,8 @@ import RegisterPage from '@/register_page'
 
     const mapDispatchToProps = dispatch => {
         return {
-            handleSubmit: (event) => handleSubmit(dispatch, event)
+            handleSubmit: (event) => handleSubmit(dispatch, event),
+            clearFormErrors: () => dispatch(clearRegistrationFormErrors())
         }
     };
 
