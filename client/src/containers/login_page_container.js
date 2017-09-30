@@ -16,11 +16,9 @@ import {
 
 // Handle input change in login form
 const handleInputChange = (dispatch, event) => {
-    // name of form field which changed value
-    let name = event.target.name;
+    // name/value of form field which changed value
+    let {name, value} = event.target;
 
-    // changed value
-    let value = event.target.value;
     let changedInput = {
         [name]: value
     };

@@ -36,25 +36,30 @@ const initialState = logoutUserState;
  * */
 export function UserAuthentication(state = initialState, action) {
     switch (action.type) {
+        //------------------------------------------
+        // LOGIN PAGE
+        //------------------------------------------
         case LOGIN_SUCCEEDED:
             return Object.assign({}, state, {
                 headerBarVisibilityFilter: SHOW_AUTHENTICATED,
                 isAuthenticated: true
             });
+
         case LOGOUT_USER:
             return Object.assign({}, state, logoutUserState);
+
         case LOGIN_FORM_INPUT_CHANGED:
             return Object.assign({}, state, action.changedInput); // Note that changedInput is a key value pair
+
+        //------------------------------------------
+        // RESET PAGE
+        //------------------------------------------
         case CHECK_RESET_ROUTE_SUCCESS:
-            console.log('---success---',action)
-            return Object.assign({}, state, {
-                routeIsValid: true
-            });
+            return Object.assign({}, state, { routeIsValid: true });
+
         case CHECK_RESET_ROUTE_FAIL:
-            console.log('---fail---',action)
-            return Object.assign({}, state, {
-                routeIsValid: false
-            });
+            return Object.assign({}, state, { routeIsValid: false});
+
         default:
             return Object.assign({}, state, initialState);
     }
