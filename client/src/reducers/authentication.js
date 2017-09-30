@@ -3,7 +3,9 @@
  * */
 
 import {
-    LOGIN_SUCCEEDED,
+    POST_LOGIN,
+    POST_LOGIN_SUCCESS,
+    POST_LOGIN_FAIL,
     LOGOUT_USER,
     headerBarVisibilityFilters,
     CHECK_RESET_ROUTE_SUCCESS,
@@ -38,12 +40,10 @@ export function UserAuthentication(state = initialState, action) {
         //------------------------------------------
         // LOGIN PAGE
         //------------------------------------------
-        case LOGIN_SUCCEEDED:
-            return Object.assign({}, state, {
-                headerBarVisibilityFilter: SHOW_AUTHENTICATED,
-                isAuthenticated: true
-            });
-
+        case POST_LOGIN_SUCCESS:
+            return Object.assign({}, state, {}); // TODO: implement
+        case POST_LOGIN_FAIL:
+            return Object.assign({}, state, {}); // TODO: implement
         case LOGOUT_USER:
             return Object.assign({}, state, logoutUserState);
 

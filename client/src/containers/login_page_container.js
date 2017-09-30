@@ -9,8 +9,7 @@ import LoginPage from '@/login_page'
 import { push } from 'react-router-redux';
 import { HOME_PATH } from '../paths';
 import {
-    postLoginInformation,
-    loginSucceeded
+    postLogin
 } from '../actions/actions';
 
 // handle submission of login information
@@ -25,18 +24,7 @@ const handleSubmit = (dispatch, event) => {
     };
 
     // dispatch postLoginInformation with the extracted form data
-    dispatch(postLoginInformation(formData))
-        .then(event => {
-            // login succeeded TODO: implement on success functionality after login
-            dispatch(loginSucceeded());
-
-            // reroute to home page
-            dispatch(push(HOME_PATH));
-        })
-        .catch(error => {
-            // TODO: give visual feedback to user
-            console.log("failed to login");
-        });
+    dispatch(postLogin(formData));
 };
 
 // redux function to map the current state to props passable to the login page component for rendering

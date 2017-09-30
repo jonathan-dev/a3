@@ -11,7 +11,7 @@ import HotPage from '@/hot_page';
 import PostDetailsPage from '@/post_details';
 import CreatePost from '@/create_post';
 import LogoutPage from '@/logout_page';
-import RegisterPage from '@/register_page';
+import RegisterPage from './containers/register_page_container';
 import ForgotPage from '@/forgot_page';
 import ProfilePage from '@/profile_page';
 

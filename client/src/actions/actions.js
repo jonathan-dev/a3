@@ -6,23 +6,34 @@
 
 import {
     LOGOUT_USER,
-    POST_LOGIN_INFORMATION,
+    POST_LOGIN,
     CHECK_RESET_ROUTE,
     RESET_PASSWORD
 } from '../constants/action_types';
 
 // action generator for posting login information
-export function postLoginInformation (loginData) {
+export function postLogin (loginData) {
     return {
-        type: POST_LOGIN_INFORMATION,
+        type: POST_LOGIN,
         payload: {
             request: {
                 url: '/login',
                 method: 'POST',
-                data: {
-                    username: loginData.username,
-                    password: loginData.password
-                }
+                data: Object.assign({}, loginData)
+            }
+        }
+    }
+}
+
+// action generator for posting login information
+export function postRegistration (registrationData) {
+    return {
+        type: POST_LOGIN,
+        payload: {
+            request: {
+                url: '/register',
+                method: 'POST',
+                data: Object.assign({}, registrationData)
             }
         }
     }
@@ -58,23 +69,7 @@ export function resetPassword (token, password) {
         }
     }
 }
-// action generator for posting login information
-export function postRegistrationInformation (registrationData) {
-    return {
-        type: POST_LOGIN_INFORMATION,
-        payload: {
-            request: {
-                url: '/register',
-                method: 'POST',
-                data: {
-                    username: registrationData.username,
-                    password: registrationData.password,
-                    email: registrationData.email
-                }
-            }
-        }
-    }
-}
+
 
 // action generator for a logout action
 export function logoutUser () {

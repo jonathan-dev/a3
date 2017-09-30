@@ -1,31 +1,19 @@
 import { connect } from 'react-redux';
-import { formInputChanged, postRegistrationInformation } from '../actions/actions';
+import { postRegistration } from '../actions/actions';
+import RegisterPage from '@/register_page'
 // THIS FILE HAS NOT BEEN UPDATED ENTIRELY FOR REDUX USAGE TODO: implement container
-
-    //Handles changes in the input fields on the page
-    const handleChange = (dispatch, event, getFormInputErrors) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        let errors = [];
-        errors.concat(getFormInputErrors());
-
-        let changeState = {
-            [name]: value,
-            errors: errors.slice(0)
-        };
-        dispatch(formInputChanged(changeState));
-    };
 
     //Handles submission of register form TODO: NOT IMPLEMENTED YET, CORRECT IMPLEMENTATION
     const handleSubmit = (dispatch, event, formInputIsValid) => {
         event.preventDefault(); //Stops page refresh
 
+        // extract formdata to object
         let formData = {
             username: event.target.username.value,
             email: event.target.email.value,
             password: event.target.password.value,
-            password2: event.target.password2.value,
-        }
+            password2: event.target.password2.value, // don't send password2 to the server, trim object before request
+        };
 
         if(formInputIsValid(formData)) {
             // trim to only relevant data for request
@@ -34,14 +22,13 @@ import { formInputChanged, postRegistrationInformation } from '../actions/action
                 password: formData.password,
                 email: formData.email
             };
-            dispatch(postRegistrationInformation(trimmedFormData))
-                .then(event => {
-                    // do stuff TODO: implement
-                })
-                .catch(error => {
-                    // something went wrong TODO: implement error handling
-                })
+
+            dispatch(postRegistration(trimmedFormData));
+        } else {
+            console.log("Form not valid!");
+            // TODO: implement
         }
+        console.log("Called register submit");
     };
 
     // checks whether all input is correct and valid for submission
@@ -80,3 +67,16 @@ import { formInputChanged, postRegistrationInformation } from '../actions/action
         return passwordErrors;
     };
 
+    const mapStateToProps = state => {
+        return {
+            // TODO implement
+        }
+    };
+
+    const mapDispatchToProps = dispatch => {
+        return {
+            handleSubmit: (event) => handleSubmit(dispatch, event, formInputIsValid)
+        }
+    };
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

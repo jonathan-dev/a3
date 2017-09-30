@@ -66,27 +66,22 @@ module.exports = function (app) {
     });
 
     app.post('/register', (req, res) => {
-        console.log('register', req.body.name, req.body.email, req.body.password);
-        if (
-            req.body.name &&
-            req.body.email &&
-            req.body.password) {
-            var name = req.body.name;
-            var email = req.body.email;
-            var password = req.body.password;
-
-            mongo.createUser(name, email, password)
+        let {username, password, email} = req.body;
+        if (username && password && email) {
+            mongo.createUser(username, email, password)
                 .then(e => {
-                    res.statusCode = 200
+                    console.log("registration completed: ");
+                    console.log(username, password, email);
+                    res.statusCode = 200;
                     res.send('OK')
                 })
                 .catch(err => {
-                    res.statusCode = 500
+                    res.statusCode = 500;
                     res.send('err')
                 })
 
         }
-    })
+    });
 
     app.post('/forgot', (req, res) => {
         const {

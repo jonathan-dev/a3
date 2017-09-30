@@ -2,7 +2,6 @@ import {
     connect
 } from 'react-redux';
 import ResetPage from '@/reset_page'
-import React from 'react';
 import {
     checkResetRoute,
     resetPassword,
