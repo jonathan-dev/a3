@@ -32,7 +32,7 @@ export function UserAuthentication(state = {}, action) {
                 { isAuthenticated: true, username: action.payload.data.username }
             );
         case POST_LOGIN_FAIL:
-            return Object.assign({}, state, { loginErrors: action.error.response.data.errors.slice(0) });
+            return Object.assign({}, state, { loginErrors: ['Username or password is incorrect!'].slice(0) });
         case SHOW_LOGIN_FORM_ERRORS:
             return Object.assign({}, state, { loginErrors: action.errors.slice(0) });
         case CLEAR_LOGIN_FORM_ERRORS:
