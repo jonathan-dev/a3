@@ -30,12 +30,6 @@ let store = createStore(
     )
 );
 
-// subscribing to log the store TODO: REMOVE when debugging is done
-let x = store.subscribe(() => {
-    console.log("state changed:");
-    console.log(store.getState());
-});
-
 const networkInterface = createNetworkInterface({
   uri: window.location.origin+'/graphql'
 });
