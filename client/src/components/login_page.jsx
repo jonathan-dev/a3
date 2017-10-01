@@ -2,42 +2,15 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { HOME_PATH } from "../paths";
 import { Field } from 'redux-form'
+import { LinkContainer } from 'react-router-bootstrap';
+import inputField from '@/inputField'
 import {
     Form,
     FormGroup,
-    ControlLabel,
-    InputGroup,
-    FormControl,
     Button,
-    HelpBlock,
     Col,
     Panel
 } from 'react-bootstrap';
-
-const renderField = ({
-    input,
-    label,
-    meta: { touched, error },
-    children,
-    ...custom
-    }) =>
-    <FormGroup controlId="formHorizontal" validationState={touched && error ? 'error' : touched && !error ? 'success' : null}>
-        {console.log(error ? error : "no error")}
-        <Col componentClass={ControlLabel} sm={2}>
-            <ControlLabel>{label}</ControlLabel>
-        </Col>
-        <Col sm={10}>
-            <FormControl
-                name={label}
-                type={label}
-                placeholder={label}
-                {...input}
-                {...custom}
-            />
-            <FormControl.Feedback />
-            {touched && error && <HelpBlock>{error}</HelpBlock>}
-        </Col>
-    </FormGroup>
 
 const LoginPage = props => {
 
@@ -58,13 +31,14 @@ const LoginPage = props => {
             <Form horizontal onSubmit={props.handleSubmit}>
                 <Field
                     name="username"
-                    component={renderField}
+                    component={inputField}
                     label="username"
                 />
                 <Field
                     name="password"
-                    component={renderField}
+                    component={inputField}
                     label="password"
+                    type="password"
                 />
                 <FormGroup>
                     <Col smOffset={2} sm={10}>
@@ -72,6 +46,9 @@ const LoginPage = props => {
                     </Col>
                 </FormGroup>
             </Form>
+            <LinkContainer to='/forgot' >
+                <a href={'/forgot'}>forgot your password?</a>
+            </LinkContainer>
         </Panel>
     );
 }

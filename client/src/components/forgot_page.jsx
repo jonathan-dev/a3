@@ -1,45 +1,13 @@
 import React from 'react'
 import { Field } from 'redux-form'
+import inputField from '@/inputField'
 import {
     Form,
     FormGroup,
-    ControlLabel,
-    InputGroup,
-    FormControl,
     Button,
-    HelpBlock,
     Col,
     Panel
 } from 'react-bootstrap';
-
-const renderEmailField = ({
-    input,
-    label,
-    meta: { touched, error },
-    children,
-    ...custom
-    }) =>
-    <FormGroup controlId="formHorizontalEmail" validationState={touched && error ? 'error' : touched && !error ? 'success' : null}>
-        {console.log(error ? error : "no error")}
-        <Col componentClass={ControlLabel} sm={2}>
-            <ControlLabel>{label}</ControlLabel>
-        </Col>
-        <Col sm={10}>
-            <InputGroup>
-                <InputGroup.Addon>@</InputGroup.Addon>
-                <FormControl
-                    name="email"
-                    type="email"
-                    placeholder={label}
-                    {...input}
-                    {...custom}
-                />
-            </InputGroup>
-            <FormControl.Feedback />
-            {touched && error && <HelpBlock>{error}</HelpBlock>}
-        </Col>
-    </FormGroup>
-
 
 const ForgotPage = props => {
     const { handleSubmit, pristine, reset, submitting, invalid } = props
@@ -54,8 +22,9 @@ const ForgotPage = props => {
             <Form horizontal>
                 <Field
                     name="email"
-                    component={renderEmailField}
+                    component={inputField}
                     label="Email"
+                    type="text"
                 />
                 <FormGroup>
                     <Col smOffset={2} sm={10}>

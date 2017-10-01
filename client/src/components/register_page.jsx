@@ -1,71 +1,16 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { HOME_PATH } from '../paths';
-
+import inputField from '@/inputField'
 import {
     Form,
-    FormGroup,
-    ControlLabel,
-    InputGroup,
     FormControl,
+    FormGroup,
     Button,
-    HelpBlock,
     Col,
     Panel
 } from 'react-bootstrap';
 import { Field } from 'redux-form'
-
-const renderField = ({
-    input,
-    label,
-    meta: { touched, error },
-    children,
-    ...custom
-    }) =>
-    <FormGroup controlId="formHorizontal" validationState={touched && error ? 'error' : touched && !error ? 'success' : null}>
-        {console.log(error ? error : "no error")}
-        <Col componentClass={ControlLabel} sm={2}>
-            <ControlLabel>{label}</ControlLabel>
-        </Col>
-        <Col sm={10}>
-            <FormControl
-                name={label}
-                placeholder={label}
-                {...input}
-                {...custom}
-            />
-            <FormControl.Feedback />
-            {touched && error && <HelpBlock>{error}</HelpBlock>}
-        </Col>
-    </FormGroup>
-
-const renderEmailField = ({
-    input,
-    label,
-    meta: { touched, error },
-    children,
-    ...custom
-    }) =>
-    <FormGroup controlId="formHorizontalEmail" validationState={touched && error ? 'error' : touched && !error ? 'success' : null}>
-        {console.log(error ? error : "no error")}
-        <Col componentClass={ControlLabel} sm={2}>
-            <ControlLabel>{label}</ControlLabel>
-        </Col>
-        <Col sm={10}>
-            <InputGroup>
-                <InputGroup.Addon>@</InputGroup.Addon>
-                <FormControl
-                    name="email"
-                    type="email"
-                    placeholder={label}
-                    {...input}
-                    {...custom}
-                />
-            </InputGroup>
-            <FormControl.Feedback />
-            {touched && error && <HelpBlock>{error}</HelpBlock>}
-        </Col>
-    </FormGroup>
 
 const RegisterPage = props => {
 
@@ -84,24 +29,24 @@ const RegisterPage = props => {
             <Form horizontal onSubmit={props.handleSubmit}>
                 <Field
                     name="username"
-                    component={renderField}
+                    component={inputField}
                     label="Username"
                 />
                 <Field
                     name="email"
-                    component={renderEmailField}
+                    component={inputField}
                     label="Email"
                     type='email'
                 />
                 <Field
                     name="password"
-                    component={renderField}
+                    component={inputField}
                     label="Password"
                     type='password'
                 />
                 <Field
                     name="password2"
-                    component={renderField}
+                    component={inputField}
                     label="Retype Password"
                     type='password'
                 />
