@@ -13,14 +13,14 @@ import {
 } from 'react-bootstrap';
 
 const renderEmailField = ({
-        input,
+    input,
     label,
     meta: { touched, error },
     children,
     ...custom
     }) =>
-    <FormGroup controlId="formHorizontalEmail" validationState={touched && error?'error':touched && !error?'success':null}>
-        {console.log(error?error:"no error")}
+    <FormGroup controlId="formHorizontalEmail" validationState={touched && error ? 'error' : touched && !error ? 'success' : null}>
+        {console.log(error ? error : "no error")}
         <Col componentClass={ControlLabel} sm={2}>
             <ControlLabel>{label}</ControlLabel>
         </Col>
@@ -36,7 +36,7 @@ const renderEmailField = ({
                 />
             </InputGroup>
             <FormControl.Feedback />
-            {touched && error && error && <HelpBlock>{error}</HelpBlock>}
+            {touched && error && <HelpBlock>{error}</HelpBlock>}
         </Col>
     </FormGroup>
 

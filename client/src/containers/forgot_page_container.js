@@ -31,11 +31,7 @@ const handleSubmit = (dispatch, event, token) => {
 const validate = values => {
     const errors = {}
     const requiredFields = [
-        'firstName',
-        'lastName',
-        'email',
-        'favoriteColor',
-        'notes'
+        'email'
     ]
     requiredFields.forEach(field => {
         if (!values[field]) {
