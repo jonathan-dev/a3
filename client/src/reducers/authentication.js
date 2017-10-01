@@ -6,6 +6,8 @@ import {
     POST_REGISTRATION_FAIL,
     CHECK_RESET_ROUTE_SUCCESS,
     CHECK_RESET_ROUTE_FAIL,
+    REQUEST_RESET_PASSWORD_SUCCESS,
+    REQUEST_RESET_PASSWORD_FAIL
 } from '../constants/action_types';
 
 export function authentication(state = {}, action) {
@@ -44,7 +46,7 @@ export function authentication(state = {}, action) {
 
 
             //------------------------------------------
-            // REGISTRATION PAGE
+            // LOGIN PAGE
             //------------------------------------------
         case POST_LOGIN_SUCCESS:
             return Object.assign({},
@@ -66,6 +68,21 @@ export function authentication(state = {}, action) {
                 isAuthenticated: false,
                 token: null
             });
+
+            //------------------------------------------
+            // FORGOT PAGE
+            //------------------------------------------
+
+        case REQUEST_RESET_PASSWORD_SUCCESS:
+            return Object.assign({}, state, {
+                resetInfo: 'success'
+            });
+
+        case REQUEST_RESET_PASSWORD_FAIL:
+            return Object.assign({}, state, {
+                resetInfo: 'fail'
+            });
+
 
         default:
             return state

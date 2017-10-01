@@ -95,6 +95,7 @@ module.exports = function (app) {
             email
         } = req.body;
         if (email) {
+            console.log('reset request received for ', email);
             const buf = crypto.randomBytes(20);
             const token = buf.toString('hex');
 

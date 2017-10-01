@@ -34,3 +34,12 @@ export const RESET_PASSWORD = 'RESET_PASSWORD';
 
 export const CHECK_RESET_ROUTE_SUCCESS = 'CHECK_RESET_ROUTE_SUCCESS';
 export const CHECK_RESET_ROUTE_FAIL = 'CHECK_RESET_ROUTE_FAIL';
+
+//------------------------------------------
+// FORGOT PAGE
+//------------------------------------------
+
+export const REQUEST_RESET_PASSWORD = 'REQUEST_RESET_PASSWORD';
+
+export const REQUEST_RESET_PASSWORD_SUCCESS = 'REQUEST_RESET_PASSWORD_SUCCESS';
+export const REQUEST_RESET_PASSWORD_FAIL = 'REQUEST_RESET_PASSWORD_FAIL';

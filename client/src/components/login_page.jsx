@@ -16,6 +16,7 @@ const LoginPage = props => {
 
     const { handleSubmit, pristine, reset, submitting, invalid } = props
 
+    
 
     // if already logged in, reroute to home
     if (props.isAuthenticated)
@@ -28,7 +29,7 @@ const LoginPage = props => {
 
     return (
         <Panel className="col-lg-4" style={colCentered}>
-            <Form horizontal onSubmit={props.handleSubmit}>
+            <Form horizontal onSubmit={handleSubmit}>
                 <Field
                     name="username"
                     component={inputField}

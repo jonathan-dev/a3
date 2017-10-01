@@ -4,9 +4,7 @@ import {
 } from 'react-redux';
 import ForgotPage from '@/forgot_page'
 import {
-    checkResetRoute,
-    resetPassword,
-    routeValidation
+    requestPasswordReset
 } from '../actions/actions';
 import {
     push
@@ -16,13 +14,10 @@ import { reduxForm } from 'redux-form'
 
 const handleSubmit = (dispatch, event, token) => {
     event.preventDefault();
-    const password = event.target.password.value;
-    const password2 = event.target.password2.value;
-    console.log('passwords: ', password, password2);
-    if (password === password2) {
-        console.log('reset password')
-        dispatch(resetPassword(token, password));
-    }
+
+    console.log('---request reset')
+    const email = event.target.email.value;
+    dispatch(requestPasswordReset(email));
 };
 
 const validate = values => {
@@ -58,8 +53,22 @@ const asyncValidate = (values /*, dispatch */ ) => {
     })
 }
 
-export default reduxForm({
-    form: 'ResetForm', // a unique identifier for this form
+const mapStateToProps = state => {
+    return {
+        resetInfo: state.authentication.resetInfo || false,
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        handleSubmit: (event) => handleSubmit(dispatch, event),
+    }
+};
+
+const forgotForm = reduxForm({
+    form: 'ForgotForm', // a unique identifier for this form
     validate,
     asyncValidate
 })(ForgotPage)
+
+export default connect(mapStateToProps, mapDispatchToProps)(forgotForm);

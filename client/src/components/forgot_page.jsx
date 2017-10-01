@@ -1,6 +1,7 @@
 import React from 'react'
 import { Field } from 'redux-form'
 import inputField from '@/inputField'
+import { LinkContainer } from 'react-router-bootstrap';
 import {
     Form,
     FormGroup,
@@ -10,7 +11,7 @@ import {
 } from 'react-bootstrap';
 
 const ForgotPage = props => {
-    const { handleSubmit, pristine, reset, submitting, invalid } = props
+    const { handleSubmit, pristine, reset, submitting, invalid, resetInfo } = props
 
     const colCentered = {
         float: 'none',
@@ -19,7 +20,7 @@ const ForgotPage = props => {
 
     return (
         <Panel className="col-lg-4" style={colCentered}>
-            <Form horizontal>
+            <Form horizontal onSubmit={handleSubmit}>
                 <Field
                     name="email"
                     component={inputField}
@@ -32,22 +33,16 @@ const ForgotPage = props => {
                     </Col>
                 </FormGroup>
             </Form>
+            {resetInfo && resetInfo === 'success' &&
+                <div>
+                    <LinkContainer to='/' >
+                        <a href={'/'}>Retun to Home</a>
+                    </LinkContainer>
+                    <p>request was send successfully! check your emails</p>
+                </div>
+            }
         </Panel>
     );
 }
 
-
 export default ForgotPage;
-
-/**
- * TODO: reimplement submit using redux
- *     handleSubmit = (event) => {
-        event.preventDefault();
-
-        axios.post(window.location.origin + '/forgot', {
-            email: this.state.email,
-        })
-            .then(event => console.log(event))
-            .catch(error => console.log(error));
-    }
- */

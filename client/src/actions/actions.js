@@ -10,10 +10,8 @@ import {
     CHECK_RESET_ROUTE,
     RESET_PASSWORD,
     POST_REGISTRATION,
-    SHOW_REGISTRATION_FORM_ERORRS,
-    CLEAR_REGISTRATION_FORM_ERRORS,
-    SHOW_LOGIN_FORM_ERRORS,
-    CLEAR_LOGIN_FORM_ERRORS
+    REQUEST_RESET_PASSWORD
+
 } from '../constants/action_types';
 
 // action generator for posting login information
@@ -67,6 +65,21 @@ export function showRegistrationFormErrors(errors) {
 export function clearRegistrationFormErrors() {
     return {
         type: CLEAR_REGISTRATION_FORM_ERRORS
+    }
+}
+
+export function requestPasswordReset(email) {
+    return {
+        type: REQUEST_RESET_PASSWORD,
+        payload: {
+            request: {
+                method: 'POST',
+                url: '/forgot',
+                data: {
+                    email: email
+                }
+            }
+        }
     }
 }
 
