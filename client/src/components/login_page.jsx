@@ -1,45 +1,79 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { HOME_PATH } from "../paths";
+import { Field } from 'redux-form'
+import {
+    Form,
+    FormGroup,
+    ControlLabel,
+    InputGroup,
+    FormControl,
+    Button,
+    HelpBlock,
+    Col,
+    Panel
+} from 'react-bootstrap';
 
-class LoginPage extends Component {
-    componentDidMount () {
-        this.props.clearLoginErrors();
+const renderField = ({
+    input,
+    label,
+    meta: { touched, error },
+    children,
+    ...custom
+    }) =>
+    <FormGroup controlId="formHorizontal" validationState={touched && error ? 'error' : touched && !error ? 'success' : null}>
+        {console.log(error ? error : "no error")}
+        <Col componentClass={ControlLabel} sm={2}>
+            <ControlLabel>{label}</ControlLabel>
+        </Col>
+        <Col sm={10}>
+            <FormControl
+                name={label}
+                type={label}
+                placeholder={label}
+                {...input}
+                {...custom}
+            />
+            <FormControl.Feedback />
+            {touched && error && <HelpBlock>{error}</HelpBlock>}
+        </Col>
+    </FormGroup>
+
+const LoginPage = props => {
+
+    const { handleSubmit, pristine, reset, submitting, invalid } = props
+
+
+    // if already logged in, reroute to home
+    if (props.isAuthenticated)
+        return <Redirect to={HOME_PATH} />;
+
+    const colCentered = {
+        float: 'none',
+        margin: '0 auto',
     }
 
-    render() {
-        let loginErrors;
-
-        // if already logged in, reroute to home
-        if (this.props.isAuthenticated)
-            return <Redirect to={HOME_PATH}/>;
-
-        // if there are loginErrors, map them for rendering
-        if (this.props.loginErrors) {
-            loginErrors = this.props.loginErrors.map((error, index) => <li key={index}>{error}</li>);
-        }
-
-        return (
-            <div>
-                <form onSubmit={this.props.handleSubmit}>
-                    <label>
-                        Username:
-                        <input name="username" type="text"/>
-                    </label>
-
-                    <label>
-                        Password:
-                        <input name="password" type="password"/>
-                    </label>
-                    <input type="submit" value="submit"/>
-                </form>
-
-                <ul>
-                    {loginErrors}
-                </ul>
-            </div>
-        );
-    }
+    return (
+        <Panel className="col-lg-4" style={colCentered}>
+            <Form horizontal onSubmit={props.handleSubmit}>
+                <Field
+                    name="username"
+                    component={renderField}
+                    label="username"
+                />
+                <Field
+                    name="password"
+                    component={renderField}
+                    label="password"
+                />
+                <FormGroup>
+                    <Col smOffset={2} sm={10}>
+                        <Button type="submit" bsStyle="primary" disabled={pristine || submitting || invalid}>Send</Button>
+                    </Col>
+                </FormGroup>
+            </Form>
+        </Panel>
+    );
 }
 
 export default LoginPage;

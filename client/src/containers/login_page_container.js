@@ -7,19 +7,7 @@
 import { connect } from 'react-redux';
 import LoginPage from '@/login_page';
 import {clearLoginFormErrors, postLogin, showLoginFormErrors} from '../actions/actions';
-
-const loginFormIsValid = formdata => {
-    return getLoginFormErrors(formdata).length == 0;
-};
-
-const getLoginFormErrors = formData => {
-    let {username, password} = formData;
-    let loginErrors = [];
-
-    if (username.length == 0) loginErrors.push('Please enter a username');
-    if (password.length == 0) loginErrors.push('Please enter a password');
-    return loginErrors;
-}
+import { reduxForm } from 'redux-form'
 
 // handle submission of login information
 const handleSubmit = (dispatch, event) => {
@@ -32,22 +20,33 @@ const handleSubmit = (dispatch, event) => {
         password: event.target.password.value || ''
     };
 
-    // if form is valid, post login data
-    if (loginFormIsValid(formData))
-        dispatch(postLogin(formData));
-    else {
-        // else show errors
-        let loginErrors = getLoginFormErrors(formData);
-        dispatch(showLoginFormErrors(loginErrors))
-    }
+    dispatch(postLogin(formData));
 };
+
+const validate = values => {
+    const errors = {}
+    const requiredFields = [
+        'username',
+        'password'
+    ]
+    requiredFields.forEach(field => {
+        if (!values[field]) {
+            errors[field] = 'Required'
+        }
+    })
+    if (
+        values.email &&
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+        errors.email = 'Invalid email address'
+    }
+    return errors
+}
 
 // redux function to map the current state to props passable to the login page component for rendering
 const mapStateToProps = state => {
-    let loginErrors = state.UserAuthentication.loginErrors;
     return {
-        isAuthenticated: state.UserAuthentication.isAuthenticated,
-        loginErrors: (loginErrors) ? loginErrors.slice(0) : null
+        isAuthenticated: state.authentication.isAuthenticated,
     };
 };
 
@@ -55,11 +54,15 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         handleSubmit: event => handleSubmit(dispatch, event),
-        clearLoginErrors: () => dispatch(clearLoginFormErrors())
     }
 };
 
+const loginForm = reduxForm({
+    form: 'ResetForm', // a unique identifier for this form
+    validate,
+})(LoginPage)
+
 // connect the redux functionality to the UI representation
-const LoginPageContainer = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+const LoginPageContainer = connect(mapStateToProps, mapDispatchToProps)(loginForm);
 
 export default LoginPageContainer;

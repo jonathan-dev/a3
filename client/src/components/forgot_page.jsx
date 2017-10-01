@@ -1,5 +1,5 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field } from 'redux-form'
 import {
     Form,
     FormGroup,
@@ -43,10 +43,6 @@ const renderEmailField = ({
 
 const ForgotPage = props => {
     const { handleSubmit, pristine, reset, submitting, invalid } = props
-
-    const panelStyle = {
-        width: '90vw'    /* Occupy the 90% of the screen width */
-    }
 
     const colCentered = {
         float: 'none',

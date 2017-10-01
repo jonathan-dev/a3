@@ -20,7 +20,6 @@ const axiosClient = axios.create({ // all axios can be used, shown in axios docu
    baseURL: window.location.origin,
 });
 const browserHistory = createBrowserHistory();
-const middleWare = routerMiddleware(browserHistory);
 
 
 let store = createStore(
@@ -28,7 +27,6 @@ let store = createStore(
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     applyMiddleware( // apply all middlewares
         axiosMiddleware(axiosClient) //second parameter options can optionally contain onSuccess, onError, onComplete, successSuffix, errorSuffix,
-        , middleWare
     )
 );
 
@@ -48,7 +46,7 @@ networkInterface.use([{
       req.options.headers = {};  // Create the header object if needed.
     }
     // get the authentication token from local storage if it exists
-    const token = store.getState().UserAuthentication.token;
+    const token = store.getState().authentication.token;
     req.options.headers.authorization = token ? `Bearer ${token}` : null;
     next();
   }

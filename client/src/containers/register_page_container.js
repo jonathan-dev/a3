@@ -1,84 +1,93 @@
-import { connect } from 'react-redux';
-import {postRegistration, showRegistrationFormErrors, clearRegistrationFormErrors} from '../actions/actions';
+import {
+    connect
+} from 'react-redux';
+import {
+    postRegistration,
+    showRegistrationFormErrors,
+    clearRegistrationFormErrors
+} from '../actions/actions';
 import RegisterPage from '@/register_page'
+import { reduxForm } from 'redux-form'
 // THIS FILE HAS NOT BEEN UPDATED ENTIRELY FOR REDUX USAGE TODO: implement container
 
-    //Handles submission of register form TODO: NOT IMPLEMENTED YET, CORRECT IMPLEMENTATION
-    const handleSubmit = (dispatch, event) => {
-        event.preventDefault(); //Stops page refresh
+//Handles submission of register form TODO: NOT IMPLEMENTED YET, CORRECT IMPLEMENTATION
+const handleSubmit = (dispatch, event) => {
+    event.preventDefault(); //Stops page refresh
 
-        // extract formdata to object
-        let formData = {
-            username: event.target.username.value,
-            email: event.target.email.value,
-            password: event.target.password.value,
-            password2: event.target.password2.value, // don't send password2 to the server, trim object before request
-        };
+    // extract formdata to object
+    let formData = {
+        username: event.target.username.value,
+        email: event.target.email.value,
+        password: event.target.password.value,
+        password2: event.target.password2.value, // don't send password2 to the server, trim object before request
+    };
 
-        if(formInputIsValid(formData)) {
-            // trim to only relevant data for request
-            let trimmedFormData = {
-                username: formData.username,
-                password: formData.password,
-                email: formData.email
-            };
+    // trim to only relevant data for request
+    let trimmedFormData = {
+        username: formData.username,
+        password: formData.password,
+        email: formData.email
+    };
 
-            dispatch(postRegistration(trimmedFormData));
-        } else {
-            dispatch(showRegistrationFormErrors(getFormInputErrors(formData)));
+    dispatch(postRegistration(trimmedFormData));
+};
+
+const validate = values => {
+    const errors = {}
+    const requiredFields = [
+        'username',
+        'email',
+        'password',
+        'password2'
+    ]
+    requiredFields.forEach(field => {
+        if (!values[field]) {
+            errors[field] = 'Required'
         }
-    };
+    })
+    if (
+        values.email &&
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+        errors.email = 'Invalid email address'
+    }
+    if(values.password2 && values.password2.length >0 && values.password2 != values.password) {
+        errors.password2 = 'Password does not match'
+    }
+    return errors
+}
 
-    // checks whether all input is correct and valid for submission
-    const formInputIsValid = (formData) => getFormInputErrors(formData).length == 0;
-
-    const getFormInputErrors = (formData) => {
-        let errors = [];
-        errors = errors.concat(getUsernameErrors(formData.username));
-        errors = errors.concat(getEmailInputErrors(formData.email));
-        errors = errors.concat(getPasswordErrors(formData.password, formData.password2));
-        return errors;
-    };
-
-    // Collects all recognized errors in currently typed username and returns them as array of strings
-    const getUsernameErrors = (username) => {
-        let usernameErrors = [];
-        if (username.length == 0) usernameErrors.push('Username cant be empty!');
-        // TODO: implement logic of legit username, e. g. accepted length, no special characters, etc...
-        return usernameErrors;
-    };
-
-    // Collects all recognized errors in currently typed email and returns them as array of strings
-    const getEmailInputErrors = (email) => {
-        let emailErrors = [];
-        if (email.length == 0) emailErrors.push('Email cant be empty!');
-        // TODO: implement validation
-
-        return emailErrors;
-    };
-
-    // Collects all recognized errors in current typed password and returns them in an array of strings
-    const getPasswordErrors = (password, password2) => {
-        let passwordErrors = []; // array of all recognized password errors
-        if (password.length == 0) passwordErrors.push('Password cant be empty!');
-        // TODO: implement password checking, e. g. atleast 8 characters, upper- and lowercase only allowed characters, password matching!, ...
-
-        return passwordErrors;
-    };
-
-    const mapStateToProps = state => {
-        let registrationErrors = state.UserAuthentication.registrationErrors;
-        return {
-            isAuthenticated: state.UserAuthentication.isAuthenticated || false,
-            registrationErrors: (registrationErrors) ? registrationErrors.slice(0) : null
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+// TODO: check if username is available!
+const asyncValidate = (values /*, dispatch */ ) => {
+    return sleep(1000).then(() => {
+        // simulate server latency
+        if (['foo@foo.com', 'bar@bar.com'].includes(values.email)) {
+            // eslint-disable-next-line no-throw-literal
+            throw {
+                email: 'Email already Exists'
+            }
         }
-    };
+    })
+}
 
-    const mapDispatchToProps = dispatch => {
-        return {
-            handleSubmit: (event) => handleSubmit(dispatch, event),
-            clearFormErrors: () => dispatch(clearRegistrationFormErrors())
-        }
-    };
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.authentication.isAuthenticated || false,
+    }
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
+const mapDispatchToProps = dispatch => {
+    return {
+        handleSubmit: (event) => handleSubmit(dispatch, event),
+    }
+};
+
+const registerForm = reduxForm({
+    form: 'ResetForm', // a unique identifier for this form
+    validate,
+    asyncValidate
+})(RegisterPage)
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(registerForm);

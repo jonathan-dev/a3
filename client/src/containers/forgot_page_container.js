@@ -12,10 +12,7 @@ import {
     push
 } from 'react-router-redux';
 
-import {
-    Field,
-    reduxForm
-} from 'redux-form'
+import { reduxForm } from 'redux-form'
 
 const handleSubmit = (dispatch, event, token) => {
     event.preventDefault();

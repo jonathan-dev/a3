@@ -9,13 +9,15 @@ import {
     POST_LOGIN,
     CHECK_RESET_ROUTE,
     RESET_PASSWORD,
-    PASSWORDS_DO_NOT_MATCH,
     POST_REGISTRATION,
-    SHOW_REGISTRATION_FORM_ERORRS, CLEAR_REGISTRATION_FORM_ERRORS, SHOW_LOGIN_FORM_ERRORS, CLEAR_LOGIN_FORM_ERRORS
+    SHOW_REGISTRATION_FORM_ERORRS,
+    CLEAR_REGISTRATION_FORM_ERRORS,
+    SHOW_LOGIN_FORM_ERRORS,
+    CLEAR_LOGIN_FORM_ERRORS
 } from '../constants/action_types';
 
 // action generator for posting login information
-export function postLogin (loginData) {
+export function postLogin(loginData) {
     return {
         type: POST_LOGIN,
         payload: {
@@ -28,21 +30,21 @@ export function postLogin (loginData) {
     }
 }
 
-export function showLoginFormErrors (errors) {
+export function showLoginFormErrors(errors) {
     return {
         type: SHOW_LOGIN_FORM_ERRORS,
         errors
     }
 }
 
-export function clearLoginFormErrors () {
+export function clearLoginFormErrors() {
     return {
         type: CLEAR_LOGIN_FORM_ERRORS
     }
 }
 
 // action generator for posting login information
-export function postRegistration (registrationData) {
+export function postRegistration(registrationData) {
     return {
         type: POST_REGISTRATION,
         payload: {
@@ -55,20 +57,20 @@ export function postRegistration (registrationData) {
     }
 }
 
-export function showRegistrationFormErrors (errors) {
+export function showRegistrationFormErrors(errors) {
     return {
         type: SHOW_REGISTRATION_FORM_ERORRS,
         errors
     }
 }
 
-export function clearRegistrationFormErrors () {
+export function clearRegistrationFormErrors() {
     return {
         type: CLEAR_REGISTRATION_FORM_ERRORS
     }
 }
 
-export function checkResetRoute (token) {
+export function checkResetRoute(token) {
     return {
         type: CHECK_RESET_ROUTE,
         payload: {
@@ -83,7 +85,7 @@ export function checkResetRoute (token) {
     }
 }
 
-export function resetPassword (token, password) {
+export function resetPassword(token, password) {
     return {
         type: RESET_PASSWORD,
         payload: {
@@ -99,16 +101,15 @@ export function resetPassword (token, password) {
     }
 }
 
-export function passwordsDoNotMatch () {
+export function passwordsDoNotMatch() {
     return {
         type: PASSWORDS_DO_NOT_MATCH
     }
 }
 
 // action generator for a logout action
-export function logoutUser () {
+export function logoutUser() {
     return {
         type: LOGOUT_USER
     };
 }
-

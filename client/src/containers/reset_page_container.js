@@ -26,7 +26,7 @@ const mapStateToProps = state => {
     return {
         username: state.username,
         password: state.password,
-        routeIsValid: state.UserAuthentication.routeIsValid
+        routeIsValid: state.reset.routeIsValid
     };
 };
 
