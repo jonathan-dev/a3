@@ -77,13 +77,11 @@ const QueryType = new GraphQLObjectType({
                 //check which argument is passed, and return appropriate method
                 if (args.postId) {
                     mongo.getCommentsPost(args.postId).then(value => {
-                        console.log(value);
                         return;
                     })
                     return mongo.getCommentsPost(args.postId);
                 } else if (args.userId) {
                     mongo.getCommentsUser(args.postId).then(value => {
-                        console.log(value);
                         return;
                     })
                     return mongo.getCommentsUser(args.userId);
