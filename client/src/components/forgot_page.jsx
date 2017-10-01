@@ -1,53 +1,82 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React from 'react'
+import { Field, reduxForm } from 'redux-form'
+import {
+    Form,
+    FormGroup,
+    ControlLabel,
+    InputGroup,
+    FormControl,
+    Button,
+    HelpBlock,
+    Col,
+    Panel
+} from 'react-bootstrap';
 
-import { Form, FormGroup, ControlLabel, InputGroup, FormControl, Button } from 'react-bootstrap';
+const renderEmailField = ({
+        input,
+    label,
+    meta: { touched, error },
+    children,
+    ...custom
+    }) =>
+    <FormGroup controlId="formHorizontalEmail" validationState={touched && error?'error':touched && !error?'success':null}>
+        {console.log(error?error:"no error")}
+        <Col componentClass={ControlLabel} sm={2}>
+            <ControlLabel>{label}</ControlLabel>
+        </Col>
+        <Col sm={10}>
+            <InputGroup>
+                <InputGroup.Addon>@</InputGroup.Addon>
+                <FormControl
+                    name="email"
+                    type="email"
+                    placeholder={label}
+                    {...input}
+                    {...custom}
+                />
+            </InputGroup>
+            <FormControl.Feedback />
+            {touched && error && error && <HelpBlock>{error}</HelpBlock>}
+        </Col>
+    </FormGroup>
 
-class ForgotPage extends Component {
 
-    constructor(props) {
-        super(props);
+const ForgotPage = props => {
+    const { handleSubmit, pristine, reset, submitting, invalid } = props
 
-        this.state = {
-            email: '',
-            emailValid: null,
-            formValid: false
-        };
+    const panelStyle = {
+        width: '90vw'    /* Occupy the 90% of the screen width */
     }
 
-    validateField(fieldName, value) {
-        let fieldValidationErrors = this.state.formErrors;
-        let emailValid = this.state.emailValid;
-
-        switch(fieldName) {
-          case 'email':
-            emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-            emailValid = emailValid ? 'success' : 'error';
-            break;
-          default:
-            break;
-        }
-        this.setState({formErrors: fieldValidationErrors,
-                        emailValid: emailValid,
-                      }, this.validateForm);
-      }
-
-    validateForm() {
-        this.setState({formValid: this.state.emailValid === 'success'});
+    const colCentered = {
+        float: 'none',
+        margin: '0 auto',
     }
 
+    return (
+        <Panel className="col-lg-4" style={colCentered}>
+            <Form horizontal>
+                <Field
+                    name="email"
+                    component={renderEmailField}
+                    label="Email"
+                />
+                <FormGroup>
+                    <Col smOffset={2} sm={10}>
+                        <Button type="submit" bsStyle="primary" disabled={pristine || submitting || invalid}>Send</Button>
+                    </Col>
+                </FormGroup>
+            </Form>
+        </Panel>
+    );
+}
 
-    handleChange = (event) => {
-        const { name, value } = event.target;
-        this.setState(
-            {
-                [name]: value},
-                () => { this.validateField(name, value)
-            }
-        );
-    }
 
-    handleSubmit = (event) => {
+export default ForgotPage;
+
+/**
+ * TODO: reimplement submit using redux
+ *     handleSubmit = (event) => {
         event.preventDefault();
 
         axios.post(window.location.origin + '/forgot', {
@@ -56,24 +85,4 @@ class ForgotPage extends Component {
             .then(event => console.log(event))
             .catch(error => console.log(error));
     }
-
-    render() {
-        return (
-            <Form inline onSubmit={this.handleSubmit}>
-                <FormGroup controlId="formInlineName" validationState={this.state.emailValid}>
-                    <ControlLabel>Email:</ControlLabel>
-                    {' '}
-                    <InputGroup>
-                        <InputGroup.Addon>@</InputGroup.Addon>
-                        <FormControl name="email" type="email" value={this.state.email} onChange={this.handleChange} />
-                    </InputGroup>
-                    <FormControl.Feedback />
-                </FormGroup>
-                    {' '}
-                <Button type="submit" bsStyle="primary" disabled={this.state.formValid?false:true}>Send</Button>
-            </Form>
-        );
-    }
-}
-
-export default ForgotPage;
+ */

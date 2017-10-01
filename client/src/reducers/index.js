@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { UserAuthentication } from './authentication';
 import { routerReducer, LOCATION_CHANGE } from 'react-router-redux';
+import { reducer as formReducer } from 'redux-form'
 
 export const locationChange = (state = {username: ''}, action) => {
   switch (action.type) {
@@ -17,5 +18,6 @@ export const locationChange = (state = {username: ''}, action) => {
 export const harrismusApp = combineReducers({
     UserAuthentication,
     locationChange,
-    routing: routerReducer
+    routing: routerReducer,
+    form: formReducer
 });

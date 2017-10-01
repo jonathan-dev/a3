@@ -25,6 +25,7 @@ const middleWare = routerMiddleware(browserHistory);
 
 let store = createStore(
     harrismusApp,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     applyMiddleware( // apply all middlewares
         axiosMiddleware(axiosClient) //second parameter options can optionally contain onSuccess, onError, onComplete, successSuffix, errorSuffix,
         , middleWare
