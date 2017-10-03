@@ -1,33 +1,37 @@
+import React from 'react';
 import {
     gql,
     graphql,
 } from 'react-apollo';
-import React, { Component } from 'react';
 
 import Post from '@/post';
 
-class HotPage extends Component {
+const HotPage = props => {
 
-    render() {
-        const {data} = this.props;
-        if(data){
-            const {loading, error, posts} = data;
+    const colCentered = {
+        float: 'none',
+        margin: '0 auto',
+    }
 
-            if (loading) {
-                return <div>Loading</div>
-            }
-            if (error) {
-                return <div>Error</div>
-            }
+    const { data } = props;
+    
+    if (data) {
+        const { loading, error, posts } = data;
 
-            return (
-                <section>
-                    {posts.map(post => {
-                        return <Post key={post.id} post={post} />
-                    })}
-                </section>
-            )
+        if (loading) {
+            return <div>Loading</div>
         }
+        if (error) {
+            return <div>Error</div>
+        }
+
+        return (
+            <section className="col-lg-4" style={colCentered}>
+                {posts.map(post => {
+                    return <Post key={post.id} post={post} />
+                })}
+            </section>
+        )
     }
 }
 
@@ -37,6 +41,7 @@ query postListQuery {
   posts {
     id
     title
+    date
     owner {
         id
         username

@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
 import { commentListQuery } from '@/comment_box'
+import {
+    Form,
+    Button,
+    FormControl,
+    Col
+} from 'react-bootstrap';
 
 class createComment extends Component {
     constructor() {
@@ -10,18 +16,13 @@ class createComment extends Component {
         };
     }
 
-    handleKeyUp = (event) => {
-        if (event.keyCode === 13) {
-            this.postComment();
-        }
-    }
-
     handleChange = (event) => {
         console.log(event.target)
         this.setState({ comment: event.target.value });
     }
 
-    postComment = () => {
+    postComment = (e) => {
+        e.preventDefault();
         this.props.mutate({
             variables: {
                 comment: {
@@ -29,10 +30,10 @@ class createComment extends Component {
                     postId: this.props.post
                 }
             },
-            refetchQueries: [{query:commentListQuery,variables: {postId: this.props.post}}]
+            refetchQueries: [{ query: commentListQuery, variables: { postId: this.props.post } }]
         })
             .then(({ data }) => {
-                this.setState({comment: ''});
+                this.setState({ comment: '' });
                 console.log('got data', data);
             }).catch((error) => {
                 console.log('there was an error sending the query', error);
@@ -41,20 +42,24 @@ class createComment extends Component {
 
     render() {
         return (
-            <section>
-                <input type="comment" onChange={this.handleChange} onKeyUp={this.handleKeyUp} value={this.state.comment} />
-                <button onClick={this.postComment} >comment</button>
-            </section>
+            <Form horizontal onSubmit={this.postComment} >
+                <Col sm={10}>
+                    <FormControl type="text" placeholder="comment" onChange={this.handleChange} value={this.state.comment} />
+                </Col>
+                <Col sm={2}>
+                    <Button type="submit" >comment</Button>
+                </Col>
+            </Form>
         );
     }
 }
 
 const CommentMutations = gql`
 mutation CommentMutations($comment: CommentInput!) {
-    createComment(comment: $comment) {
-        comment
-    }
-}
+                    createComment(comment: $comment) {
+                    comment
+                }
+                }
 `
 
 export default graphql(CommentMutations)(createComment)

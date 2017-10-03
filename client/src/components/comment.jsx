@@ -7,10 +7,10 @@ class Comment extends Component {
     }
 
     render() {
-        const {comment, date} = this.props.comment
+        const {comment, date, owner } = this.props.comment
         return (
             <section>
-                <p>{comment}</p>
+                <p>{owner.username+": "+comment}</p>
                 <p>{date}</p>
             </section>
         );

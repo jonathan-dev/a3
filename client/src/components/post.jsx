@@ -1,42 +1,56 @@
 import React, { Component } from 'react';
-import './post.sass';
 import Tag from '@/tag';
 import CommentBox from '@/comment_box';
 import languages from 'src/language/language';
 
+import { Panel, Label } from 'react-bootstrap';
+
+
 let currentLanguage = "english"; // default, TODO: change when user changes his local language later on
-export default class Post extends Component {
-    render() {
-        return (
-            <div>
-                <h3>{this.props.post.title}</h3>
-                <p>11.11.2016</p>
-                <p>{this.props.post.owner.username}</p>
+const Post = props => {
 
-                {
-                    <img src={
-                        this.props.post.imageId
-                            ? window.location.origin + "/images/" + this.props.post.imageId + ".png"
-                            : window.location.origin + "/images/sanic_crop.png"
-                    } />
+    const margin10 = {
+        margin: '10px',
+    };
 
+    const margin20 = {
+        margin: '20px',
+    };
+
+    const { post } = props
+
+    return (
+        <Panel>
+            <h3>{post.title}</h3>
+            <p>{post.date}</p>
+            <p>{post.owner.username}</p>
+
+            {
+                <img src={
+                    post.imageId
+                        ? window.location.origin + "/images/" + post.imageId + ".png"
+                        : window.location.origin + "/images/sanic_crop.png"
+                } width={"100%"} />
+
+            }
+            <p>
+                {post.voteup} {languages[currentLanguage]["upvotes"]}, {post.votedown} {languages[currentLanguage]["downvotes"]}
+            </p>
+            <section style={margin20}>
+                {post.tags.map((tag, index) => {
+                    return <Label bsStyle="info" key={index} style={margin10} >{tag.name}</Label>
+                })
                 }
-                <p>
-                    {this.props.post.voteup} {languages[currentLanguage]["upvotes"]}, {this.props.post.votedown} {languages[currentLanguage]["downvotes"]}
-                </p>
-                <div>
-                    {this.props.post.tags.map((tag, index) => {
-                        return <Tag key={index} tag={tag} />
-                    })
-                    }
-                </div>
-                <CommentBox post={this.props.post.id}/>
-            </div>
-        );
-    }
+            </section>
+            <CommentBox post={post.id} />
+        </Panel>
+    );
 }
 
+export default Post;
 /**
+ * TODO: create container
+ *
  * TODO: do proper error checking (for null/undefined)
  *
  * TODO: add proper placeholder img which is show when

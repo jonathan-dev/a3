@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
-import { Line } from 'rc-progress';
 import { gql, graphql } from 'react-apollo';
 import AutocompleteTagsInput from '@/autocomplete_tags_input'
+import {
+    Panel,
+    ProgressBar
+} from 'react-bootstrap'
 
 const PostMutations = gql`
 mutation PostMutations($post: PostInput!) {
@@ -92,9 +95,14 @@ class createPost extends Component {
 
   render() {
 
+    const colCentered = {
+        float: 'none',
+        margin: '0 auto',
+    }
+
     this.state.accepted.map(f => console.log('f: ', f))
     return (
-      <section>
+        <Panel className="col-lg-4" style={colCentered}>
         <div className="dropzone">
           <Dropzone
             accept="image/jpeg, image/png"
@@ -103,7 +111,7 @@ class createPost extends Component {
             <p>Try dropping some files here, or click to select files to upload.</p>
             <p>Only *.jpeg and *.png images will be accepted</p>
           </Dropzone>
-          <Line percent={this.state.loaded} strokeWidth="4" strokeColor="#F00" />
+          <ProgressBar now={this.state.loaded} />
         </div>
         <aside>
           <h2>Accepted files</h2>
@@ -123,7 +131,7 @@ class createPost extends Component {
         <input type="text" onChange={this.handleChange} />
         <AutocompleteTagsInput updateTags={this.updateTags} tags={this.getTags}/>
         <button onClick={this.onClick}>post</button>
-      </section>
+      </Panel>
     );
   }
 }
