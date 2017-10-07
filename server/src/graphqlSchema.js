@@ -62,6 +62,13 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getUserNameById(args.userId)
             }
         },
+        users: {
+            type: new GraphQLList(types.UserType),
+            description: 'Get a list of all users in database',
+            resolve: (x, context, args) => {
+                return mongo.getUsers();
+            }
+        },
         comments: {
             type: new GraphQLList(types.CommentType),
             description: 'Get a list of comments for a specific post',
@@ -128,9 +135,6 @@ const PostMutation = new GraphQLObjectType({
             }, context) => {
                 //Get the user from the request
                 var userId = context.req.user._id;
-                //NOTE: For testing only
-                //TODO: remove completely
-                //var userId = "59be0a53336d4e22cca74840";
 
                 /* HOW TO QUERY using Graphiql
                 mutation CreateCommentForPost($comment: CommentAttributes!) {

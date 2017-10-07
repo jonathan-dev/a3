@@ -13,6 +13,7 @@ import CreatePost from '@/create_post';
 import RegisterPage from './containers/register_page_container';
 import ForgotPage from './containers/forgot_page_container';
 import ProfilePage from '@/profile_page';
+import AdminPage from '@/admin_page';
 
 import {
   HOME_PATH,
@@ -22,7 +23,8 @@ import {
   FORGOT_PASSWORD_PATH,
   RESET_PASSWORD_PATH,
   POST_DETAIL_PATH,
-  USER_PROFILE_PATH
+  USER_PROFILE_PATH,
+  ADMIN_PATH
 } from './paths';
 
 class Routes extends Component {
@@ -38,6 +40,7 @@ class Routes extends Component {
         <Route path={RESET_PASSWORD_PATH} component={ResetPage}/>
         <Route path={POST_DETAIL_PATH} component={PostDetailsPage}/>
         <Route path={USER_PROFILE_PATH} component={ProfilePage}/>
+        <Route path={ADMIN_PATH} component={AdminPage}/>
       </Switch>
     );
   }

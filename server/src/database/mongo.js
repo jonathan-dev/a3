@@ -133,6 +133,9 @@ export default {
             userId: userId
         }).save();
     },
+    getUsers() {
+        return User.find();
+    },
     getAuthenticated(name, password) {
         return User.getAuthenticated(name, password)
     },
