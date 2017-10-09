@@ -13,8 +13,8 @@ import AdminPage from '@/admin_page';
 const mapStateToProps = state => {
     return {
         //Properties that the component needs to render
-        isAuthenticated: state.authentication.isAuthenticated
-        //TODO: need to add isAdmin to props
+        isAuthenticated: state.authentication.isAuthenticated,
+        isAdmin: state.authentication.isAdmin
     };
 }
 

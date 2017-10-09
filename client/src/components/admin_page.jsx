@@ -43,10 +43,15 @@ const AdminPage = props => {
 
         return (
             <section className="col-lg-8" style={colCentered}>
-                <BootstrapTable data={ users } striped={true}>
+                <BootstrapTable data={ users } striped={true} search={true} hover={true}>
                     <TableHeaderColumn dataField="id" isKey={true} dataAlign="left" dataSort={true}>User ID</TableHeaderColumn>
                     <TableHeaderColumn dataField="username" dataSort={true}>Username</TableHeaderColumn>
                     <TableHeaderColumn dataField="isAdmin" dataSort={true}>Administrator</TableHeaderColumn>
+                    {/* <TableHeaderColumn
+                        dataField="isAdmin"
+                        dataSort={true}
+                        editable={ { type: 'checkbox', options: { values: 'Y:N' } } }> Is administrator </TableHeaderColumn> */}
+                    <TableHeaderColumn dataField="bannedUntil" dataSort={true}>Banned until</TableHeaderColumn>
                 </BootstrapTable>
             </section>
         )
