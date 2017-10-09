@@ -10,12 +10,28 @@ import mailgunConfig from '../config/mailgun'
 
 import mongo from './database/mongo'
 
-module.exports = function (app) {
-    var jwtOptions = {
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: 'tasmanianDevil' // TODO: change put in config
-    }
+const jwtOptions = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: 'tasmanianDevil' // TODO: change put in config
+}
 
+/**
+ * Returns a verified, decoded token if valid
+ * Returns error if not verified
+ */
+// module.exports.verifyToken = function (token){
+export function verifyToken(token) {
+    //TODO - handle error if not valid token
+    try {
+        var decodedToken = jwt.verify(token, jwtOptions.secretOrKey);
+        return decodedToken;
+    } catch (error) {
+        return null;
+    }
+};
+
+// module.exports.authApp = function (app) {
+export function authApp(app) {
     //Authorization: Bearer <Token>
 
     var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
@@ -40,17 +56,38 @@ module.exports = function (app) {
         })(req, res, next);
     })
 
+    //Takes a token & checks if admin true in token
+    //Does this every time user visits admin route
+    // app.get('/admin', function checkIfAdmin(userToken) {
+    //     //TODO - handle error if not valid token
+    //     var decodedToken = jwt.verify(userToken, jwtOptions.secretOrKey);
+    //     console.log("(REMOVE LATER) Decoded token ", decodedToken);
+    //     //Can simplify to 'return decodedToken.isAdmin';
+    //     //TODO - remove second thing here
+    //     if (decodedToken.isAdmin || userToken == "iamanadmin") {
+    //         console.log("User verified as admin");
+    //         return true;
+    //     } else {
+    //         console.log("User not an admin");
+    //         return false;
+    //     }
+    // });
+
     app.post('/login', (req, res) => {
         let {username, password} = req.body;
 
         if (username && password) {
+            //Checks user/pw against database, returns user if valid
             mongo.getAuthenticated(username, password)
                 .then(data => {
                     if (data.user) {
+                        //Prepare token payload from user
                         var payload = {
-                            id: data.user._id
+                            id: data.user._id,
+                            isAdmin: data.user.isAdmin
                         };
                         var token = jwt.sign(payload, jwtOptions.secretOrKey);
+                        //Return success with token inside
                         res.statusCode = 200;
                         res.json({
                             message: "login succeeded",
@@ -137,21 +174,21 @@ module.exports = function (app) {
 
     function sendMail(email, text) {
         var api_key = mailgunConfig.key;
-                    var domain = 'sandboxa9461c2dc5d64c618caaec296ca33955.mailgun.org';
-                    var mailgun = require('mailgun-js')({
-                        apiKey: api_key,
-                        domain: domain
-                    });
+        var domain = 'sandboxa9461c2dc5d64c618caaec296ca33955.mailgun.org';
+        var mailgun = require('mailgun-js')({
+            apiKey: api_key,
+            domain: domain
+        });
 
-                    var data = {
-                        from: 'no reply<am@am.com>',
-                        to: email,
-                        subject: 'Password reset',
-                        text: text
-                    };
+        var data = {
+            from: 'no reply<am@am.com>',
+            to: email,
+            subject: 'Password reset',
+            text: text
+        };
 
-                    mailgun.messages().send(data, function (error, body) {
-                        console.log(body);
-                    });
+        mailgun.messages().send(data, function (error, body) {
+            console.log(body);
+        });
     }
 }

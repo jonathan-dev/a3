@@ -11,6 +11,7 @@ import {
 import mongo from './database/mongo' // Database
 import * as actions from './actions'
 import * as types from './graphqlTypes'
+import { verifyToken } from './auth'
 
 //Defines all queries that can be done, and their details
 const QueryType = new GraphQLObjectType({
@@ -65,8 +66,14 @@ const QueryType = new GraphQLObjectType({
         users: {
             type: new GraphQLList(types.UserType),
             description: 'Get a list of all users in database',
-            resolve: (x, context, args) => {
-                return mongo.getUsers();
+            resolve: (root, args, context) => {
+                var token = context.req.headers.authorization;
+                var decodedToken = verifyToken(token);
+                if (decodedToken && decodedToken.isAdmin) {
+                    return mongo.getUsers();
+                } else {
+                    throw new Error('you need to be an admin to view this page');
+                }
             }
         },
         comments: {

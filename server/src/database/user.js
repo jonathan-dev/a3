@@ -24,6 +24,11 @@ let userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    isAdmin: {
+        type: Boolean,
+        required: true,
+        default: 0
+    },
     loginAttempts: {
         type: Number,
         required: true,

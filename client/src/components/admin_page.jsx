@@ -19,6 +19,11 @@ const AdminPage = props => {
     //set up local variables from the props object
     const { data } = props;
 
+    //check if actually admin
+    if (props.isAuthenticated)
+        return <Redirect to={HOME_PATH} />;
+
+
     //return actual page details
 
     const colCentered = {
@@ -41,11 +46,7 @@ const AdminPage = props => {
                 <BootstrapTable data={ users } striped={true}>
                     <TableHeaderColumn dataField="id" isKey={true} dataAlign="left" dataSort={true}>User ID</TableHeaderColumn>
                     <TableHeaderColumn dataField="username" dataSort={true}>Username</TableHeaderColumn>
-                    {/* {
-                        users.map(user => {
-                            return <Post key={post.id} post={post} />
-                            })
-                    } */}
+                    <TableHeaderColumn dataField="isAdmin" dataSort={true}>Administrator</TableHeaderColumn>
                 </BootstrapTable>
             </section>
         )
@@ -53,12 +54,16 @@ const AdminPage = props => {
 
 }
 
+const userToken = localStorage.getItem("token");
+
 //Query for retrieving a list of users
+//need to somehow get the token into here as an argument
 const usersListQuery = gql`
 query userListQuery {
   users {
     id
     username
+    isAdmin
   }
 }
 `;

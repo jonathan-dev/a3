@@ -14,7 +14,7 @@ const mapStateToProps = state => {
     return {
         //Properties that the component needs to render
         isAuthenticated: state.authentication.isAuthenticated
-        //Have list of users here?
+        //TODO: need to add isAdmin to props
     };
 }
 

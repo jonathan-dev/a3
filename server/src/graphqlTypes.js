@@ -5,6 +5,7 @@ import {
     GraphQLString,
     GraphQLList,
     GraphQLInt,
+    GraphQLBoolean,
     GraphQLNonNull,
     GraphQLInputObjectType
 } from 'graphql' // GraphQL and GraphQL types
@@ -107,6 +108,11 @@ export const UserType = new GraphQLObjectType({
         username: {
             type: GraphQLString,
             resolve: (user) => user.username
+        },
+        isAdmin: {
+            type: new GraphQLNonNull(GraphQLBoolean),
+            description: "Whether or not user is admin",
+            resolve: (user) => user.isAdmin
         }
     })
 })

@@ -8,7 +8,7 @@ import graphQLHTTP from 'express-graphql'
 import schema from './graphqlSchema'
 
 import upload from './upload'
-import auth from './auth'
+import { authApp } from './auth'
 
 function resolve(dir) {
     return path.join(__dirname, dir)
@@ -39,7 +39,7 @@ app.use(cors());
 app.use('/images', express.static(resolve(IMAGES_URL)));
 app.use('/', express.static(resolve('../dist')));
 
-auth(app)
+authApp(app);
 upload(app);
 
 // GraphqQL server route

@@ -11,7 +11,8 @@ import {
     HOME_PATH,
     CREATE_POST_PATH,
     LOGIN_PATH,
-    REGISTER_PATH
+    REGISTER_PATH,
+    ADMIN_PATH
 } from '../paths'
 
 class HeaderBar extends Component {
@@ -31,9 +32,14 @@ class HeaderBar extends Component {
                 <Navbar.Collapse>
                     <Nav>
                         {isAuthenticated?
-                        <LinkContainer to={CREATE_POST_PATH} >
-                            <NavItem href={CREATE_POST_PATH}>{CREATE_POST_PATH}</NavItem>
-                        </LinkContainer>
+                        [
+                            <LinkContainer to={CREATE_POST_PATH} >
+                                <NavItem href={CREATE_POST_PATH}>{CREATE_POST_PATH}</NavItem>
+                            </LinkContainer>,
+                            <LinkContainer to={ADMIN_PATH} >
+                                <NavItem href={ADMIN_PATH}>{ADMIN_PATH}</NavItem>
+                            </LinkContainer>
+                        ]
                         :
                         null
                         }
