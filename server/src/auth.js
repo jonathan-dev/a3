@@ -36,6 +36,7 @@ export function authApp(app) {
 
     var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
         // console.log('payload received', jwt_payload);
+        // TODO: handle isAdmin /remove database call
         mongo.getUserById(jwt_payload.id)
             .then(user => {
                 // console.log('user', user)
