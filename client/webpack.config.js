@@ -40,10 +40,18 @@ module.exports = {
       }
     ]
   },
-  plugins: [new HtmlWebpackPlugin({
-    template: 'src/index.html',
-    inject: 'body'
-  })],
+  plugins: [
+    function() {
+        this.plugin('watch-run', function(watching, callback) {
+            console.log('=====STARTED COMPILING AT ' + new Date().toTimeString() + '=====================================');
+            callback();
+        })
+    },
+    new HtmlWebpackPlugin({
+        template: 'src/index.html',
+        inject: 'body'
+    })
+  ],
   devServer: {
     contentBase: resolve('dist'),
     historyApiFallback: true,
