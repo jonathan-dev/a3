@@ -49,10 +49,13 @@ export function authentication(state = {}, action) {
             // LOGIN PAGE
             //------------------------------------------
         case POST_LOGIN_SUCCESS:
+            console.log("Logged in successfully");
+            console.log("Payload is ", action.payload.data);
             return Object.assign({},
                 state, {
                     isAuthenticated: true,
                     username: action.payload.data.username,
+                    isAdmin: action.payload.data.isAdmin,
                     token: action.payload.data.token
                 }
             );
@@ -64,8 +67,9 @@ export function authentication(state = {}, action) {
 
         case LOGOUT_USER:
             return Object.assign({}, state, {
-                username: null,
                 isAuthenticated: false,
+                username: null,
+                isAdmin: false,
                 token: null
             });
 

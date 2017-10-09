@@ -92,6 +92,7 @@ export function authApp(app) {
                         res.json({
                             message: "login succeeded",
                             username: username,
+                            isAdmin: data.user.isAdmin,
                             token: token
                         });
                     }

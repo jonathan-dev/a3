@@ -20,7 +20,8 @@ const logout = (dispatch) => {
 const mapStateToProps = state => {
     return {
         username: state.authentication.isAuthenticated ? state.authentication.username : null,
-        isAuthenticated: state.authentication.isAuthenticated
+        isAuthenticated: state.authentication.isAuthenticated,
+        isAdmin: state.authentication.isAdmin
     }
 };
 

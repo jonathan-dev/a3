@@ -17,7 +17,7 @@ import {
 
 class HeaderBar extends Component {
     render() {
-        const { isAuthenticated, username } = this.props
+        const { isAuthenticated, isAdmin, username } = this.props
         console.log(username)
         return (
             <Navbar inverse collapseOnSelect>
@@ -31,17 +31,18 @@ class HeaderBar extends Component {
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        {isAuthenticated?
-                        [
-                            <LinkContainer to={CREATE_POST_PATH} >
-                                <NavItem href={CREATE_POST_PATH}>{CREATE_POST_PATH}</NavItem>
-                            </LinkContainer>,
-                            <LinkContainer to={ADMIN_PATH} >
-                                <NavItem href={ADMIN_PATH}>{ADMIN_PATH}</NavItem>
-                            </LinkContainer>
-                        ]
-                        :
-                        null
+                        { isAuthenticated?
+                            [
+                                <LinkContainer to={CREATE_POST_PATH} >
+                                    <NavItem href={CREATE_POST_PATH}>{CREATE_POST_PATH}</NavItem>
+                                </LinkContainer>
+                            ] : null
+                        }
+                        { isAdmin ? [
+                                <LinkContainer to={ADMIN_PATH} >
+                                    <NavItem href={ADMIN_PATH}>{ADMIN_PATH}</NavItem>
+                                </LinkContainer>
+                            ] : null
                         }
                     </Nav>
                     <Nav pullRight>
