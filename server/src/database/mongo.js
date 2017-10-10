@@ -86,11 +86,14 @@ export default {
         })
     },
     getTags(ids) {
-        return Tag.find({
-            _id: {
-                "$in": ids
-            }
-        })
+        if(ids){
+            return Tag.find({
+                _id: {
+                    "$in": ids
+                }
+            })
+        }
+        return Tag.find({})
     },
     createTag(name) {
         return new Tag({
@@ -127,11 +130,17 @@ export default {
         console.log("    postId: ", userId);
         console.log("   comment: ", comment);
         //Validation
-        return new Comment({
-            comment: comment,
-            postId: postId,
-            userId: userId
-        }).save();
+        //Check if user is banned
+        // if (!isUserBanned(userId)) {
+            return new Comment({
+                comment: comment,
+                postId: postId,
+                userId: userId
+            }).save();
+        // } else {
+            // console.log("User was banned, can't post comment", userId);
+            //TODO - add proper error handling here to give better feedback to user
+        // }
     },
     getUsers() {
         return User.find();
@@ -151,6 +160,12 @@ export default {
     },
     getUserNameById(id) {
         return User.findById(id,{username:1})
+    },
+    banUser(id) {
+        return User.banUser(id);
+    },
+    unbanUser(id) {
+        return User.unbanUser(id);
     },
     setResetToken(email,resetPasswordToken,resetPasswordExpires) {
         return User.findOneAndUpdate(

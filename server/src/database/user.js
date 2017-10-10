@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOCK_TIME = 2 * 60 * 60 * 1000;
+const BAN_TIME = 86400000; //default ban time of a day
 
 let userSchema = mongoose.Schema({
     username: {
@@ -56,15 +57,6 @@ userSchema.virtual('isLocked').get(
         return (this.lockUntil && this.lockUntil > Date.now());
     }
 );
-
-/**
- * Checks if the user is currently banned
- */
-userSchema.virtual('isBanned').get(
-    function () {
-        return (this.bannedUntil && this.bannedUntil > Date.now());
-    }
-)
 
 // expose enum on the model, and provide an internal convenience reference
 var reasons = userSchema.statics.failedLogin = {
@@ -135,9 +127,71 @@ userSchema.methods.incLoginAttempts = function () {
                 .then(res => resolve(res))
                 .catch(err => reject(err))
         }
-    })
+    });
 
 };
+
+/**
+ * Locks user from logging in (for ever / until unbanned)
+ */
+userSchema.statics.banUser = function (userid) {
+    //TODO - also invalidate any issued tokens to that user
+    return new Promise((resolve, reject) => {
+        this.findOne({
+            _id: userid
+        }).then(user => {
+            // make sure the user exists
+            if (!user) resolve({
+                reason: reasons.NOT_FOUND
+            });
+            console.log('=====Found user to ban', user);
+            //Set ban details
+            var updates = {
+                $set: {
+                    lockUntil: bantime
+                }
+            };
+            //Add ban to db
+            user.update(updates)
+                .then(() => resolve(user)) //returns the user when update is completed successfully
+                .catch(err => function(error) {
+                    console.log("Couldn't update the db add the ban :( ");
+                    reject(err);
+                }) //returns error if not successful
+
+        });
+    });
+}
+
+/**
+ * Unbans a user by finding them in DB, and then clearing 'lock until' value
+ */
+userSchema.statics.unbanUser = function (userid) {
+    return new Promise((resolve, reject) => {
+        this.findOne({
+            _id: userid
+        }).then(user => {
+            // make sure the user exists
+            if (!user) resolve({
+                reason: reasons.NOT_FOUND
+            });
+            console.log('=====Found user to ban', user);
+            //Set ban time on user to be almost nothing
+            var updates = {
+                $unset: {
+                    lockUntil: 1
+                }
+            };
+            //Update db
+            user.update(updates)
+                .then(() => resolve(user))
+                .catch(err => function(error) {
+                    console.log("Couldn't update the db to remove the ban :( ");
+                    reject(err);
+                })
+        });
+    });
+}
 
 
 userSchema.statics.getAuthenticated = function (username, password) {

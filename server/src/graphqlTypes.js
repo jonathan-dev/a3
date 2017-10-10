@@ -5,6 +5,7 @@ import {
     GraphQLString,
     GraphQLList,
     GraphQLInt,
+    GraphQLFloat,
     GraphQLBoolean,
     GraphQLNonNull,
     GraphQLInputObjectType
@@ -114,13 +115,18 @@ export const UserType = new GraphQLObjectType({
             description: "Whether or not user is admin",
             resolve: (user) => user.isAdmin
         },
-        bannedUntil: {
-            type: GraphQLInt,
-            description: "Single number of when the user is banned until",
-            resolve: (user) => user.bannedUntil
+        lockUntil: {
+            type: GraphQLFloat,
+            description: "Single number of time the user is locked until",
+            resolve: (user) => user.lockUntil
         }
     })
 })
+
+// export const UserInputType = new GraphQLObjectType({
+//     name: 'UserInput',
+//     description: 'User input type for querying'
+// })
 
 export const CommentType = new GraphQLObjectType({
     name: 'Comment',

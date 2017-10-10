@@ -5,6 +5,7 @@ import {
     GraphQLString,
     GraphQLList,
     GraphQLInt,
+    GraphQLFloat,
     GraphQLNonNull,
     GraphQLInputObjectType
 } from 'graphql' // GraphQL and GraphQL types
@@ -18,6 +19,7 @@ const QueryType = new GraphQLObjectType({
     name: 'Query',
     description: 'Perform a query on the database using one of the following:',
     fields: () => ({
+
         posts: {
             type: new GraphQLList(types.PostType),
             args: {
@@ -32,6 +34,7 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getPosts();
             }
         },
+
         post: {
             type: types.PostType,
             description: 'Get a specific post. Pass in post id as an argument.',
@@ -44,6 +47,7 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getPost(args.id);
             }
         },
+
         tags: {
             type: new GraphQLList(types.TagType),
             description: 'Get a list of all tags that have been used',
@@ -51,6 +55,7 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getTags();
             }
         },
+
         user: {
             type: types.UserType,
             description: 'Get User',
@@ -63,19 +68,20 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getUserNameById(args.userId)
             }
         },
+
         users: {
             type: new GraphQLList(types.UserType),
             description: 'Get a list of all users in database',
             resolve: (root, args, context) => {
-                var token = context.req.headers.authorization;
-                var decodedToken = verifyToken(token);
-                if (decodedToken && decodedToken.isAdmin) {
+                //Retrieves the 'isAdmin' flag from context, decoded by passport
+                if (context.req.user.isAdmin) {
                     return mongo.getUsers();
                 } else {
                     throw new Error('you need to be an admin to view this page');
                 }
             }
         },
+
         comments: {
             type: new GraphQLList(types.CommentType),
             description: 'Get a list of comments for a specific post',
@@ -190,6 +196,36 @@ const PostMutation = new GraphQLObjectType({
                 id
             }) => {
                 return mongo.deletePost(id);
+            }
+        },
+
+        banUser: {
+            type: types.UserType,
+            description: 'Ban a user permanently (until unbanned)',
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLString),
+                    description: 'The user id to ban'
+                }
+            },
+            resolve: (value, { id }, context) => {
+                //Todo - add isAdmin check
+                return mongo.banUser(id);
+            }
+        },
+
+        unbanUser: {
+            type: types.UserType,
+            description: 'Unban a banned user. No effect on unbanned users.',
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLString),
+                    description: 'The user id to ban'
+                }
+            },
+            resolve: (value, { id }, context) => {
+                //Todo - add isAdmin check
+                return mongo.unbanUser(id);
             }
         }
     })
