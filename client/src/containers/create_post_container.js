@@ -5,12 +5,15 @@ import {
 import createPost from '../components/create_post'
 import {
     uploadImage,
-    updateTags
-} from '../actions/actions';
+    updateTags,
+    updateAccepted,
+    updateImage
+} from '../actions/create_posts_actions';
 import {
     push
 } from 'react-router-redux';
 import { gql, graphql } from 'react-apollo';
+import { reduxForm } from 'redux-form'
 
 const PostMutations = gql`
 mutation PostMutations($post: PostInput!) {
@@ -46,12 +49,26 @@ const onDropHandler = (dispatch, accepted, rejected) => {
         let formData = new FormData();
         formData.append("index", 1);
         formData.append("image", accepted[0]);
-        dispatch(uploadImage(dispatch, formData))
+        dispatch(updateImage(accepted[0]));
+        dispatch(uploadImage(dispatch, formData));
     }
 }
 
 const onUpdateTags = (dispatch, tags) => {
     dispatch(updateTags(tags))
+}
+
+const validate = values => {
+    const errors = {}
+    const requiredFields = [
+        'title'
+    ]
+    requiredFields.forEach(field => {
+        if (!values[field]) {
+            errors[field] = 'Required'
+        }
+    })
+    return errors
 }
 
 const mapStateToProps = state => {
@@ -60,8 +77,7 @@ const mapStateToProps = state => {
         progress: state.createPost.uploadProgress,
         tags: state.createPost.tags ? state.createPost.tags.slice(0) : null,
         imageId: state.createPost.imageId,
-        title: state.createPost.title,
-
+        image: state.createPost.image
     }
 };
 
@@ -72,6 +88,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }
 };
 
+//TODO: fix merge props
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
     return Object.assign({},ownProps, stateProps, {
         handleSubmit: () => dispatchProps.handleSubmit()
@@ -79,9 +96,14 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     )
 }
 
+const createPostForm = reduxForm({
+    form: 'createPostForm', // a unique identifier for this form
+    validate,
+})(createPost)
+
 export default
 graphql(PostMutations)(
     graphql(TagsQuery)(
-        connect(mapStateToProps, mapDispatchToProps)(createPost)
+        connect(mapStateToProps, mapDispatchToProps)(createPostForm)
     )
 );

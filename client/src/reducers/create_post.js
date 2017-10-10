@@ -2,7 +2,8 @@ import {
     UPDATE_UPLOAD_PROGRESS,
     UPLOAD_IMAGE_SUCCESS,
     UPLOAD_IMAGE_FAIL,
-    UPDATE_TAGS
+    UPDATE_TAGS,
+    UPDATE_IMAGE
 } from '../constants/action_types';
 
 export function createPost(state = {}, action) {
@@ -19,12 +20,16 @@ export function createPost(state = {}, action) {
             });
 
         case UPLOAD_IMAGE_FAIL:
-            return Object.assign({}, state, {
-            });
+            return Object.assign({}, state, {});
 
         case UPDATE_TAGS:
             return Object.assign({}, state, {
                 tags: action.payload
+            });
+
+        case UPDATE_IMAGE:
+            return Object.assign({}, state, {
+                image: action.payload
             });
 
         default:

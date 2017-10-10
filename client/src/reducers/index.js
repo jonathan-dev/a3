@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { authentication } from './authentication';
-import { createPost } from './createPost';
+import { createPost } from './create_post';
 import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form'
 
