@@ -211,13 +211,32 @@ const PostMutation = new GraphQLObjectType({
                 }
             },
             resolve: (value, { id, banned }, context) => {
-                //Todo - add isAdmin check
-                // if (context.req.user.isAdmin) {
-                    //Performs ban or unban
+                if (context.req.user.isAdmin) {
+                    // Performs ban or unban
                     return (banned ?  mongo.banUser(id) : mongo.unbanUser(id))
-                // } else {
-                    // throw new Error('you need to be an admin to perform this mutation');
-                // }
+                } else {
+                    throw new Error('you need to be an admin to perform this action');
+                }
+            }
+        },
+
+        promoteUser: {
+            type: types.UserType,
+            description: 'Promote a user to admin status',
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLString),
+                    description: 'The user id to promote'
+                }
+            },
+            resolve: (value, { id }, context) => {
+                //Todo - add isAdmin check
+                if (context.req.user.isAdmin) {
+                    //Performs promotion
+                    return mongo.promoteUser(id);
+                } else {
+                    throw new Error('you need to be an admin to perform this action.');
+                }
             }
         }
     })
