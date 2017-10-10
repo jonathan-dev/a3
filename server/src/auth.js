@@ -34,7 +34,7 @@ export function authApp(app) {
 
     app.use(passport.initialize());
 
-    // makes user object available on request if a user is lodictatesgged in
+    // makes user object available on request if a user is logged in
     app.use(function (req, res, next) {
         passport.authenticate('jwt', function (err, user, info) {
             req.user = user;
