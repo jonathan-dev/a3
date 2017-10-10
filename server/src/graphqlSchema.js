@@ -12,7 +12,6 @@ import {
 import mongo from './database/mongo' // Database
 import * as actions from './actions'
 import * as types from './graphqlTypes'
-import { verifyToken } from './auth'
 
 //Defines all queries that can be done, and their details
 const QueryType = new GraphQLObjectType({
@@ -34,7 +33,6 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getPosts();
             }
         },
-
         post: {
             type: types.PostType,
             description: 'Get a specific post. Pass in post id as an argument.',
@@ -167,7 +165,6 @@ const PostMutation = new GraphQLObjectType({
                 return mongo.createComment(userId, comment.postId, comment.comment);
             }
         },
-
         updatePost: {
             type: types.PostType,
             description: 'Update an post, and optionally any related posts.',

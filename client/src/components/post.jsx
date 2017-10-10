@@ -17,7 +17,7 @@ const Post = props => {
         margin: '20px',
     };
 
-    const { post } = props
+    const { post } = props;
 
     return (
         <Panel>
