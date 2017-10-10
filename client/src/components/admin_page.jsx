@@ -39,11 +39,12 @@ const AdminPage = props => {
         //     mode: 'click' // click cell to edit
         // };
 
-        function banUserMutation(userid) {
+        function banUserMutation(userid, isBanned) {
             //Send a mutation request to server
             props.mutate({
                 variables: {
-                    userid: userid
+                    userid: userid,
+                    userBanned: isBanned
                 },
                 refetchQueries: [{ query: usersListQuery }]
             }).then(({ data }) => {
@@ -53,24 +54,21 @@ const AdminPage = props => {
             });
         }
 
-        function unbanUserButton(cell, row, rowIndex) {
-            //Submit unban
-            console.log('Banning user id ', row.id);
-        }
-
         function banButton(cell, row, enumObject, rowIndex) {
             return  (!row.isLocked ) ? (
+                //Ban button
                 <Button
-                    block
                     onClick={() =>
-                    banUserMutation(row.id)}>
+                        banUserMutation(row.id, true)}
+                    block>
                     Ban { row.username }
                 </Button>
             ) : (
+                //User unban button
                 <Button
-                    block
                     onClick={() =>
-                    unbanUser(cell, row, rowIndex)}>
+                        banUserMutation(row.id, false)}
+                    block>
                     Unban { row.username }
                 </Button>
             )
@@ -122,16 +120,16 @@ query userListQuery {
 }
 `;
 
-const UserMutations = gql`
-    mutation banSpecificUser($userid: String!) {
-        banUser(id: $userid) {
+const BanUserMutations = gql`
+    mutation changeBanStatus($userid: String!, $userBanned: Boolean!) {
+        banUser(id: $userid, banned: $userBanned) {
             username
             lockUntil
         }
     }
 `;
 
-export default graphql(UserMutations)(graphql(usersListQuery, {
+export default graphql(BanUserMutations)(graphql(usersListQuery, {
     options: { pollInterval: 2000 },
 })(AdminPage));
 

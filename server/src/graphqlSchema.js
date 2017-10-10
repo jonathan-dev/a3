@@ -6,6 +6,7 @@ import {
     GraphQLList,
     GraphQLInt,
     GraphQLFloat,
+    GraphQLBoolean,
     GraphQLNonNull,
     GraphQLInputObjectType
 } from 'graphql' // GraphQL and GraphQL types
@@ -198,39 +199,25 @@ const PostMutation = new GraphQLObjectType({
 
         banUser: {
             type: types.UserType,
-            description: 'Ban a user permanently (until unbanned)',
+            description: 'Ban or unban a user (prevents from logging in)',
             args: {
                 id: {
                     type: new GraphQLNonNull(GraphQLString),
                     description: 'The user id to ban'
+                },
+                banned: {
+                    type: GraphQLBoolean,
+                    description: 'Whether the user is banned or not. Defaults to false (unban) if not specified'
                 }
             },
-            resolve: (value, { id }, context) => {
+            resolve: (value, { id, banned }, context) => {
                 //Todo - add isAdmin check
-                if (context.req.user.isAdmin) {
-                    return mongo.banUser(id);
-                } else {
-                    throw new Error('you need to be an admin to perform this mutation');
-                }
-            }
-        },
-
-        unbanUser: {
-            type: types.UserType,
-            description: 'Unban a banned user. No effect on unbanned users.',
-            args: {
-                id: {
-                    type: new GraphQLNonNull(GraphQLString),
-                    description: 'The user id to ban'
-                }
-            },
-            resolve: (value, { id }, context) => {
-                //Todo - add isAdmin check
-                if (context.req.user.isAdmin) {
-                    return mongo.unbanUser(id);
-                } else {
-                    throw new Error('you need to be an admin to perform this mutation')
-                }
+                // if (context.req.user.isAdmin) {
+                    //Performs ban or unban
+                    return (banned ?  mongo.banUser(id) : mongo.unbanUser(id))
+                // } else {
+                    // throw new Error('you need to be an admin to perform this mutation');
+                // }
             }
         }
     })
