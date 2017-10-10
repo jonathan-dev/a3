@@ -37,18 +37,34 @@ let userSchema = mongoose.Schema({
     lockUntil: {
         type: Number
     },
+    //If null, not banned
+    bannedUntil: {
+        type: Number
+    },
     resetPasswordToken: String,
     resetPasswordExpires: Date
 });
 
 userSchema.plugin(uniqueValidator, {type: 'already in use'});
 
+/**
+ * Checks if the user is currently locked out
+ */
 userSchema.virtual('isLocked').get(
     // check for a future lockUntil timestamp
     function () {
-        return (this.lockUntil && this.lockUntil < Date.now())
+        return (this.lockUntil && this.lockUntil > Date.now());
     }
 );
+
+/**
+ * Checks if the user is currently banned
+ */
+userSchema.virtual('isBanned').get(
+    function () {
+        return (this.bannedUntil && this.bannedUntil > Date.now());
+    }
+)
 
 // expose enum on the model, and provide an internal convenience reference
 var reasons = userSchema.statics.failedLogin = {

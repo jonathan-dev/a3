@@ -113,6 +113,11 @@ export const UserType = new GraphQLObjectType({
             type: new GraphQLNonNull(GraphQLBoolean),
             description: "Whether or not user is admin",
             resolve: (user) => user.isAdmin
+        },
+        bannedUntil: {
+            type: GraphQLInt,
+            description: "Single number of when the user is banned until",
+            resolve: (user) => user.bannedUntil
         }
     })
 })
