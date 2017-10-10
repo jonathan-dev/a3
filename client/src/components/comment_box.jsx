@@ -12,6 +12,8 @@ class CommentBox extends Component {
     }
 
     render() {
+        console.log("PROPS:");
+        console.log(this.props);
         const { data } = this.props;
         if (data) {
             const { loading, error, comments } = data;

@@ -161,7 +161,7 @@ export const CommentType = new GraphQLObjectType({
             resolve: (comment) => comment.date
         }
     })
-})
+});
 
 export const CommentInputType = new GraphQLInputObjectType({
     name: 'CommentInput',
@@ -174,4 +174,5 @@ export const CommentInputType = new GraphQLInputObjectType({
             type: GraphQLString
         }
     })
-})
+});
+
