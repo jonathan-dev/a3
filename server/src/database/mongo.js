@@ -86,11 +86,14 @@ export default {
         })
     },
     getTags(ids) {
-        return Tag.find({
-            _id: {
-                "$in": ids
-            }
-        })
+        if(ids){
+            return Tag.find({
+                _id: {
+                    "$in": ids
+                }
+            })
+        }
+        return Tag.find({})
     },
     createTag(name) {
         return new Tag({

@@ -7,13 +7,13 @@ import { Route, Switch } from 'react-router-dom';
 
 import LoginPage from './containers/login_page_container';
 import ResetPage from './containers/reset_page_container';
-import HotPage from '@/hot_page';
-import PostDetailsPage from '@/post_details';
-import CreatePost from '@/create_post';
+import HotPage from './components/hot_page';
+import PostDetailsPage from './components/post_details';
+import CreatePost from './containers/create_post_container';
 import RegisterPage from './containers/register_page_container';
 import ForgotPage from './containers/forgot_page_container';
-import ProfilePage from '@/profile_page';
-import AdminPage from '@/admin_page';
+import ProfilePage from './components/profile_page';
+import AdminPage from './components/admin_page';
 
 import {
   HOME_PATH,

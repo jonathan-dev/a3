@@ -6,7 +6,7 @@ import {
     showRegistrationFormErrors,
     clearRegistrationFormErrors
 } from '../actions/actions';
-import RegisterPage from '@/register_page'
+import RegisterPage from '../components/register_page'
 import { reduxForm } from 'redux-form'
 // THIS FILE HAS NOT BEEN UPDATED ENTIRELY FOR REDUX USAGE TODO: implement container
 

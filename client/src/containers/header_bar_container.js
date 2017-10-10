@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import HeaderBar from '@/header_bar';
+import HeaderBar from '../components/header_bar';
 import { push } from 'react-router-redux';
 import {
     HOME_PATH,

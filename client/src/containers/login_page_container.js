@@ -5,7 +5,7 @@
  * */
 
 import { connect } from 'react-redux';
-import LoginPage from '@/login_page';
+import LoginPage from '../components/login_page';
 import {clearLoginFormErrors, postLogin, showLoginFormErrors} from '../actions/actions';
 import { reduxForm } from 'redux-form'
 
