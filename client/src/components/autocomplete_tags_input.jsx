@@ -89,7 +89,7 @@ class AutocompleteTagsInput extends Component {
     }
 
     render() {
-        return <TagsInput renderInput={this.autocompleteRenderInput} value={this.state.tags} onChange={this.handleChange} onlyUnique={true} />
+        return <TagsInput addKeys={[32, 9, 13]} renderInput={this.autocompleteRenderInput} value={this.state.tags} onChange={this.handleChange} onlyUnique={true} />
     }
 }
 
