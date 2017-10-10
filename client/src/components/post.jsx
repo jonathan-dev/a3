@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Tag from '@/tag';
-import CommentBox from '@/comment_box';
+import Tag from './tag';
+import CommentBox from './comment_box';
 import languages from 'src/language/language';
 
 import { Panel, Label } from 'react-bootstrap';

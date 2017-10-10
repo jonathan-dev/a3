@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { HOME_PATH } from '../paths';
-import inputField from '@/inputField'
+import inputField from './inputField'
 import {
     Form,
     FormControl,

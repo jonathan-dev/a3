@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import { HOME_PATH } from "../paths";
 import { Field } from 'redux-form'
 import { LinkContainer } from 'react-router-bootstrap';
-import inputField from '@/inputField'
+import inputField from './inputField'
 import {
     Form,
     FormGroup,

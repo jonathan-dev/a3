@@ -4,7 +4,7 @@ import {
     graphql,
 } from 'react-apollo';
 
-import Post from '@/post';
+import Post from './post';
 
 const HotPage = props => {
 
@@ -14,7 +14,7 @@ const HotPage = props => {
     }
 
     const { data } = props;
-    
+
     if (data) {
         const { loading, error, posts } = data;
 

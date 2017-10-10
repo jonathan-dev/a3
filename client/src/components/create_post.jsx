@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import { gql, graphql } from 'react-apollo';
-import AutocompleteTagsInput from '@/autocomplete_tags_input'
+import AutocompleteTagsInput from './autocomplete_tags_input'
 import {
     Panel,
     ProgressBar
