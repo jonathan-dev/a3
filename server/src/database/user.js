@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOCK_TIME = 2 * 60 * 60 * 1000;
+const BAN_TIME = 86400000; //default ban time of a day
 
 let userSchema = mongoose.Schema({
     username: {
@@ -56,15 +57,6 @@ userSchema.virtual('isLocked').get(
         return (this.lockUntil && this.lockUntil > Date.now());
     }
 );
-
-/**
- * Checks if the user is currently banned
- */
-userSchema.virtual('isBanned').get(
-    function () {
-        return (this.bannedUntil && this.bannedUntil > Date.now());
-    }
-)
 
 // expose enum on the model, and provide an internal convenience reference
 var reasons = userSchema.statics.failedLogin = {
@@ -135,8 +127,73 @@ userSchema.methods.incLoginAttempts = function () {
                 .then(res => resolve(res))
                 .catch(err => reject(err))
         }
-    })
+    });
 
+};
+
+/**
+ * Locks user from logging in (for ever / until unbanned)
+ */
+userSchema.statics.banUser = function (userid) {
+    return new Promise((resolve, reject) => {
+        this.findOne({
+            _id: userid
+        }).then(user => {
+            // make sure the user exists
+            if (!user) resolve({
+                reason: reasons.NOT_FOUND
+            });
+            console.log('=====Found user to ban', user);
+            //Set ban details
+            let bantime = Number.MAX_SAFE_INTEGER;
+            var updates = {
+                $set: {
+                    lockUntil: bantime
+                }
+            };
+            //Add ban to db
+            user.update(updates)
+                .then(() => resolve(user)) //returns the user when update is completed successfully
+                .catch(err => reject(err)) //returns error if not successful
+
+        })
+        return;
+        /*
+        return new Promise((resolve, reject) => {
+            console.log('This user is locked: ', this.isLocked);
+            console.log('==========This is ', this);
+            //TODO - extract common code from this and from login attempt locking code
+            //Get current time
+            let bantime = Number.MAX_SAFE_INTEGER; //add a day of ms
+            console.log('Banning forever (until ' + bantime + ')');
+
+            //set ban time
+            var updates = {
+                $set: {
+                    lockUntil: bantime
+                }
+            }
+            this.update(updates)
+                .then(res => resolve(res))
+                .catch(err => reject(err))
+        }); */
+    });
+}
+
+/**
+ * Unbans
+ */
+userSchema.statics.unbanUser = function (userid) {
+    return new Promise((resolve, reject) => {
+        //Set ban time on user to be almost nothing
+        updates.$set = {
+            lockUntil: 1
+        };
+        //Update db
+        this.update(updates)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+    });
 };
 
 

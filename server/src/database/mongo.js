@@ -127,11 +127,17 @@ export default {
         console.log("    postId: ", userId);
         console.log("   comment: ", comment);
         //Validation
-        return new Comment({
-            comment: comment,
-            postId: postId,
-            userId: userId
-        }).save();
+        //Check if user is banned
+        // if (!isUserBanned(userId)) {
+            return new Comment({
+                comment: comment,
+                postId: postId,
+                userId: userId
+            }).save();
+        // } else {
+            // console.log("User was banned, can't post comment", userId);
+            //TODO - add proper error handling here to give better feedback to user
+        // }
     },
     getUsers() {
         return User.find();
@@ -151,6 +157,22 @@ export default {
     },
     getUserNameById(id) {
         return User.findById(id,{username:1})
+    },
+    banUser(id) {
+        //Todo - test these methods
+        // var foundUser = User.findById(id);
+        // console.log('Found user ', foundUser);
+        //console.log('====Found user id ', foundUser);
+        //var castUser = foundUser.cast(User.schema);
+        //console.log('====Cast user to schema ', castUser);
+
+        //console.log('Attempting to use a method on found user', foundUser.isLocked);
+        //return User.schema.methods.banUser();
+        return User.banUser(id);
+    },
+    unbanUser(id) {
+        var foundUser = User.findById(id);
+        return foundUser.unbanUser();
     },
     setResetToken(email,resetPasswordToken,resetPasswordExpires) {
         return User.findOneAndUpdate(
