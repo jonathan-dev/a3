@@ -10,7 +10,12 @@ import {
     CHECK_RESET_ROUTE,
     RESET_PASSWORD,
     POST_REGISTRATION,
-    REQUEST_RESET_PASSWORD
+    REQUEST_RESET_PASSWORD,
+    UPDATE_UPLOAD_PROGRESS,
+    UPLOAD_IMAGE,
+    UPLOAD_IMAGE_SUCCESS,
+    UPLOAD_IMAGE_FAIL,
+    UPDATE_TAGS
 
 } from '../constants/action_types';
 
@@ -22,22 +27,9 @@ export function postLogin(loginData) {
             request: {
                 url: '/login',
                 method: 'POST',
-                data: Object.assign({}, loginData)
+                data: Object.assign({}, loginData),
             }
         }
-    }
-}
-
-export function showLoginFormErrors(errors) {
-    return {
-        type: SHOW_LOGIN_FORM_ERRORS,
-        errors
-    }
-}
-
-export function clearLoginFormErrors() {
-    return {
-        type: CLEAR_LOGIN_FORM_ERRORS
     }
 }
 
@@ -52,19 +44,6 @@ export function postRegistration(registrationData) {
                 data: Object.assign({}, registrationData)
             }
         }
-    }
-}
-
-export function showRegistrationFormErrors(errors) {
-    return {
-        type: SHOW_REGISTRATION_FORM_ERORRS,
-        errors
-    }
-}
-
-export function clearRegistrationFormErrors() {
-    return {
-        type: CLEAR_REGISTRATION_FORM_ERRORS
     }
 }
 
@@ -125,4 +104,38 @@ export function logoutUser() {
     return {
         type: LOGOUT_USER
     };
+}
+
+export function updateUploadProgress(progress) {
+    return {
+        type: UPDATE_UPLOAD_PROGRESS,
+        payload: progress
+    }
+}
+
+export function uploadImage(dispatch, FormData) {
+    return {
+        type: UPLOAD_IMAGE,
+        payload: {
+            request: {
+                url: '/upload',
+                method: 'POST',
+                data: FormData,
+                onUploadProgress: (e) => {
+                    if (e.lengthComputable) {
+                        let loaded = Math.round((e.loaded / e.total) * 100);
+                        console.log('---progress', loaded);
+                        dispatch(updateUploadProgress(loaded));
+                    }
+                }
+            }
+        }
+    }
+}
+
+export function updateTags (tags) {
+    return {
+        type: UPDATE_TAGS,
+        payload: tags
+    }
 }
