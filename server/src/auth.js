@@ -15,26 +15,10 @@ const jwtOptions = {
     secretOrKey: 'tasmanianDevil' // TODO: change put in config
 }
 
-/**
- * Returns a verified, decoded token if valid
- * Returns error if not verified
- */
-// module.exports.verifyToken = function (token){
-export function verifyToken(token) {
-    //TODO: - handle error if not valid token
-    try {
-        var decodedToken = jwt.verify(token, jwtOptions.secretOrKey);
-        return decodedToken;
-    } catch (error) {
-        return null;
-    }
-};
-
-// module.exports.authApp = function (app) {
 export function authApp(app) {
-    //Authorization: Bearer <Token>
 
-    var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
+    var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, done) {
+        //Authorization: Bearer <Token>
         console.log('---jwt-payload',jwt_payload);
         const {id, isAdmin} = jwt_payload;
 
@@ -43,7 +27,7 @@ export function authApp(app) {
             isAdmin
         }
 
-        next(null,user);
+        done(null,user);
     });
 
     passport.use(strategy);
