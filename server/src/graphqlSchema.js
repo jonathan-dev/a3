@@ -67,9 +67,7 @@ const QueryType = new GraphQLObjectType({
             type: new GraphQLList(types.UserType),
             description: 'Get a list of all users in database',
             resolve: (root, args, context) => {
-                var token = context.req.headers.authorization;
-                var decodedToken = verifyToken(token);
-                if (decodedToken && decodedToken.isAdmin) {
+                if (context.req.user.isAdmin) {
                     return mongo.getUsers();
                 } else {
                     throw new Error('you need to be an admin to view this page');
