@@ -21,7 +21,7 @@ const jwtOptions = {
  */
 // module.exports.verifyToken = function (token){
 export function verifyToken(token) {
-    //TODO - handle error if not valid token
+    //TODO: - handle error if not valid token
     try {
         var decodedToken = jwt.verify(token, jwtOptions.secretOrKey);
         return decodedToken;
@@ -35,21 +35,22 @@ export function authApp(app) {
     //Authorization: Bearer <Token>
 
     var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
-        // console.log('payload received', jwt_payload);
-        // TODO: handle isAdmin /remove database call
-        mongo.getUserById(jwt_payload.id)
-            .then(user => {
-                // console.log('user', user)
-                next(null, user)
-            })
-            .catch(err => next(null, false))
+        console.log('---jwt-payload',jwt_payload);
+        const {id, isAdmin} = jwt_payload;
+
+        const user = {
+            id,
+            isAdmin
+        }
+
+        next(null,user);
     });
 
     passport.use(strategy);
 
     app.use(passport.initialize());
 
-    // makes user object available on request if a user is logged in
+    // makes user object available on request if a user is lodictatesgged in
     app.use(function (req, res, next) {
         passport.authenticate('jwt', function (err, user, info) {
             req.user = user;

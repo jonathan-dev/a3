@@ -109,6 +109,7 @@ const PostMutation = new GraphQLObjectType({
     name: 'PostMutations',
     description: 'Post API Mutations',
     fields: () => ({
+
         createPost: {
             type: types.PostType,
             description: 'Create a new post.',
@@ -121,7 +122,7 @@ const PostMutation = new GraphQLObjectType({
                 post
             }, context) => {
                 if (context.req.user) {
-                    let userId = context.req.user._id
+                    let userId = context.req.user.id
                     return actions.createPost(userId, post)
                 } else {
                     console.error('no auth')
@@ -129,6 +130,7 @@ const PostMutation = new GraphQLObjectType({
                 }
             }
         },
+
         createComment: {
             type: types.CommentType,
             description: "Create a new comment on a post",
@@ -141,7 +143,7 @@ const PostMutation = new GraphQLObjectType({
                 comment
             }, context) => {
                 //Get the user from the request
-                var userId = context.req.user._id;
+                var userId = context.req.user.id;
 
                 /* HOW TO QUERY using Graphiql
                 mutation CreateCommentForPost($comment: CommentAttributes!) {
@@ -159,6 +161,7 @@ const PostMutation = new GraphQLObjectType({
                 return mongo.createComment(userId, comment.postId, comment.comment);
             }
         },
+
         updatePost: {
             type: types.PostType,
             description: 'Update an post, and optionally any related posts.',
@@ -174,6 +177,7 @@ const PostMutation = new GraphQLObjectType({
                 return mongo.updatePost(post);
             }
         },
+
         deletePost: {
             type: types.PostType,
             description: 'Delete an post with id and return the post that was deleted.',

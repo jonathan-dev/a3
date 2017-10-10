@@ -39,11 +39,10 @@ networkInterface.use([{
     if (!req.options.headers) {
       req.options.headers = {};  // Create the header object if needed.
     }
-    // get the authentication token from local storage if it exists
+    // get the authentication token from Redux store if it exists
     // and add to every request
     const token = store.getState().authentication.token;
-    //req.options.headers.authorization = token ? `Bearer ${token}` : null;
-    req.options.headers.authorization = token;
+    req.options.headers.authorization = token ? `Bearer ${token}` : null;
     next();
   }
 }]);
