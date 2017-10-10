@@ -210,7 +210,11 @@ const PostMutation = new GraphQLObjectType({
             },
             resolve: (value, { id }, context) => {
                 //Todo - add isAdmin check
-                return mongo.banUser(id);
+                if (context.req.user.isAdmin) {
+                    return mongo.banUser(id);
+                } else {
+                    throw new Error('you need to be an admin to perform this mutation');
+                }
             }
         },
 
@@ -225,7 +229,11 @@ const PostMutation = new GraphQLObjectType({
             },
             resolve: (value, { id }, context) => {
                 //Todo - add isAdmin check
-                return mongo.unbanUser(id);
+                if (context.req.user.isAdmin) {
+                    return mongo.unbanUser(id);
+                } else {
+                    throw new Error('you need to be an admin to perform this mutation')
+                }
             }
         }
     })
