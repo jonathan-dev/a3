@@ -18,6 +18,7 @@ const QueryType = new GraphQLObjectType({
     name: 'Query',
     description: 'Perform a query on the database using one of the following:',
     fields: () => ({
+
         posts: {
             type: new GraphQLList(types.PostType),
             args: {
@@ -32,6 +33,7 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getPosts();
             }
         },
+
         post: {
             type: types.PostType,
             description: 'Get a specific post. Pass in post id as an argument.',
@@ -44,6 +46,7 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getPost(args.id);
             }
         },
+
         tags: {
             type: new GraphQLList(types.TagType),
             description: 'Get a list of all tags that have been used',
@@ -51,6 +54,7 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getTags();
             }
         },
+
         user: {
             type: types.UserType,
             description: 'Get User',
@@ -63,6 +67,7 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getUserNameById(args.userId)
             }
         },
+
         users: {
             type: new GraphQLList(types.UserType),
             description: 'Get a list of all users in database',
@@ -74,6 +79,7 @@ const QueryType = new GraphQLObjectType({
                 }
             }
         },
+
         comments: {
             type: new GraphQLList(types.CommentType),
             description: 'Get a list of comments for a specific post',
