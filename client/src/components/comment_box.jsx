@@ -26,7 +26,7 @@ class CommentBox extends Component {
             return (
                 <section>
                     <CreateComment post={this.props.post} />
-                    {comments.map(comment => <Comment comment={comment} />)}
+                    {comments.map((comment, index) => <Comment key={index} comment={comment} />)}
                 </section>
             )
         }
