@@ -162,20 +162,10 @@ export default {
         return User.findById(id,{username:1})
     },
     banUser(id) {
-        //Todo - test these methods
-        // var foundUser = User.findById(id);
-        // console.log('Found user ', foundUser);
-        //console.log('====Found user id ', foundUser);
-        //var castUser = foundUser.cast(User.schema);
-        //console.log('====Cast user to schema ', castUser);
-
-        //console.log('Attempting to use a method on found user', foundUser.isLocked);
-        //return User.schema.methods.banUser();
         return User.banUser(id);
     },
     unbanUser(id) {
-        var foundUser = User.findById(id);
-        return foundUser.unbanUser();
+        return User.unbanUser(id);
     },
     setResetToken(email,resetPasswordToken,resetPasswordExpires) {
         return User.findOneAndUpdate(

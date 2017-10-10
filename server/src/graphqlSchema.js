@@ -198,6 +198,7 @@ const PostMutation = new GraphQLObjectType({
                 return mongo.deletePost(id);
             }
         },
+
         banUser: {
             type: types.UserType,
             description: 'Ban a user permanently (until unbanned)',
@@ -210,6 +211,21 @@ const PostMutation = new GraphQLObjectType({
             resolve: (value, { id }, context) => {
                 //Todo - add isAdmin check
                 return mongo.banUser(id);
+            }
+        },
+
+        unbanUser: {
+            type: types.UserType,
+            description: 'Unban a banned user. No effect on unbanned users.',
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLString),
+                    description: 'The user id to ban'
+                }
+            },
+            resolve: (value, { id }, context) => {
+                //Todo - add isAdmin check
+                return mongo.unbanUser(id);
             }
         }
     })

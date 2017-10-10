@@ -135,6 +135,7 @@ userSchema.methods.incLoginAttempts = function () {
  * Locks user from logging in (for ever / until unbanned)
  */
 userSchema.statics.banUser = function (userid) {
+    //TODO - also invalidate any issued tokens to that user
     return new Promise((resolve, reject) => {
         this.findOne({
             _id: userid
@@ -145,7 +146,6 @@ userSchema.statics.banUser = function (userid) {
             });
             console.log('=====Found user to ban', user);
             //Set ban details
-            let bantime = Number.MAX_SAFE_INTEGER;
             var updates = {
                 $set: {
                     lockUntil: bantime
@@ -154,47 +154,44 @@ userSchema.statics.banUser = function (userid) {
             //Add ban to db
             user.update(updates)
                 .then(() => resolve(user)) //returns the user when update is completed successfully
-                .catch(err => reject(err)) //returns error if not successful
+                .catch(err => function(error) {
+                    console.log("Couldn't update the db add the ban :( ");
+                    reject(err);
+                }) //returns error if not successful
 
-        })
-        return;
-        /*
-        return new Promise((resolve, reject) => {
-            console.log('This user is locked: ', this.isLocked);
-            console.log('==========This is ', this);
-            //TODO - extract common code from this and from login attempt locking code
-            //Get current time
-            let bantime = Number.MAX_SAFE_INTEGER; //add a day of ms
-            console.log('Banning forever (until ' + bantime + ')');
-
-            //set ban time
-            var updates = {
-                $set: {
-                    lockUntil: bantime
-                }
-            }
-            this.update(updates)
-                .then(res => resolve(res))
-                .catch(err => reject(err))
-        }); */
+        });
     });
 }
 
 /**
- * Unbans
+ * Unbans a user by finding them in DB, and then clearing 'lock until' value
  */
 userSchema.statics.unbanUser = function (userid) {
     return new Promise((resolve, reject) => {
-        //Set ban time on user to be almost nothing
-        updates.$set = {
-            lockUntil: 1
-        };
-        //Update db
-        this.update(updates)
-            .then(res => resolve(res))
-            .catch(err => reject(err))
+        this.findOne({
+            _id: userid
+        }).then(user => {
+            // make sure the user exists
+            if (!user) resolve({
+                reason: reasons.NOT_FOUND
+            });
+            console.log('=====Found user to ban', user);
+            //Set ban time on user to be almost nothing
+            var updates = {
+                $unset: {
+                    lockUntil: 1
+                }
+            };
+            //Update db
+            user.update(updates)
+                .then(() => resolve(user))
+                .catch(err => function(error) {
+                    console.log("Couldn't update the db to remove the ban :( ");
+                    reject(err);
+                })
+        });
     });
-};
+}
 
 
 userSchema.statics.getAuthenticated = function (username, password) {
