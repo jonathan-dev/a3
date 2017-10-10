@@ -111,7 +111,7 @@ export const UserType = new GraphQLObjectType({
             resolve: (user) => user.username
         },
         isAdmin: {
-            type: new GraphQLNonNull(GraphQLBoolean),
+            type: GraphQLBoolean,
             description: "Whether or not user is admin",
             resolve: (user) => user.isAdmin
         },
@@ -119,6 +119,11 @@ export const UserType = new GraphQLObjectType({
             type: GraphQLFloat,
             description: "Single number of time the user is locked until",
             resolve: (user) => user.lockUntil
+        },
+        isLocked: {
+            type: GraphQLBoolean,
+            description: "Whether the user is locked or not",
+            resolve: (user) => user.isLocked
         }
     })
 })
@@ -161,7 +166,7 @@ export const CommentType = new GraphQLObjectType({
             resolve: (comment) => comment.date
         }
     })
-})
+});
 
 export const CommentInputType = new GraphQLInputObjectType({
     name: 'CommentInput',
@@ -174,4 +179,5 @@ export const CommentInputType = new GraphQLInputObjectType({
             type: GraphQLString
         }
     })
-})
+});
+

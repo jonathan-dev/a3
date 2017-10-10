@@ -144,7 +144,7 @@ userSchema.statics.banUser = function (userid) {
             if (!user) resolve({
                 reason: reasons.NOT_FOUND
             });
-            console.log('=====Found user to ban', user);
+            var bantime = Number.MAX_SAFE_INTEGER;
             //Set ban details
             var updates = {
                 $set: {

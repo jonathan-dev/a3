@@ -5,5 +5,4 @@ export const LOGIN_PATH = '/login';
 export const REGISTER_PATH = '/register';
 export const FORGOT_PASSWORD_PATH = '/forgot';
 export const RESET_PASSWORD_PATH = '/reset/:id';
-export const POST_DETAIL_PATH = '/post/:id';
 export const USER_PROFILE_PATH = '/user/:id';

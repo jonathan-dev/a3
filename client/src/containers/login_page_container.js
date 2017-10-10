@@ -63,7 +63,7 @@ const mapDispatchToProps = dispatch => {
 const loginForm = reduxForm({
     form: 'ResetForm', // a unique identifier for this form
     validate,
-})(LoginPage)
+})(LoginPage);
 
 // connect the redux functionality to the UI representation
 const LoginPageContainer = connect(mapStateToProps, mapDispatchToProps)(loginForm);

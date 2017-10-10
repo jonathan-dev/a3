@@ -18,7 +18,6 @@ import {
 class HeaderBar extends Component {
     render() {
         const { isAuthenticated, isAdmin, username } = this.props
-        console.log(username)
         return (
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
@@ -31,34 +30,33 @@ class HeaderBar extends Component {
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        { isAuthenticated?
-                            [
-                                <LinkContainer to={CREATE_POST_PATH} >
-                                    <NavItem href={CREATE_POST_PATH}>{CREATE_POST_PATH}</NavItem>
-                                </LinkContainer>
-                            ] : null
+                        { isAuthenticated ?
+                            <LinkContainer to={CREATE_POST_PATH} >
+                                <NavItem href={CREATE_POST_PATH}>{CREATE_POST_PATH}</NavItem>
+                            </LinkContainer>
+                            : null
                         }
-                        { isAdmin ? [
-                                <LinkContainer to={ADMIN_PATH} >
-                                    <NavItem href={ADMIN_PATH}>{ADMIN_PATH}</NavItem>
-                                </LinkContainer>
-                            ] : null
+                        { isAdmin ?
+                            <LinkContainer to={ADMIN_PATH} >
+                                <NavItem href={ADMIN_PATH}>{ADMIN_PATH}</NavItem>
+                            </LinkContainer>
+                            : null
                         }
                     </Nav>
                     <Nav pullRight>
-                        {isAuthenticated ?
+                        { isAuthenticated ?
                             [
-                            <LinkContainer to={username} >
-                                <NavItem href={username}>{username}</NavItem>
-                            </LinkContainer>,
-                            <NavItem onClick={this.props.logout}>Logout</NavItem>
+                                <LinkContainer key={1} to={username}>
+                                    <NavItem href={username}>{username}</NavItem>
+                                </LinkContainer>,
+                                <NavItem key={2} onClick={this.props.logout}>Logout</NavItem>
                             ]
                             :
                             [
-                                <LinkContainer to={REGISTER_PATH} >
+                                <LinkContainer key={1} to={REGISTER_PATH} >
                                     <NavItem href={REGISTER_PATH}>{REGISTER_PATH}</NavItem>
                                 </LinkContainer>,
-                                <LinkContainer to={LOGIN_PATH} >
+                                <LinkContainer key={2} to={LOGIN_PATH} >
                                     <NavItem href={LOGIN_PATH}>{LOGIN_PATH}</NavItem>
                                 </LinkContainer>
                             ]
