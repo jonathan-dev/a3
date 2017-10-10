@@ -11,7 +11,7 @@ class AutocompleteTagsInput extends Component {
 
     handleChange = (tags) => {
         this.setState({ tags })
-        this.props.updateTags(tags)
+        this.props.onUpdateTags(tags)
     }
 
     autocompleteRenderInput = ({ addTag, ...props }) => {
