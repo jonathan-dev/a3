@@ -1,7 +1,7 @@
 import {
     connect
 } from 'react-redux';
-import ResetPage from '@/reset_page'
+import ResetPage from '../components/reset_page'
 import {
     checkResetRoute,
     resetPassword,

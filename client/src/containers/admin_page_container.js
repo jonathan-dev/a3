@@ -7,7 +7,7 @@
 
 //component import
 import { connect } from 'react-redux';
-import AdminPage from '@/admin_page';
+import AdminPage from '../components/admin_page';
 
 //Redux function - maps current state to props object so it can be given to the component to render the page
 const mapStateToProps = state => {
