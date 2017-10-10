@@ -144,17 +144,9 @@ export const CommentType = new GraphQLObjectType({
             type: GraphQLString,
             resolve: (comment) => comment.postId
         },
-        comment: {
+        commentText: {
             type: GraphQLString,
             resolve: (comment) => comment.comment
-        },
-        voteup: {
-            type: GraphQLInt,
-            resolve: (comment) => comment.voteup
-        },
-        votedown: {
-            type: GraphQLInt,
-            resolve: (comment) => comment.votedown
         },
         date: {
             type: GraphQLString,
