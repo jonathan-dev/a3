@@ -8,7 +8,6 @@ import { Route, Switch } from 'react-router-dom';
 import LoginPage from './containers/login_page_container';
 import ResetPage from './containers/reset_page_container';
 import HotPage from './components/hot_page';
-import PostDetailsPage from './components/post_details';
 import CreatePost from './containers/create_post_container';
 import RegisterPage from './containers/register_page_container';
 import ForgotPage from './containers/forgot_page_container';
@@ -22,7 +21,6 @@ import {
   REGISTER_PATH,
   FORGOT_PASSWORD_PATH,
   RESET_PASSWORD_PATH,
-  POST_DETAIL_PATH,
   USER_PROFILE_PATH,
   ADMIN_PATH
 } from './paths';
@@ -38,7 +36,6 @@ class Routes extends Component {
         <Route path={REGISTER_PATH} component={RegisterPage}/>
         <Route path={FORGOT_PASSWORD_PATH} component={ForgotPage}/>
         <Route path={RESET_PASSWORD_PATH} component={ResetPage}/>
-        <Route path={POST_DETAIL_PATH} component={PostDetailsPage}/>
         <Route path={USER_PROFILE_PATH} component={ProfilePage}/>
         <Route path={ADMIN_PATH} component={AdminPage}/>
       </Switch>

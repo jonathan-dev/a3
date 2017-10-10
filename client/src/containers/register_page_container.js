@@ -1,20 +1,13 @@
-import {
-    connect
-} from 'react-redux';
-import {
-    postRegistration,
-    showRegistrationFormErrors,
-    clearRegistrationFormErrors
-} from '../actions/actions';
-import RegisterPage from '../components/register_page'
-import { reduxForm } from 'redux-form'
-// THIS FILE HAS NOT BEEN UPDATED ENTIRELY FOR REDUX USAGE TODO: implement container
+import { connect } from 'react-redux';
+import { postRegistration } from '../actions/actions';
+import RegisterPage from '../components/register_page';
+import { reduxForm } from 'redux-form';
 
-//Handles submission of register form TODO: NOT IMPLEMENTED YET, CORRECT IMPLEMENTATION
+//Handles submission of register form
 const handleSubmit = (dispatch, event) => {
     event.preventDefault(); //Stops page refresh
 
-    // extract formdata to object
+    // extract form-data to object
     let formData = {
         username: event.target.username.value,
         email: event.target.email.value,
@@ -32,32 +25,46 @@ const handleSubmit = (dispatch, event) => {
     dispatch(postRegistration(trimmedFormData));
 };
 
+const stringIsEmail = string => {
+    // email regular expression to test if string is an valid email address string
+    let emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    if (string) {
+        // if string is not empty, test if it matches the email regex
+        return emailRegEx.test(string)
+    }
+    return false;
+};
+
 const validate = values => {
-    const errors = {}
+    const errors = {};
+
+    // define the required fields in the form
     const requiredFields = [
         'username',
         'email',
         'password',
         'password2'
-    ]
+    ];
+
+    // check if a required field is empty
     requiredFields.forEach(field => {
         if (!values[field]) {
             errors[field] = 'Required'
         }
-    })
-    if (
-        values.email &&
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-        errors.email = 'Invalid email address'
+    });
+
+    if (!stringIsEmail(values.email)) {
+        errors.email = 'Invalid email address';
     }
-    if(values.password2 && values.password2.length >0 && values.password2 != values.password) {
+
+    if(values.password2 && values.password2.length > 0 && values.password2 != values.password) {
         errors.password2 = 'Password does not match'
     }
     return errors
-}
+};
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 // TODO: check if username is available!
 const asyncValidate = (values /*, dispatch */ ) => {
     return sleep(1000).then(() => {
@@ -73,7 +80,7 @@ const asyncValidate = (values /*, dispatch */ ) => {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.authentication.isAuthenticated || false,
+        isAuthenticated: state.authentication.isAuthenticated || false
     }
 };
 
