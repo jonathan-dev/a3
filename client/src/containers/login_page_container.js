@@ -6,7 +6,7 @@
 
 import { connect } from 'react-redux';
 import LoginPage from '../components/login_page';
-import {clearLoginFormErrors, postLogin, showLoginFormErrors} from '../actions/actions';
+import { postLogin } from '../actions/actions';
 import { reduxForm } from 'redux-form'
 
 // handle submission of login information
@@ -22,6 +22,9 @@ const handleSubmit = (dispatch, event) => {
 
     dispatch(postLogin(formData));
 };
+
+
+
 
 const validate = values => {
     const errors = {}
@@ -53,7 +56,7 @@ const mapStateToProps = state => {
 // redux function to map dispatch functions to props to invoke callback in login page component from props
 const mapDispatchToProps = dispatch => {
     return {
-        handleSubmit: event => handleSubmit(dispatch, event),
+        handleSubmit: event => handleSubmit(dispatch, event)
     }
 };
 

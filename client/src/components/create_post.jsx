@@ -31,17 +31,7 @@ class createPost extends Component {
         this.setState({ title: event.target.value });
     }
 
-    onClick = () => {
-        this.props.mutate({
-            variables: { post: { title: this.state.title, imageId: this.state.imageId, tags: this.state.tags } }
-        })
-            .then(({ data }) => {
-                console.log('got data', data);
-                this.props.history.push('/')
-            }).catch((error) => {
-                console.log('there was an error sending the query', error);
-            });
-    }
+
 
     updateTags = (tags) => {
         this.setState({ tags })
@@ -53,33 +43,7 @@ class createPost extends Component {
         return []
     }
 
-    onDropHandler = (accepted, rejected) => {
-        this.setState({ accepted, rejected });
-        if (accepted) {
 
-            let formData = new FormData();
-            formData.append("index", 1);
-            formData.append("image", accepted[0]);
-
-            axios.post(window.location.origin + '/upload', formData, {
-                onUploadProgress: (e) => {
-                    if (e.lengthComputable) {
-                        let loaded = Math.round((e.loaded / e.total) * 100);
-                        this.setState({ loaded: loaded })
-                    }
-                }
-            })
-                .then(response => {
-                    let data = response.data;
-                    console.log(response);
-                    this.setState({ imageId: data.imageId })
-                })
-                .catch(err => {
-
-                    console.log(err);
-                });
-        }
-    }
 
     render() {
 
@@ -99,16 +63,16 @@ class createPost extends Component {
                 <div className="dropzone">
                     <Dropzone
                         accept="image/jpeg, image/png"
-                        onDrop={this.onDropHandler}
+                        onDrop={this.props.onDropHandler}
                         disabled={this.state.accepted.length}
                     >
                         <p>Try dropping some files here, or click to select files to upload.</p>
-                        <p>Only *.jpegthis.state.accepted[0] and *.png images will be accepted</p>
+                        <p>Only *.jpeg this.state.accepted[0] and *.png images will be accepted</p>
                     </Dropzone>
                     { this.state.accepted[0] && <img src={this.state.accepted[0].preview}/>}
-                    <ProgressBar now={this.state.loaded} />
+                    <ProgressBar now={this.props.progress} />
                 </div>
-                <AutocompleteTagsInput updateTags={this.updateTags} tags={this.getTags} />
+                <AutocompleteTagsInput updateTags={this.props.updateTags} tags={this.getTags} />
                 <button onClick={this.onClick}>post</button>
             </Panel>
         );
