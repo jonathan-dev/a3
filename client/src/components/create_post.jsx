@@ -6,7 +6,8 @@ import axios from 'axios';
 import AutocompleteTagsInput from './autocomplete_tags_input'
 import {
     Panel,
-    ProgressBar
+    ProgressBar,
+    PageHeader
 } from 'react-bootstrap'
 
 
@@ -93,6 +94,8 @@ class createPost extends Component {
 
         return (
             <Panel className="col-lg-4" style={colCentered}>
+                <PageHeader>Post something</PageHeader>
+                <input type="text" onChange={this.handleChange} />
                 <div className="dropzone">
                     <Dropzone
                         accept="image/jpeg, image/png"
@@ -100,26 +103,11 @@ class createPost extends Component {
                         disabled={this.state.accepted.length}
                     >
                         <p>Try dropping some files here, or click to select files to upload.</p>
-                        <p>Only *.jpeg and *.png images will be accepted</p>
+                        <p>Only *.jpegthis.state.accepted[0] and *.png images will be accepted</p>
                     </Dropzone>
+                    { this.state.accepted[0] && <img src={this.state.accepted[0].preview}/>}
                     <ProgressBar now={this.state.loaded} />
                 </div>
-                <aside>
-                    <h2>Accepted files</h2>
-                    <ul>
-                        {
-                            this.state.accepted.map(f => <li key={f.name}>{f.name} - {f.size} bytes
-                <img src={f.preview} /></li>)
-                        }
-                    </ul>
-                    <h2>Rejected files</h2>
-                    <ul>
-                        {
-                            this.state.rejected.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
-                        }
-                    </ul>
-                </aside>
-                <input type="text" onChange={this.handleChange} />
                 <AutocompleteTagsInput updateTags={this.updateTags} tags={this.getTags} />
                 <button onClick={this.onClick}>post</button>
             </Panel>

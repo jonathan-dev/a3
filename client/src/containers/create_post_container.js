@@ -38,7 +38,7 @@ const handleSubmit = (dispatch, event, token) => {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.authentication.isAuthenticated ||false,
+        isAuthenticated: state.authentication.isAuthenticated,
     }
 };
 
