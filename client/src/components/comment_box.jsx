@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import {
-    gql,
-    graphql,
-} from 'react-apollo';
-import CreateComment from './create_comment'
 
 import {
     Form,
@@ -11,7 +6,7 @@ import {
     FormControl,
     Col
 } from 'react-bootstrap';
-import Comment from './comment'
+import Comment from '../containers/comment_container'
 
 class CommentBox extends Component {
     constructor() {
@@ -19,14 +14,10 @@ class CommentBox extends Component {
     }
 
     render() {
-        console.log("PROPS:");
-        console.log(this.props);
         const { data } = this.props;
         if (data) {
             const { loading, error, comments } = data;
-            console.log("Data on commentbox.jsx: ", data);
 
-            console.log("Is loading", loading);
             if (loading) {
                 return <div>Loading</div>
             }
