@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
-import CreateComment from './create_comment'
+import {
+    Button,
+    Col
+} from 'react-bootstrap';
 
 const Comment = props => {
     const {comment, date, owner } = props.comment;
+    let d = new Date(date);
+    let calendarDate = d.toLocaleDateString();
+    let time = d.getHours() + ":" + d.getMinutes();
+    let adjustedDate = time + " (" + calendarDate + ")";
+
     return (
         <section>
-            <p>{owner.username+": "+ comment}</p>
-            {props.isOwnComment ? <p>This is your comment</p> : null}
-            <p>{date}</p>
+            <div className={"comment"}>
+                <h2 className="author">{owner.username}</h2>
+                { comment }
+                { props.isOwnComment ? <Button className="pull-right" bsStyle="primary" bsSize="xsmall">Edit</Button> : null }
+                <p>{adjustedDate}</p>
+            </div>
         </section>
     );
 };

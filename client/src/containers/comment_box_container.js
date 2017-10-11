@@ -12,8 +12,8 @@ const handleSubmit = (event, postId, mutate) => {
     mutate({
         variables: {
             comment: {
-                comment: comment.slice(0),
-                postId: postId.slice(0)
+                comment: comment,
+                postId: postId
             }
         },
         refetchQueries: [{ query: commentListQuery, variables: { postId: postId } }]
@@ -43,6 +43,7 @@ const commentListQuery = gql`
                 id
                 username
             }
+            date
         }
     }
 `;

@@ -4,6 +4,7 @@ import Comment from '../components/comment';
 
 
 const mapStateToProps = (state, ownProps) => {
+    console.log("OWN OPP: ", ownProps);
     return {
         comment: ownProps.comment,
         isOwnComment: state.authentication.username === ownProps.comment.owner.username
