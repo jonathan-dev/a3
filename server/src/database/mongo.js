@@ -155,6 +155,10 @@ export default {
             .catch(err => reject(err))
         })
     },
+    deleteComment(id) {
+        console.log("removing comment with id: ", id);
+        return Comment.findByIdAndRemove(id);
+    },
     getUsers() {
         return User.find();
     },

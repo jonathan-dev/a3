@@ -24,12 +24,22 @@ const handleCommentSubmit = (event, postId, mutate) => {
     .catch(err => console.log("Error sending comment quAry", err));
 };
 
-const handleEditComment = () => {
-    console.log("Edit comment was clicked");
+const handleEditComment = (comment, postId, mutate) => {
+    console.log("Edit comment was clicked", comment);
+
 };
 
-const handleDeleteComment = () => {
-    console.log("Delete comment was clicked");
+const handleDeleteComment = (comment, postId, mutate) => {
+    mutate({
+        variables: {
+            commentId: comment.id
+        },
+        refetchQueries: [{ query: commentListQuery, variables: { postId: postId } }]
+    })
+    .then(({data}) => {
+        console.log("Deleted comment", data);
+    })
+    .catch(err => console.log("Error deleting comment: ", err));
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -41,8 +51,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         handleCommentSubmit: event => handleCommentSubmit(event, ownProps.postId, ownProps.newCommentMutation),
-        handleEditComment: () => handleEditComment(),
-        handleDeleteComment: () => handleDeleteComment()
+        handleEditComment: comment => handleEditComment(commentId, newCommentText, ownProps.postId, ownProps.newCommentUpdateMutation),
+        handleDeleteComment: comment => handleDeleteComment(comment, ownProps.postId, ownProps.newCommentDeletionMutation)
     }
 };
 
@@ -68,10 +78,16 @@ const createComment = gql`
 }`;
 
 const updateComment = gql`
-    mutation updateComment($comment: CommentInput!) {
+    mutation updateComment($comment: Comment!) {
         updateComment(comment: $comment) {
             comment
         }
+    }
+`;
+
+const deleteComment = gql`
+    mutation deleteComment($commentId: String!) {
+        deleteComment(commentId: $commentId)
     }
 `;
 
@@ -84,8 +100,12 @@ mutation CommentMutations($comment: CommentInput!) {
 `;
 
 export default graphql(createComment, {name: 'newCommentMutation'})(
-    graphql(commentListQuery)(
-        connect(mapStateToProps, mapDispatchToProps)
-        (CommentBox)
+    graphql(deleteComment, {name: 'newCommentDeletionMutation'})(
+        graphql(updateComment, {name: 'newCommentUpdateMutation'})(
+            graphql(commentListQuery)(
+                connect(mapStateToProps, mapDispatchToProps)
+                (CommentBox)
+            )
+        )
     )
 )

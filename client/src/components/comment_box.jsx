@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
     Form,
     Button,
@@ -12,8 +11,6 @@ import Comment from '../containers/comment_container'
 
 
 const CommentBox = props => {
-    const deleteButton = <Button bsStyle="danger" bsSize="small" onClick={props.handleDeleteComment}>Delete</Button>;
-    const editButton = <Button bsStyle="primary" bsSize="small" onClick={props.handleEditComment}>Edit</Button>;
 
     const { data } = props;
     if (data) {
@@ -33,8 +30,8 @@ const CommentBox = props => {
                 let isOwnComment = comment.owner.username == props.username;
                 let actionButtons = isOwnComment ?
                     <ButtonGroup className="pull-right">
-                        {editButton}
-                        {deleteButton}
+                        <Button bsStyle="primary" bsSize="small" onClick={() => props.handleEditComment(comment)}>Edit</Button>
+                        <Button bsStyle="danger" bsSize="small" onClick={() => props.handleDeleteComment(comment)}>Delete</Button>
                     </ButtonGroup> : null;
 
                     return (
@@ -48,7 +45,7 @@ const CommentBox = props => {
 
         return (
             <section>
-                <Form style={{marginBottom: "25px"}}horizontal onSubmit={props.handleCommentSubmit} >
+                <Form horizontal onSubmit={props.handleCommentSubmit} >
                     <Col sm={10}>
                         <FormControl name="comment" type="text" placeholder="comment"/>
                     </Col>

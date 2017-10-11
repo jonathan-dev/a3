@@ -146,7 +146,6 @@ const PostMutation = new GraphQLObjectType({
             resolve: (root, {
                 comment
             }, context) => {
-                console.log("COMMENT ON CREATE COMMENT: " , comment);
                 //Get the user from the request
                 const userId = context.req.user.id;
                 return mongo.createComment(userId, comment.postId, comment.comment);
@@ -157,11 +156,23 @@ const PostMutation = new GraphQLObjectType({
             description: "Update an existing comment",
             args: {
                 comment: {
-                    type: types.CommentInputType
+                    type: new GraphQLNonNull(GraphQLString)
                 }
             },
-            resolve: (root, { comment }, context) => {
+            resolve: (root, {comment}, context) => {
                 return mongo.updateComment(comment);
+            }
+        },
+        deleteComment: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "Delete an existing comment",
+            args: {
+                commentId: {
+                    type: new GraphQLNonNull(GraphQLString)
+                }
+            },
+            resolve: (root, {commentId}, context) => {
+                return mongo.deleteComment(commentId)
             }
         },
         updatePost: {
