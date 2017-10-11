@@ -24,6 +24,17 @@ const CommentBox = props => {
             return <div>Error</div>
         }
 
+        let commentList = null;
+
+        if (comments) {
+            commentList = comments.map((comment, index) => {
+                let actionButtons = null;
+                let isOwnComment = comment.owner.username == props.username;
+                let isInEditMode = false;
+
+
+            });
+        }
         // if there are comments, wrap them for representation
         let commentList = comments ?
             comments.map((comment, index) => {
@@ -34,13 +45,13 @@ const CommentBox = props => {
                         <Button bsStyle="danger" bsSize="small" onClick={() => props.handleDeleteComment(comment)}>Delete</Button>
                     </ButtonGroup> : null;
 
-                    return (
-                        <div key={index}>
-                            <Comment styte={{marginBottom: "25px", display: "inline"}} comment={comment}></Comment>
-                            {actionButtons}
-                            <br/>
-                        </div>
-                    );
+                return (
+                    <div key={index}>
+                        <Comment styte={{marginBottom: "25px", display: "inline"}} comment={comment}></Comment>
+                        {actionButtons}
+                        <br/>
+                    </div>
+                );
             }) : null;
 
         return (

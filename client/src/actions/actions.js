@@ -10,8 +10,9 @@ import {
     CHECK_RESET_ROUTE,
     RESET_PASSWORD,
     POST_REGISTRATION,
-    REQUEST_RESET_PASSWORD
-
+    REQUEST_RESET_PASSWORD,
+    EDIT_COMMENT_CLICKED,
+    UNDO_EDIT_COMMENT_CLICKED
 } from '../constants/action_types';
 
 // action generator for posting login information
@@ -125,4 +126,18 @@ export function logoutUser() {
     return {
         type: LOGOUT_USER
     };
+}
+
+export function editCommentClicked (comment) {
+    return {
+        type: EDIT_COMMENT_CLICKED,
+        comment
+    }
+}
+
+export function undoEditCommentClicked (comment) {
+    return {
+        type: UNDO_EDIT_COMMENT_CLICKED,
+        comment
+    }
 }
