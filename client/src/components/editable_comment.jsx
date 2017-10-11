@@ -8,7 +8,6 @@ import {
 } from 'react-bootstrap';
 
 class EditableComment extends Component {
-
     render () {
         const {editCommentText, onSubmit, onAbort, originalComment, onEditInputChange} = this.props;
 

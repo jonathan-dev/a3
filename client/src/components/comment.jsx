@@ -1,11 +1,4 @@
 import React from 'react';
-import {
-    Form,
-    Button,
-    ButtonGroup,
-    FormControl,
-    Col
-} from 'react-bootstrap';
 
 const Comment = props => {
     const {comment, date, owner} = props.comment;

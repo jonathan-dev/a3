@@ -9,60 +9,6 @@ import {
 import Comment from '../containers/comment_container'
 import EditableComment from '../containers/editable_comment_container';
 
-const getCorrespondingActionButtons = (props, comment) => {
-    let isOwnComment = comment.owner.username == props.username;
-    let isInEditMode = (comment.id == props.commentInEditMode);
-
-    if (isOwnComment && isInEditMode) {
-        return (
-            <ButtonGroup className="pull-right">
-                <Button bsStyle="primary" bsSize="small" onClick={() => props.handleCommentUpdate(comment)}>
-                    apply
-                </Button>
-
-                <Button bsStyle="danger" bsSize="small" onClick={() => props.undoEditCommentClicked(comment)}>
-                    Discard
-                </Button>
-            </ButtonGroup>
-        )
-    }
-    else if(isOwnComment) {
-        return (
-            <ButtonGroup className="pull-right">
-                <Button bsStyle="primary" bsSize="small" onClick={() => props.handleCommentUpdate(comment)}>
-                    Edit
-                </Button>
-
-                <Button bsStyle="danger" bsSize="small" onClick={() => props.handleDeleteComment(comment)}>
-                    Delete
-                </Button>
-            </ButtonGroup>
-        )
-    }
-    else {
-        return null;
-    }
-};
-
-const getCorrespondingCommentView = (props, comment) => {
-
-    if (isInEditMode) {
-        return (
-            <Form horizontal onSubmit={props.handleCommentUpdate} >
-                <Col sm={10}>
-                    <FormControl name="comment" type="text" placeholder="comment"/>
-                </Col>
-                <Col sm={2}>
-                    <Button type="submit" >comment</Button>
-                </Col>
-            </Form>
-        )
-    }
-    else {
-        <Comment comment={comment}></Comment>
-    }
-};
-
 const CommentBox = props => {
 
     const { data , handleCommentSubmit, handleDeleteComment, switchCommentToEditMode} = props;

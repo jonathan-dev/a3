@@ -74,13 +74,6 @@ const commentListQuery = gql`
     }
 `;
 
-const createComment = gql`
-    mutation createComment($comment: CommentInput!) {
-        createComment(comment: $comment) {
-            comment
-        }
-}`;
-
 const updateComment = gql`
     mutation updateComment($comment: Comment!) {
         updateComment(comment: $comment) {
@@ -88,6 +81,14 @@ const updateComment = gql`
         }
     }
 `;
+
+const createComment = gql`
+    mutation createComment($comment: CommentInput!) {
+        createComment(comment: $comment) {
+            comment
+        }
+}`;
+
 
 const deleteComment = gql`
     mutation deleteComment($commentId: String!) {
