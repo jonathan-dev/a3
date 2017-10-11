@@ -1,4 +1,11 @@
 import React, {Component} from 'react';
+import {
+    Form,
+    Button,
+    ButtonGroup,
+    FormControl,
+    Col
+} from 'react-bootstrap';
 
 class EditableComment extends Component {
 
