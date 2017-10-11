@@ -5,7 +5,7 @@ import {
 } from 'react-apollo';
 import CommentBox from '../components/comment_box';
 
-const handleSubmit = (event, postId, mutate) => {
+const handleCommentSubmit = (event, postId, mutate) => {
     event.preventDefault();
     let comment = event.target.comment.value;
 
@@ -24,13 +24,25 @@ const handleSubmit = (event, postId, mutate) => {
     .catch(err => console.log("Error sending comment quAry", err));
 };
 
+const handleEditComment = () => {
+    console.log("Edit comment was clicked");
+};
+
+const handleDeleteComment = () => {
+    console.log("Delete comment was clicked");
+};
+
 const mapStateToProps = (state, ownProps) => {
-    return {}
+    return {
+        username: state.authentication.username
+    }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        handleSubmit: event => handleSubmit(event, ownProps.postId, ownProps.newCommentMutation)
+        handleCommentSubmit: event => handleCommentSubmit(event, ownProps.postId, ownProps.newCommentMutation),
+        handleEditComment: () => handleEditComment(),
+        handleDeleteComment: () => handleDeleteComment()
     }
 };
 
