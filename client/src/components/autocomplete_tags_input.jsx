@@ -27,9 +27,11 @@ class AutocompleteTagsInput extends Component {
         const inputValue = (props.value && props.value.trim().toLowerCase()) || ''
         const inputLength = inputValue.length
 
-        let suggestions = this.props.tags().filter((state) => {
+        let tags = this.props.tags ||[];
+
+        let suggestions = tags.filter((state) => {
             if (state.name) {
-                return state.name.toLowerCase().slice(0, inputLength) === inputValue && !this.state.tags.includes(state.name)
+                return state.name.toLowerCase().slice(0, inputLength) === inputValue && !tags.includes(state.name)
             }
         })
 

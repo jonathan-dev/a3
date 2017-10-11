@@ -1,24 +1,19 @@
 import React from 'react'
-import {
-    connect
-} from 'react-redux';
+import { connect } from 'react-redux';
 import createPost from '../components/create_post'
 import {
     uploadImage,
     updateTags,
     updateAccepted,
-    updateImage
+    updateImage,
+    resetState
 } from '../actions/create_posts_actions';
-import {
-    push
-} from 'react-router-redux';
+import { push } from 'react-router-redux';
 import {
     gql,
     graphql
 } from 'react-apollo';
-import {
-    reduxForm
-} from 'redux-form'
+import { reduxForm } from 'redux-form'
 
 const PostMutations = gql `
 mutation PostMutations($post: PostInput!) {
@@ -48,11 +43,10 @@ const handleSubmit = (event, stateProps, dispatchProps, ownProps) => {
             post: {
                 title: title,
                 imageId: stateProps.imageId,
-                tags: stateProps.tags
+                tags: stateProps.tags ||[]
             }
         }
     }
-    console.log(mutationData)
 
     ownProps.mutate(mutationData)
         .then(({
@@ -80,7 +74,6 @@ const onUpdateTags = (dispatch, tags) => {
 }
 
 const validate = values => {
-    console.log('---values', values)
     const errors = {}
     const requiredFields = [
         'title',
@@ -106,13 +99,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        // handleSubmit: (event) => handleSubmit(dispatch, props, event),
         onDropHandler: (accepted, rejected) => onDropHandler(dispatch, accepted, rejected),
-        onUpdateTags: (tags) => onUpdateTags(dispatch, tags)
+        onUpdateTags: (tags) => onUpdateTags(dispatch, tags),
+        resetState: () => dispatch(resetState())
     }
 };
 
-//TODO: fix merge props
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
     return Object.assign({}, ownProps, stateProps, dispatchProps, {
         handleSubmit: (event) => handleSubmit(event, stateProps, dispatchProps, ownProps)
@@ -123,7 +115,7 @@ const createPostForm = reduxForm({
     form: 'createPostForm', // a unique identifier for this form
     validate,
 })(createPost)
-updateTags
+
 export default
 graphql(PostMutations)(
     graphql(TagsQuery)(

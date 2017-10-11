@@ -20,22 +20,12 @@ import DropzoneInput from './DropzoneInput'
 class createPost extends Component {
     constructor() {
         super();
-
-        // this.state = {
-        //     accepted: [],
-        //     rejected: [],
-        //     loaded: 0,
-        //     title: '',
-        //     imageId: '',
-        //     tags: []
-        // };
     }
 
-    getTags = () => {
-        if (this.props && this.props.data && this.props.data.tags)
-            return this.props.data.tags;
-        return []
+    componentDidMount() {
+        this.props.resetState();
     }
+
 
     render() {
 
@@ -70,7 +60,7 @@ class createPost extends Component {
                     />
                     <FormGroup>
                         <Col smOffset={2} sm={10}>
-                            <AutocompleteTagsInput onUpdateTags={this.props.onUpdateTags} tags={this.getTags} />
+                            <AutocompleteTagsInput onUpdateTags={this.props.onUpdateTags} tags={this.props.getTags} />
                         </Col>
                     </FormGroup>
                     <FormGroup>

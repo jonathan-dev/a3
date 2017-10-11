@@ -4,7 +4,8 @@ import {
     UPLOAD_IMAGE_FAIL,
     UPDATE_TAGS,
     UPDATE_IMAGE,
-    UPDATE_UPLOAD_PROGRESS
+    UPDATE_UPLOAD_PROGRESS,
+    RESET_STATE
 } from '../constants/action_types'
 
 export function updateUploadProgress(progress) {
@@ -33,16 +34,22 @@ export function uploadImage(dispatch, FormData) {
     }
 }
 
-export function updateTags (tags) {
+export function updateTags(tags) {
     return {
         type: UPDATE_TAGS,
         payload: tags
     }
 }
 
-export function updateImage (image) {
+export function updateImage(image) {
     return {
         type: UPDATE_IMAGE,
         payload: image
+    }
+}
+
+export function resetState(){
+    return {
+        type: RESET_STATE
     }
 }
