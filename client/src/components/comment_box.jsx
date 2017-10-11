@@ -80,9 +80,12 @@ const CommentBox = props => {
         let commentList = null;
         if (comments) {
             commentList = comments.map((comment, index) => {
+                const isInEditMode = (comment.id == props.commentInEditMode);
+                let isOwnComment = comment.owner.username == props.username;
+
                 let actionButtons =
                     <ButtonGroup className="pull-right">
-                        <Button bsStyle="primary" bsSize="small" onClick={() => props.handleCommentUpdate(comment)}>
+                        <Button bsStyle="primary" bsSize="small" onClick={() => props.switchToEditMode(comment)}>
                             Edit
                         </Button>
 
@@ -90,12 +93,14 @@ const CommentBox = props => {
                             Delete
                         </Button>
                     </ButtonGroup>;
+
+                actionButtons = (isInEditMode || !isOwnComment) ? null : actionButtons;
                 return (
-                    <div key={index}>
-                        <Comment comment={comment}></Comment>
-                        {actionButtons}
+                    <li key={index}>
+                        <Comment isInEditMode={isInEditMode} editCommentText={props.editCommentText} comment={comment}></Comment>
+                        {isInEditMode ? null : actionButtons}
                         <br/>
-                    </div>
+                    </li>
                 )
             });
         }
@@ -109,10 +114,10 @@ const CommentBox = props => {
                     <Col sm={2}>
                         <Button type="submit" >comment</Button>
                     </Col>
+                    <ul>
+                        { commentList }
+                    </ul>
                 </Form>
-                <ol>
-                    { commentList }
-                </ol>
             </section>
         )
     }

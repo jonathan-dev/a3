@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import {
+    Form,
+    Button,
+    ButtonGroup,
+    FormControl,
+    Col
+} from 'react-bootstrap';
 
 const Comment = props => {
-    const {comment, date, owner } = props.comment;
+    const {comment, date, owner} = props.comment;
     let d = new Date(date);
     let calendarDate = d.toLocaleDateString();
     let time = d.getHours() + ":" + d.getMinutes();
     let adjustedDate = time + calendarDate;
-
     return (
         <div>
             <h2 className="author">{owner.username}</h2>
