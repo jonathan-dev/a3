@@ -7,6 +7,7 @@ import {
     Col
 } from 'react-bootstrap';
 import Comment from '../containers/comment_container'
+import EditableComment from '../containers/editable_comment_container';
 
 const getCorrespondingActionButtons = (props, comment) => {
     let isOwnComment = comment.owner.username == props.username;
@@ -44,7 +45,6 @@ const getCorrespondingActionButtons = (props, comment) => {
 };
 
 const getCorrespondingCommentView = (props, comment) => {
-    let isInEditMode = (comment.id == props.commentInEditMode);
 
     if (isInEditMode) {
         return (
@@ -65,7 +65,7 @@ const getCorrespondingCommentView = (props, comment) => {
 
 const CommentBox = props => {
 
-    const { data } = props;
+    const { data , handleCommentSubmit, handleDeleteComment, switchCommentToEditMode} = props;
     if (data) {
         const { loading, error, comments } = data;
 
@@ -80,44 +80,43 @@ const CommentBox = props => {
         let commentList = null;
         if (comments) {
             commentList = comments.map((comment, index) => {
-                const isInEditMode = (comment.id == props.commentInEditMode);
-                let isOwnComment = comment.owner.username == props.username;
+                const isOwnComment = comment.owner.username == props.username;
+                const isInEditMode = comment.id == props.commentInEditMode;
 
-                let actionButtons =
+                const commentView = (isInEditMode) ?
+                    <EditableComment originalComment={comment}/> : <Comment comment={comment}/>;
+
+                const actionButtons = (isOwnComment && !isInEditMode) ?
                     <ButtonGroup className="pull-right">
-                        <Button bsStyle="primary" bsSize="small" onClick={() => props.switchToEditMode(comment)}>
+                        <Button bsStyle="primary" bsSize="small" onClick={() => switchCommentToEditMode(comment)}>
                             Edit
                         </Button>
 
-                        <Button bsStyle="danger" bsSize="small" onClick={() => props.handleDeleteComment(comment)}>
+                        <Button bsStyle="danger" bsSize="small" onClick={() => handleDeleteComment(comment)}>
                             Delete
                         </Button>
-                    </ButtonGroup>;
+                    </ButtonGroup> : null;
 
-                actionButtons = (isInEditMode || !isOwnComment) ? null : actionButtons;
-                return (
-                    <li key={index}>
-                        <Comment isInEditMode={isInEditMode} editCommentText={props.editCommentText} comment={comment}></Comment>
-                        {isInEditMode ? null : actionButtons}
-                        <br/>
-                    </li>
-                )
+                    return (
+                        <div key={index}>
+                            {commentView}
+                            {actionButtons}
+                        </div>
+                    );
             });
         }
 
         return (
             <section>
-                <Form horizontal onSubmit={props.handleCommentSubmit} >
+                <Form horizontal onSubmit={handleCommentSubmit} >
                     <Col sm={10}>
                         <FormControl name="comment" type="text" placeholder="comment"/>
                     </Col>
                     <Col sm={2}>
                         <Button type="submit" >comment</Button>
                     </Col>
-                    <ul>
-                        { commentList }
-                    </ul>
                 </Form>
+                { commentList }
             </section>
         )
     }

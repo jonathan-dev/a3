@@ -10,21 +10,18 @@ import {
 class EditableComment extends Component {
 
     render () {
-        const {editCommentText, onSubmit, onAbort, comment} = props;
+        const {editCommentText, onSubmit, onAbort, originalComment, onEditInputChange} = this.props;
 
         return (
             <Form horizontal onSubmit={onSubmit}>
-                <h2 className="author">{comment.owner.username}</h2>
+                <h2 className="author">{originalComment.owner.username}</h2>
                 <Col sm={10}>
-                    <FormControl name="comment" type="text" placeholder="comment" value={editCommentText}/>
+                    <FormControl name="comment" type="text" placeholder="comment" value={editCommentText} onChange={onEditInputChange}/>
                 </Col>
-                <Col sm={2}>
-                    <ButtonGroup className="pull-right">
-                        <Button type="submit" bsStyle="primary" bsSize="small">Apply</Button>
-                        <Button bsStyle="danger" bsSize="small" onClick={onAbort}>Abort</Button>
-                    </ButtonGroup>;
-                    <Button type="submit" >apply</Button>
-                </Col>
+                <ButtonGroup className="pull-right">
+                    <Button type="submit" bsStyle="primary" bsSize="small">Apply</Button>
+                    <Button bsStyle="danger" bsSize="small" onClick={onAbort}>Abort</Button>
+                </ButtonGroup>
             </Form>
         );
     }

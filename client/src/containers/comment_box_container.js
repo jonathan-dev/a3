@@ -53,7 +53,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         handleCommentSubmit: event => handleCommentSubmit(event, ownProps.postId, ownProps.newCommentMutation),
-        switchToEditMode: comment => dispatch(editCommentClicked(comment)),
+        switchCommentToEditMode: comment => dispatch(editCommentClicked(comment)),
         undoEditMode: comment => dispatch(undoEditCommentClicked(comment)),
         handleCommentUpdate: comment => handleCommentUpdate(comment), // TODO: REFACTOR
         handleDeleteComment: comment => handleDeleteComment(comment, ownProps.postId, ownProps.newCommentDeletionMutation)
