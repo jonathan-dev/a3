@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Tag from './tag';
-import CommentBox from './comment_box';
+import CommentBox from '../containers/comment_box_container';
 import languages from 'src/language/language';
 
 import { Panel, Label } from 'react-bootstrap';
@@ -42,7 +42,7 @@ const Post = props => {
                 })
                 }
             </section>
-            <CommentBox post={post.id} />
+            <CommentBox postId={post.id} />
         </Panel>
     );
 }

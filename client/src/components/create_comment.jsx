@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
-import { commentListQuery } from './comment_box'
 import {
     Form,
     Button,
@@ -19,7 +18,7 @@ class createComment extends Component {
     handleChange = (event) => {
         console.log(event.target)
         this.setState({ comment: event.target.value });
-    }
+    };
 
     postComment = (e) => {
         e.preventDefault();
@@ -60,6 +59,20 @@ mutation CommentMutations($comment: CommentInput!) {
                     comment
                 }
                 }
-`
+`;
+
+
+export const commentListQuery = gql`
+    query commentListQuery($postId: String) {
+        comments (postId: $postId){
+            id
+            comment
+            owner {
+                id
+                username
+            }
+        }
+    }
+`;
 
 export default graphql(CommentMutations)(createComment)

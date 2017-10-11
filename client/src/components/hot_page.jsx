@@ -57,6 +57,4 @@ query postListQuery {
 }
 `;
 
-export default graphql(postsListQuery, {
-    options: { pollInterval: 2000 },
-})(HotPage);
+export default graphql(postsListQuery)(HotPage);

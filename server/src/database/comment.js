@@ -13,14 +13,6 @@ let commentSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    voteup: {
-        type: Number,
-        default: 0
-    },
-    votedown: {
-        type: Number,
-        default: 0
-    },
     date: {
         type: Date,
         default: Date.now
