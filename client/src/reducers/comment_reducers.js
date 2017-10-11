@@ -13,7 +13,6 @@ export function commenting (state = {}, action) {
         case EDIT_COMMENT_TEXT_CHANGED:
             return Object.assign({}, state, {editCommentText: action.newCommentText});
         case UNDO_EDIT_COMMENT_CLICKED:
-            console.log("Undo editing comment: ", action.comment);
             return Object.assign({}, state, { editCommentWithId: null, editCommentText: null });
         default:
             return state;

@@ -118,9 +118,8 @@ export function editCommentTextChanged (newCommentText) {
     }
 }
 
-export function undoEditCommentClicked (comment) {
+export function undoEditCommentClicked () {
     return {
         type: UNDO_EDIT_COMMENT_CLICKED,
-        comment
     }
 }
