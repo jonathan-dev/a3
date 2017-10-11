@@ -132,34 +132,14 @@ userSchema.methods.incLoginAttempts = function () {
 };
 
 /**
- * Locks user from logging in (for ever / until unbanned)
+ * Locks user from logging in (until unbanned)
  */
 userSchema.statics.banUser = function (userid) {
-    //TODO - also invalidate any issued tokens to that user
-    return new Promise((resolve, reject) => {
-        this.findOne({
-            _id: userid
-        }).then(user => {
-            // make sure the user exists
-            if (!user) resolve({
-                reason: reasons.NOT_FOUND
-            });
-            var bantime = Number.MAX_SAFE_INTEGER;
-            //Set ban details
-            var updates = {
-                $set: {
-                    lockUntil: bantime
-                }
-            };
-            //Add ban to db
-            user.update(updates)
-                .then(() => resolve(user)) //returns the user when update is completed successfully
-                .catch(err => function(error) {
-                    console.log("Couldn't update the db add the ban :( ");
-                    reject(err);
-                }) //returns error if not successful
-
-        });
+    var bantime = Number.MAX_SAFE_INTEGER;
+    return this.updateUser(userid, {
+        $set: {
+            lockUntil: bantime
+        }
     });
 }
 
@@ -167,6 +147,25 @@ userSchema.statics.banUser = function (userid) {
  * Unbans a user by finding them in DB, and then clearing 'lock until' value
  */
 userSchema.statics.unbanUser = function (userid) {
+    return this.updateUser(userid, {
+        $unset: {
+            lockUntil: 1
+        }
+    });
+}
+
+userSchema.statics.promoteUser = function (userid) {
+    return this.updateUser(userid, {
+        $set: {
+            isAdmin: true
+        }
+    });
+}
+
+/**
+ * Gets user and updates it with the given update details
+ */
+userSchema.statics.updateUser = function (userid, updates) {
     return new Promise((resolve, reject) => {
         this.findOne({
             _id: userid
@@ -175,13 +174,8 @@ userSchema.statics.unbanUser = function (userid) {
             if (!user) resolve({
                 reason: reasons.NOT_FOUND
             });
-            console.log('=====Found user to ban', user);
+            console.log('=====Updating user details ', user);
             //Set ban time on user to be almost nothing
-            var updates = {
-                $unset: {
-                    lockUntil: 1
-                }
-            };
             //Update db
             user.update(updates)
                 .then(() => resolve(user))
@@ -192,7 +186,6 @@ userSchema.statics.unbanUser = function (userid) {
         });
     });
 }
-
 
 userSchema.statics.getAuthenticated = function (username, password) {
     return new Promise((resolve, reject) => {

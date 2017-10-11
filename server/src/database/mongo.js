@@ -167,6 +167,9 @@ export default {
     unbanUser(id) {
         return User.unbanUser(id);
     },
+    promoteUser(id) {
+        return User.promoteUser(id);
+    },
     setResetToken(email,resetPasswordToken,resetPasswordExpires) {
         return User.findOneAndUpdate(
             {

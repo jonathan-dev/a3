@@ -6,6 +6,7 @@ import {
     GraphQLList,
     GraphQLInt,
     GraphQLFloat,
+    GraphQLBoolean,
     GraphQLNonNull,
     GraphQLInputObjectType
 } from 'graphql' // GraphQL and GraphQL types
@@ -198,38 +199,43 @@ const PostMutation = new GraphQLObjectType({
 
         banUser: {
             type: types.UserType,
-            description: 'Ban a user permanently (until unbanned)',
+            description: 'Ban or unban a user (prevents from logging in)',
             args: {
                 id: {
                     type: new GraphQLNonNull(GraphQLString),
                     description: 'The user id to ban'
+                },
+                banned: {
+                    type: GraphQLBoolean,
+                    description: 'Whether the user is banned or not. Defaults to false (unban) if not specified'
                 }
             },
-            resolve: (value, { id }, context) => {
-                //Todo - add isAdmin check
+            resolve: (value, { id, banned }, context) => {
                 if (context.req.user.isAdmin) {
-                    return mongo.banUser(id);
+                    // Performs ban or unban
+                    return (banned ?  mongo.banUser(id) : mongo.unbanUser(id))
                 } else {
-                    throw new Error('you need to be an admin to perform this mutation');
+                    throw new Error('you need to be an admin to perform this action');
                 }
             }
         },
 
-        unbanUser: {
+        promoteUser: {
             type: types.UserType,
-            description: 'Unban a banned user. No effect on unbanned users.',
+            description: 'Promote a user to admin status',
             args: {
                 id: {
                     type: new GraphQLNonNull(GraphQLString),
-                    description: 'The user id to ban'
+                    description: 'The user id to promote'
                 }
             },
             resolve: (value, { id }, context) => {
                 //Todo - add isAdmin check
                 if (context.req.user.isAdmin) {
-                    return mongo.unbanUser(id);
+                    //Performs promotion
+                    return mongo.promoteUser(id);
                 } else {
-                    throw new Error('you need to be an admin to perform this mutation')
+                    throw new Error('you need to be an admin to perform this action.');
                 }
             }
         }
