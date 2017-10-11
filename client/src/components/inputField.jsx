@@ -33,4 +33,4 @@ const inputField = ({
         </Col>
     </FormGroup>
 
-export default inputField
+export default inputField;

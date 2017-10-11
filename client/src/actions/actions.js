@@ -12,7 +12,8 @@ import {
     POST_REGISTRATION,
     REQUEST_RESET_PASSWORD,
     EDIT_COMMENT_CLICKED,
-    UNDO_EDIT_COMMENT_CLICKED
+    UNDO_EDIT_COMMENT_CLICKED,
+    UPDATE_UPLOAD_PROGRESS,
 } from '../constants/action_types';
 
 // action generator for posting login information
@@ -23,22 +24,9 @@ export function postLogin(loginData) {
             request: {
                 url: '/login',
                 method: 'POST',
-                data: Object.assign({}, loginData)
+                data: Object.assign({}, loginData),
             }
         }
-    }
-}
-
-export function showLoginFormErrors(errors) {
-    return {
-        type: SHOW_LOGIN_FORM_ERRORS,
-        errors
-    }
-}
-
-export function clearLoginFormErrors() {
-    return {
-        type: CLEAR_LOGIN_FORM_ERRORS
     }
 }
 
@@ -53,19 +41,6 @@ export function postRegistration(registrationData) {
                 data: Object.assign({}, registrationData)
             }
         }
-    }
-}
-
-export function showRegistrationFormErrors(errors) {
-    return {
-        type: SHOW_REGISTRATION_FORM_ERORRS,
-        errors
-    }
-}
-
-export function clearRegistrationFormErrors() {
-    return {
-        type: CLEAR_REGISTRATION_FORM_ERRORS
     }
 }
 

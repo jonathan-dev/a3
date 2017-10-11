@@ -4,6 +4,7 @@ import {
     graphql
 } from 'react-apollo';
 import CommentBox from '../components/comment_box';
+import { editCommentClicked, undoEditCommentClicked } from '../actions/actions';
 
 const handleCommentSubmit = (event, postId, mutate) => {
     event.preventDefault();
@@ -24,8 +25,8 @@ const handleCommentSubmit = (event, postId, mutate) => {
     .catch(err => console.log("Error sending comment quAry", err));
 };
 
-const handleEditComment = (comment, postId, mutate) => {
-    console.log("Edit comment was clicked", comment);
+const handleCommentUpdate = (comment) => {
+    console.log("Updating comments not implemented yet");
 
 };
 
@@ -44,14 +45,17 @@ const handleDeleteComment = (comment, postId, mutate) => {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        username: state.authentication.username
+        username: state.authentication.username,
+        commentInEditMode: state.commenting.editCommentWithId
     }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         handleCommentSubmit: event => handleCommentSubmit(event, ownProps.postId, ownProps.newCommentMutation),
-        handleEditComment: comment => handleEditComment(commentId, newCommentText, ownProps.postId, ownProps.newCommentUpdateMutation),
+        switchToEditMode: comment => dispatch(editCommentClicked(comment)),
+        undoEditMode: comment => dispatch(undoEditCommentClicked(comment)),
+        handleCommentUpdate: comment => handleCommentUpdate(comment), // TODO: REFACTOR
         handleDeleteComment: comment => handleDeleteComment(comment, ownProps.postId, ownProps.newCommentDeletionMutation)
     }
 };

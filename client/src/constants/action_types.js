@@ -40,3 +40,16 @@ export const REQUEST_RESET_PASSWORD_FAIL = 'REQUEST_RESET_PASSWORD_FAIL';
 
 export const EDIT_COMMENT_CLICKED = 'EDIT_COMMENT_CLICKED';
 export const UNDO_EDIT_COMMENT_CLICKED = 'UNDO_EDIT_COMMENT_CLICKED';
+
+
+//------------------------------------------
+// CREATE POST PAGE
+//------------------------------------------
+
+export const UPDATE_UPLOAD_PROGRESS = 'UPDATE_UPLOAD_PROGRESS';
+export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
+export const UPLOAD_IMAGE_SUCCESS = 'UPLOAD_IMAGE_SUCCESS';
+export const UPLOAD_IMAGE_FAIL = 'UPLOAD_IMAGE_FAIL';
+export const UPDATE_TAGS = 'UPDATE_TAGS';
+export const UPDATE_IMAGE = 'UPDATE_IMAGE';
+export const RESET_STATE = 'RESET_STATE';
