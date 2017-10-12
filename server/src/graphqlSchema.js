@@ -115,6 +115,22 @@ const PostMutation = new GraphQLObjectType({
     description: 'Post API Mutations',
     fields: () => ({
 
+        voteAction: {
+            type: types.PostType,
+            description: 'Vote action',
+            args: {
+                voteInput: {
+                    type: types.VoteInputType
+                }
+            },
+            resolve: (root, {
+                voteInput
+            }, context) => {
+                console.log('---vote---')
+                return mongo.vote(voteInput, context.req.user);
+            }
+        },
+
         createPost: {
             type: types.PostType,
             description: 'Create a new post.',
@@ -210,10 +226,13 @@ const PostMutation = new GraphQLObjectType({
                     description: 'Whether the user is banned or not. Defaults to false (unban) if not specified'
                 }
             },
-            resolve: (value, { id, banned }, context) => {
+            resolve: (value, {
+                id,
+                banned
+            }, context) => {
                 if (context.req.user.isAdmin) {
                     // Performs ban or unban
-                    return (banned ?  mongo.banUser(id) : mongo.unbanUser(id))
+                    return (banned ? mongo.banUser(id) : mongo.unbanUser(id))
                 } else {
                     throw new Error('you need to be an admin to perform this action');
                 }
@@ -229,7 +248,9 @@ const PostMutation = new GraphQLObjectType({
                     description: 'The user id to promote'
                 }
             },
-            resolve: (value, { id }, context) => {
+            resolve: (value, {
+                id
+            }, context) => {
                 //Todo - add isAdmin check
                 if (context.req.user.isAdmin) {
                     //Performs promotion
