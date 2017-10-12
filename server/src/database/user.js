@@ -96,6 +96,8 @@ userSchema.methods.comparePassword = function (candidatePassword) {
 userSchema.methods.incLoginAttempts = function () {
     return new Promise((resolve, reject) => {
         // if we have a previous lock that has expired, restart at 1
+        console.log('Checking login lock, current time ', Date.now());
+        console.log('   This object is locked until ', this.lockUntil);
         if (this.lockUntil && this.lockUntil < Date.now()) {
             console.log("lock expired")
             this.update({
@@ -198,14 +200,20 @@ userSchema.statics.getAuthenticated = function (username, password) {
                     reason: reasons.NOT_FOUND
                 });
 
-                // check if the account is currently locked
+                // check if account is locked to prevent login
                 if (user.isLocked) {
-                    // just increment login attempts if account is already locked
-                    user.incLoginAttempts()
-                        .then(() => resolve({
-                            reason: reasons.MAX_ATTEMPTS
-                        }))
-                        .catch(err => reject(err))
+                    //if lock not expired, prevent login
+                    if (user.lockUntil < Date.now()) {
+                        //account still locked, just increment login attempts
+                        console.log('This account is locked, dont log them in');
+                        user.incLoginAttempts()
+                            .then(() => resolve({
+                                reason: reasons.MAX_ATTEMPTS
+                            }))
+                            .catch(err => reject(err))
+                    } else {
+                        //unlock them?
+                    }
                 }
 
                 // test for a matching password
@@ -214,10 +222,14 @@ userSchema.statics.getAuthenticated = function (username, password) {
                         // check if the password was a match
                         if (isMatch) {
                             // if there's no lock or failed attempts, just return the user
-                            if (!user.loginAttempts && !user.lockUntil) resolve({
-                                user: user
-                            });
+                            if (!user.loginAttempts && !user.lockUntil) {
+                                console.log('Authenticated successfully, not user locked = ', !user.lockUntil);
+                                resolve({
+                                    user: user
+                                });
+                            }
                             // reset attempts and lock info
+                            //if their password matches then reset lock
                             var updates = {
                                 $set: {
                                     loginAttempts: 0
