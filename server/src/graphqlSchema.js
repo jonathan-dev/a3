@@ -215,21 +215,21 @@ const PostMutation = new GraphQLObjectType({
                     description: 'Whether the user is banned or not. Defaults to false (unban) if not specified'
                 }
             },
-            resolve: (value, {id}, context) => {
-                //Todo - add isAdmin check
-                return mongo.banUser(id);
-            }
-        }
-        /*unbanUser: {
-            resolve: (value, { id, banned }, context) => {
-                if (context.req.user.isAdmin) {
-                    // Performs ban or unban
-                    return (banned ?  mongo.banUser(id) : mongo.unbanUser(id))
+            resolve: (value, {id, banned }, context) => {
+                //Check if banning current user
+                if (id == context.req.user.id) {
+                    throw new Error("you can't ban yourself");
                 } else {
-                    throw new Error('you need to be an admin to perform this action');
+                    //Checks if user is an admin
+                    if (context.req.user.isAdmin) {
+                        // Performs ban or unban
+                        return (banned ?  mongo.banUser(id) : mongo.unbanUser(id))
+                    } else {
+                        throw new Error('you need to be an admin to perform this action');
+                    }
                 }
             }
-        }*/,
+        },
         promoteUser: {
             type: types.UserType,
             description: 'Promote a user to admin status',
@@ -240,7 +240,6 @@ const PostMutation = new GraphQLObjectType({
                 }
             },
             resolve: (value, {id}, context) => {
-                //Todo - add isAdmin check
                 if (context.req.user.isAdmin) {
                     //Performs promotion
                     return mongo.promoteUser(id);

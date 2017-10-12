@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap'; //provides rest of bootstrap styled stuff
 import {
     gql,
-    graphql,
+    graphql
 } from 'react-apollo'; //provides query ability
 
 const AdminPage = props => {
@@ -39,27 +39,12 @@ const AdminPage = props => {
         //     mode: 'click' // click cell to edit
         // };
 
-        function banUserMutation(userid, isBanned) {
-            //Send a mutation request to server
-            props.mutate({
-                variables: {
-                    userid: userid,
-                    userBanned: isBanned
-                },
-                refetchQueries: [{ query: usersListQuery }]
-            }).then(({ data }) => {
-                console.log('got data, user banned', data);
-            }).catch((error) => {
-                console.log('there was an error sending the query', error);
-            });
-        }
-
         function banButton(cell, row, enumObject, rowIndex) {
             return  (!row.isLocked ) ? (
                 //Ban button
                 <Button
                     onClick={() =>
-                        banUserMutation(row.id, true)}
+                        banUser(row.id, true)}
                     block>
                     Ban { row.username }
                 </Button>
@@ -67,11 +52,26 @@ const AdminPage = props => {
                 //User unban button
                 <Button
                     onClick={() =>
-                        banUserMutation(row.id, false)}
+                        banUser(row.id, false)}
                     block>
                     Unban { row.username }
                 </Button>
             )
+        }
+
+        function banUser(userid, isBanned) {
+            //Send a mutation request to server
+            props.banUserMutation({
+                variables: {
+                    userid: userid,
+                    userBanned: isBanned
+                },
+                refetchQueries: [{ query: usersListQuery }]
+            }).then(({ data }) => {
+                console.log('got data, user ban changed ', data);
+            }).catch((error) => {
+                console.log('there was an error sending the query', error);
+            });
         }
 
         if (loading) {
@@ -120,17 +120,32 @@ query userListQuery {
 }
 `;
 
-const BanUserMutations = gql`
+//Mutation request for banning / unbanning a user
+const banUserGraphql = gql`
     mutation changeBanStatus($userid: String!, $userBanned: Boolean!) {
         banUser(id: $userid, banned: $userBanned) {
             username
             lockUntil
+            isLocked
         }
     }
 `;
 
-export default graphql(BanUserMutations)(graphql(usersListQuery, {
-    options: { pollInterval: 2000 },
-})(AdminPage));
+//Mutation request for promoting a user
+const promoteUserGraphql = gql`
+    mutation promoteUserMutation($userid: String!) {
+        promoteUser(id: $userid) {
+            username
+            isAdmin
+        }
+    }
+`;
+
+//Export all graphql requests for use by apollo
+export default
+    graphql(banUserGraphql, { name: 'banUserMutation' })(
+    graphql(promoteUserGraphql, { name: 'promoteUserMutation' }) (
+    graphql(usersListQuery, { options: { pollInterval: 2000 },})
+    (AdminPage)));
 
 //export default graphql(UserMutations)(AdminPage);
