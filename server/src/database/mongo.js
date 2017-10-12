@@ -157,9 +157,10 @@ export default {
         //     .catch(err => reject(err))
         // })
 
-        return Comment.findOneAndUpdate(
-            {postId:comment.commentId},
-            {comment: comment.comment
+        return Comment.findOneAndUpdate({
+            _id: comment.commentId
+        }, {
+            comment: comment.comment
         })
     },
     deleteComment(id) {

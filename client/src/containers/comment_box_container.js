@@ -25,16 +25,29 @@ const handleCommentSubmit = (event, postId, mutate) => {
     .catch(err => console.log("Error sending comment quAry", err));
 };
 
-const handleCommentUpdate = (event, originalComment, dispatch) => {
+const handleCommentUpdate = (event, originalComment, dispatch, mutate) => {
     event.preventDefault();
+    let newComment = event.target.comment.value
     console.log("---comment wtf",event.target.comment.value);
     console.log("Original Comment was: ", originalComment);
     console.log("Updating comments not implemented yet");
 
+    mutate({
+        variables: {
+            comment: {
+                comment: newComment,
+                commentId: originalComment.id
+            }
+        },
+        refetchQueries: [{ query: commentListQuery, variables: { postId: originalComment.postId } }]
+    })
+    .then(e => dispatch(undoEditCommentClicked()))
+    .catch(err => console.log('error updating comment: ',err))
+
     // TODO: post update comment mutation to server
 
     // clear form
-    dispatch(undoEditCommentClicked());
+    // dispatch(undoEditCommentClicked());
 };
 
 const handleDeleteComment = (comment, postId, mutate) => {
@@ -50,6 +63,8 @@ const handleDeleteComment = (comment, postId, mutate) => {
     .catch(err => console.log("Error deleting comment: ", err));
 };
 
+
+
 const mapStateToProps = (state, ownProps) => {
     return {
         username: state.authentication.username,
@@ -62,7 +77,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         handleCommentSubmit: event => handleCommentSubmit(event, ownProps.postId, ownProps.newCommentMutation),
         switchCommentToEditMode: comment => dispatch(editCommentClicked(comment)),
         undoEditMode: comment => dispatch(undoEditCommentClicked(comment)),
-        handleCommentUpdate: (event, originalComment) => handleCommentUpdate(event, originalComment, dispatch), // TODO: REFACTOR
+        handleCommentUpdate: (event, originalComment) => handleCommentUpdate(event, originalComment, dispatch, ownProps.newCommentUpdateMutation), // TODO: REFACTOR
         handleDeleteComment: comment => handleDeleteComment(comment, ownProps.postId, ownProps.newCommentDeletionMutation)
     }
 };
@@ -77,12 +92,13 @@ const commentListQuery = gql`
                 username
             }
             date
+            postId
         }
     }
 `;
 
 const updateComment = gql`
-    mutation updateComment($comment: Comment!) {
+    mutation updateComment($comment: CommentInput!) {
         updateComment(comment: $comment) {
             comment
         }
