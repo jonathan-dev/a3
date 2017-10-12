@@ -159,6 +159,12 @@ export default {
     getUsers() {
         return User.find();
     },
+    isUsernameAvailable(username) {
+        return User.find({username: username})
+    },
+    isEmailAvailable(email) {
+        return User.find({email:email})
+    },
     getAuthenticated(name, password) {
         return User.getAuthenticated(name, password)
     },

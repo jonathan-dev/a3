@@ -13,7 +13,7 @@ import {
 const inputField = ({
     input,
     label,
-    meta: { touched, error },
+    meta: {asyncValidating, touched, error },
     children,
     ...custom
     }) =>

@@ -19,15 +19,18 @@ export function authApp(app) {
 
     var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, done) {
         //Authorization: Bearer <Token>
-        console.log('---jwt-payload',jwt_payload);
-        const {id, isAdmin} = jwt_payload;
+        console.log('---jwt-payload', jwt_payload);
+        const {
+            id,
+            isAdmin
+        } = jwt_payload;
 
         const user = {
             id,
             isAdmin
         }
 
-        done(null,user);
+        done(null, user);
     });
 
     passport.use(strategy);
@@ -59,8 +62,31 @@ export function authApp(app) {
     //     }
     // });
 
+    app.post('/validateRegistration', (req, res) => {
+        const {
+            email,
+            username
+        } = req.body;
+        console.log(username, email)
+        let promises = []
+        promises.push(mongo.isUsernameAvailable(username))
+        promises.push(mongo.isEmailAvailable(email)),
+        Promise.all(promises)
+        .then(e => {
+            res.json({
+                username: e[0].length? "taken": "available",
+                email: e[1].length? "taken": "available",
+            })
+        })
+        .catch(err => console.log(err))
+
+    })
+
     app.post('/login', (req, res) => {
-        let {username, password} = req.body;
+        let {
+            username,
+            password
+        } = req.body;
 
         if (username && password) {
             //Checks user/pw against database, returns user if valid
@@ -81,8 +107,7 @@ export function authApp(app) {
                             isAdmin: data.user.isAdmin,
                             token: token
                         });
-                    }
-                    else {
+                    } else {
                         res.sendStatus(401);
                     }
                 })
@@ -91,19 +116,27 @@ export function authApp(app) {
     });
 
     app.post('/register', (req, res) => {
-        let {username, password, email} = req.body;
+        let {
+            username,
+            password,
+            email
+        } = req.body;
         if (username && password && email) {
             mongo.createUser(username, email, password)
                 .then(() => {
                     res.statusCode = 200;
-                    res.json({username: username});
+                    res.json({
+                        username: username
+                    });
                 })
                 .catch(error => {
                     if (error._message === 'User validation failed') {
                         let errors = [];
                         Object.keys(error.errors).forEach(key => errors.push(key + " " + error.errors[key].kind));
                         res.statusCode = 401;
-                        res.json({errors: errors.slice(0)});
+                        res.json({
+                            errors: errors.slice(0)
+                        });
                     } else {
                         res.statusCode = 500;
                         // send error as array of strings to be able to add additional error messages
@@ -129,9 +162,9 @@ export function authApp(app) {
             mongo.setResetToken(email, resetPasswordToken, resetPasswordExpires)
                 .then(e => {
                     const text = 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-                            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-                            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                        'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                        'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                        'If you did not request this, please ignore this email and your password will remain unchanged.\n'
                     sendMail(email, text);
                     res.send('send')
                 })
@@ -140,21 +173,26 @@ export function authApp(app) {
     })
 
     app.post('/reset', (req, res) => {
-        const {token, password} = req.body
+        const {
+            token,
+            password
+        } = req.body
         if (token) {
             if (password) {
-                console.log('reset password',password)
+                console.log('reset password', password)
                 mongo.resetPassword(token, password)
-                .then(user => {
-                    const text = 'password reset successfully!'
-                    sendMail(user.email, text)
-                    res.send()
-                })
-                .catch(err => res.status(401).send('Unauthorized'))
+                    .then(user => {
+                        const text = 'password reset successfully!'
+                        sendMail(user.email, text)
+                        res.send()
+                    })
+                    .catch(err => res.status(401).send('Unauthorized'))
             }
 
             mongo.isValidResetToken(token)
-                .then(user => {user?res.json(user):res.status(401).send('Unauthorized')})
+                .then(user => {
+                    user ? res.json(user) : res.status(401).send('Unauthorized')
+                })
                 .catch(err => res.status(500).send('Internal Error'))
         }
     })

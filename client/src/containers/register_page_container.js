@@ -1,7 +1,14 @@
-import { connect } from 'react-redux';
-import { postRegistration } from '../actions/actions';
+import {
+    connect
+} from 'react-redux';
+import {
+    postRegistration
+} from '../actions/actions';
 import RegisterPage from '../components/register_page';
-import { reduxForm } from 'redux-form';
+import {
+    reduxForm
+} from 'redux-form';
+import axios from 'axios'
 
 //Handles submission of register form
 const handleSubmit = (dispatch, event) => {
@@ -57,7 +64,7 @@ const validate = values => {
         errors.email = 'Invalid email address';
     }
 
-    if(values.password2 && values.password2.length > 0 && values.password2 != values.password) {
+    if (values.password2 && values.password2.length > 0 && values.password2 != values.password) {
         errors.password2 = 'Password does not match'
     }
     return errors
@@ -67,15 +74,36 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 // TODO: check if username is available!
 const asyncValidate = (values /*, dispatch */ ) => {
-    return sleep(1000).then(() => {
-        // simulate server latency
-        if (['foo@foo.com', 'bar@bar.com'].includes(values.email)) {
-            // eslint-disable-next-line no-throw-literal
-            throw {
-                email: 'Email already Exists'
+    console.log(values)
+    return axios({
+            method: 'post',
+            url: '/validateRegistration',
+            data: {
+                email: values.email,
+                username: values.username
             }
-        }
-    })
+        })
+        .then(res => {
+            console.log(res.data)
+            const {email, username} = res.data
+            if(email === "taken" && username === "taken") {
+                throw {
+                    email: 'Email already Exists',
+                    username: 'Username already Exists'
+                }
+            }else{
+                if (email === "taken") {
+                    throw {
+                        email: 'Email already Exists'
+                    }
+                }
+                if (username === "taken") {
+                    throw {
+                        username: 'Username already Exists'
+                    }
+                }
+            }
+        })
 }
 
 const mapStateToProps = state => {
