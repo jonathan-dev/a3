@@ -86,9 +86,9 @@ const AdminPage = props => {
         }
 
         //====PROMOTE FUNCTIONS====
-
+        //Commented out because it's not dynamically showing / hiding the popover yet
         /**
-         * Make admin popover
+         * Toggles open the modal popover for warning
          */
         function promoteButton(cell, row, enumObject, rowIndex) {
             return (
