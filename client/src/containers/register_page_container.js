@@ -72,7 +72,6 @@ const validate = values => {
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-// TODO: check if username is available!
 const asyncValidate = (values /*, dispatch */ ) => {
     console.log(values)
     return axios({
