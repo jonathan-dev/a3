@@ -146,17 +146,6 @@ export default {
         // }
     },
     updateComment(comment) {
-        // return new Promise((resolve, reject) => {
-        //     Comment.findOne({postId: comment.postId, date: comment.date})
-        //     .then(oldComment => {
-        //         oldComment.comment = comment.comment;
-        //         oldComment.save()
-        //         .then(comment => resolve(comment))
-        //         .catch(err => reject(err));
-        //     })
-        //     .catch(err => reject(err))
-        // })
-
         return Comment.findOneAndUpdate({
             _id: comment.commentId
         }, {
