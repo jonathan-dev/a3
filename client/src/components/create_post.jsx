@@ -72,8 +72,3 @@ class createPost extends Component {
 }
 
 export default (createPost)
-
-/**
- * TODO: add styling
- * TODO: compress image before upload see trello
- */

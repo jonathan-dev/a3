@@ -25,7 +25,6 @@ const handleSubmit = (dispatch, event) => {
         username: event.target.username.value || '',
         password: event.target.password.value || ''
     };
-
     dispatch(postLogin(formData));
 };
 
@@ -50,6 +49,7 @@ const validate = values => {
 const mapStateToProps = state => {
     return {
         isAuthenticated: state.authentication.isAuthenticated,
+        loginError: state.authentication.loginErrors
     };
 };
 

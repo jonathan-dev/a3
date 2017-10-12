@@ -9,14 +9,13 @@ import {
     FormGroup,
     Button,
     Col,
-    Panel
+    Panel,
+    HelpBlock
 } from 'react-bootstrap';
 
 const LoginPage = props => {
 
-    const { handleSubmit, pristine, reset, submitting, invalid } = props
-
-
+    const { handleSubmit, pristine, reset, submitting, invalid, loginError } = props
 
     // if already logged in, reroute to home
     if (props.isAuthenticated)
@@ -41,6 +40,13 @@ const LoginPage = props => {
                     label="password"
                     type="password"
                 />
+
+                { loginError && <FormGroup validationState={'error'}>
+                    <Col smOffset={2} sm={10}>
+                        <HelpBlock>{loginError}</HelpBlock>
+                    </Col>
+                </FormGroup>}
+
                 <FormGroup>
                     <Col smOffset={2} sm={10}>
                         <Button type="submit" bsStyle="primary" disabled={pristine || submitting || invalid}>Send</Button>

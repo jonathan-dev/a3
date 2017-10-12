@@ -60,7 +60,7 @@ const validate = values => {
         }
     });
 
-    if (!stringIsEmail(values.email)) {
+    if (values.email && !stringIsEmail(values.email)) {
         errors.email = 'Invalid email address';
     }
 
@@ -72,8 +72,7 @@ const validate = values => {
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const asyncValidate = (values /*, dispatch */ ) => {
-    console.log(values)
+const asyncValidate = (values) => {
     return axios({
             method: 'post',
             url: '/validateRegistration',
@@ -83,7 +82,6 @@ const asyncValidate = (values /*, dispatch */ ) => {
             }
         })
         .then(res => {
-            console.log(res.data)
             const {email, username} = res.data
             if(email === "taken" && username === "taken") {
                 throw {

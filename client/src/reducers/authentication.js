@@ -56,7 +56,8 @@ export function authentication(state = {}, action) {
                     isAuthenticated: true,
                     username: action.payload.data.username,
                     isAdmin: action.payload.data.isAdmin,
-                    token: action.payload.data.token
+                    token: action.payload.data.token,
+                    loginErrors: null
                 }
             );
 
