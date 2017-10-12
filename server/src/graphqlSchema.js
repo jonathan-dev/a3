@@ -157,7 +157,7 @@ const PostMutation = new GraphQLObjectType({
             description: "Update an existing comment",
             args: {
                 comment: {
-                    type: new GraphQLNonNull(GraphQLString)
+                    type: new GraphQLNonNull(types.PostInputType)
                 }
             },
             resolve: (root, {comment}, context) => {

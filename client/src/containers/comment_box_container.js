@@ -25,9 +25,16 @@ const handleCommentSubmit = (event, postId, mutate) => {
     .catch(err => console.log("Error sending comment quAry", err));
 };
 
-const handleCommentUpdate = (comment) => {
+const handleCommentUpdate = (event, originalComment, dispatch) => {
+    event.preventDefault();
+    console.log("---comment wtf",event.target.comment.value);
+    console.log("Original Comment was: ", originalComment);
     console.log("Updating comments not implemented yet");
 
+    // TODO: post update comment mutation to server
+
+    // clear form
+    dispatch(undoEditCommentClicked());
 };
 
 const handleDeleteComment = (comment, postId, mutate) => {
@@ -55,7 +62,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         handleCommentSubmit: event => handleCommentSubmit(event, ownProps.postId, ownProps.newCommentMutation),
         switchCommentToEditMode: comment => dispatch(editCommentClicked(comment)),
         undoEditMode: comment => dispatch(undoEditCommentClicked(comment)),
-        handleCommentUpdate: comment => handleCommentUpdate(comment), // TODO: REFACTOR
+        handleCommentUpdate: (event, originalComment) => handleCommentUpdate(event, originalComment, dispatch), // TODO: REFACTOR
         handleDeleteComment: comment => handleDeleteComment(comment, ownProps.postId, ownProps.newCommentDeletionMutation)
     }
 };

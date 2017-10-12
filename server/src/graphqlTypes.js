@@ -167,6 +167,9 @@ export const CommentInputType = new GraphQLInputObjectType({
         postId: {
             type: GraphQLString
         },
+        commentId: {
+            type: GraphQLString
+        },
         comment: {
             type: GraphQLString
         }
