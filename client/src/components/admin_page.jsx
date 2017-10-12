@@ -7,7 +7,8 @@ import {
 import {
     Button,
     Col,
-    Panel
+    Panel,
+    Modal
 } from 'react-bootstrap'; //provides rest of bootstrap styled stuff
 import {
     gql,
@@ -18,6 +19,12 @@ const AdminPage = props => {
 
     //set up local variables from the props object
     const { data } = props;
+    //Variables for promote modal
+    var showModal = true;
+    var userToPromote = {
+        id: 'test',
+        name: 'test'
+    };
 
     //check if actually admin
     if (props.isAuthenticated)
@@ -34,11 +41,15 @@ const AdminPage = props => {
     if (data) {
         const { loading, error, users } = data;
 
-        //Cell editing mode for react bootstrap table
-        // const cellEdit = {
-        //     mode: 'click' // click cell to edit
-        // };
+        if (loading) {
+            return <div>Loading</div>
+        }
 
+        if (error) {
+            return <div>Error</div>
+        }
+
+        //====BAN FUNCTIONS====
         function banButton(cell, row, enumObject, rowIndex) {
             return  (!row.isLocked ) ? (
                 //Ban button
@@ -70,20 +81,87 @@ const AdminPage = props => {
             }).then(({ data }) => {
                 console.log('got data, user ban changed ', data);
             }).catch((error) => {
-                console.log('there was an error sending the query', error);
+                console.log('there was an error sending the mutation ', error);
             });
         }
 
-        if (loading) {
-            return <div>Loading</div>
+        //====PROMOTE FUNCTIONS====
+
+        /**
+         * Make admin popover
+         */
+        function promoteButton(cell, row, enumObject, rowIndex) {
+            return (
+                <Button
+                    onClick={() =>
+                        toggleAdminPopover(row.id, row.username)}
+                    block
+                    //{...row.isAdmin ? disabled : _ }
+                    >
+                    Promote { row.username }
+                </Button>
+            )
         }
 
-        if (error) {
-            return <div>Error</div>
+        /**
+         * prepare and show (or hide) admin modal dialog
+         */
+        function toggleAdminPopover(userid, username) {
+            //change text on the modal
+            //this.setState({ userToPromote: { id: userid, name: username } })
+            userToPromote = {
+                id: userid,
+                name: username
+            }
+            console.log('user to promote', userToPromote);
+            //toggle visibility of modal
+            if (showModal) {
+                console.log('hiding modal');
+                //this.setState({ showModal: false });
+                showModal = false;
+            } else {
+                console.log('showing modal');
+                //this.setState({ showModal: true });
+                showModal = true;
+            }
+        }
+
+        function promoteUser() {
+            console.log("Promoting user ", userToPromote.name);
+            //get user to promote from state
+            props.promoteUserMutation({
+                variables: {
+                    userid: userToPromote.id
+                },
+                refetchQueries: [{ query: usersListQuery }]
+            }).then(({ data }) => {
+                console.log('got data, user was promoted');
+            }).catch((error) => {
+                console.log('there was an error sending the mutation ', error);
+            });
         }
 
         return (
             <section className="col-lg-8" style={colCentered}>
+                {/* {Popover for promoting users} */}
+                <Modal show={ true } onHide={ toggleAdminPopover }>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Are you sure you want to make { userToPromote.name } an admin?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button
+                            onClick={ toggleAdminPopover }>
+                            Cancel </Button>
+                        <Button
+                            bsStyle="warning"
+                            onClick={() => promoteUser() }>
+                            Yes </Button>
+                    </Modal.Footer>
+                </Modal>
+                {/* Table of users */}
                 <BootstrapTable data={ users }
                     striped={true}
                     search={true}
@@ -91,12 +169,7 @@ const AdminPage = props => {
                     <TableHeaderColumn dataField="id" isKey={true} dataAlign="left" dataSort={true}>User ID</TableHeaderColumn>
                     <TableHeaderColumn dataField="username" dataSort={true}>Username</TableHeaderColumn>
                     <TableHeaderColumn dataField="isAdmin" dataSort={true}>Administrator</TableHeaderColumn>
-                    {/* <TableHeaderColumn
-                        dataField="isAdmin"
-                        dataSort={true}
-                        editable={ { type: 'checkbox', options: { values: 'Y:N' } } }>
-                        Is administrator
-                    </TableHeaderColumn> */}
+                    <TableHeaderColumn dataField="button" dataFormat={ promoteButton }>Promote</TableHeaderColumn>
                     <TableHeaderColumn dataField="isLocked" dataSort={true}>User account locked</TableHeaderColumn>
                     <TableHeaderColumn dataField="lockUntil" dataSort={true}>Locked until</TableHeaderColumn>
                     <TableHeaderColumn dataField="button" dataFormat={ banButton }>Ban user</TableHeaderColumn>
