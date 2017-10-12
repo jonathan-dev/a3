@@ -30,6 +30,12 @@ let postSchema = mongoose.Schema({
     owner: {
         type: String,
         required: true
+    },
+    up: {
+        type: [String]
+    },
+    down: {
+        type: [String]
     }
 });
 

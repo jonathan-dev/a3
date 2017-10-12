@@ -43,7 +43,16 @@ let userSchema = mongoose.Schema({
         type: Number
     },
     resetPasswordToken: String,
-    resetPasswordExpires: Date
+    resetPasswordExpires: Date,
+    pendingTransactions: {
+        type: String
+    },
+    up: {
+        type: String
+    },
+    down: {
+        type: String
+    }
 });
 
 userSchema.plugin(uniqueValidator, {type: 'already in use'});
