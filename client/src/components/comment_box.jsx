@@ -1,59 +1,71 @@
 import React, { Component } from 'react';
 import {
-    gql,
-    graphql,
-} from 'react-apollo';
-import CreateComment from './create_comment'
-import Comment from './comment'
+    Form,
+    Button,
+    ButtonGroup,
+    FormControl,
+    Col
+} from 'react-bootstrap';
+import Comment from '../containers/comment_container'
+import EditableComment from '../containers/editable_comment_container';
 
-class CommentBox extends Component {
-    constructor() {
-        super();
-    }
+const CommentBox = props => {
 
-    render() {
-        console.log("PROPS:");
-        console.log(this.props);
-        const { data } = this.props;
-        if (data) {
-            const { loading, error, comments } = data;
+    const { data , handleCommentSubmit, handleDeleteComment, switchCommentToEditMode} = props;
+    if (data) {
+        const { loading, error, comments } = data;
 
-            if (loading) {
-                return <div>Loading</div>
-            }
-            if (error) {
-                return <div>Error</div>
-            }
-
-            return (
-                <section>
-                    <CreateComment post={this.props.post} />
-                    {comments.map((comment, index) => <Comment key={index} comment={comment} />)}
-                </section>
-            )
+        if (loading) {
+            return <div>Loading</div>
         }
-    }
-}
-
-export const commentListQuery = gql`
-    query commentListQuery($postId: String) {
-        comments (postId: $postId){
-            id
-            comment
-            owner {
-                id
-                username
-            }
-            voteup
-            votedown
+        if (error) {
+            console.log(error);
+            return <div>Error</div>
         }
-    }
-`;
 
-export default graphql(commentListQuery, {
-    options: (props) => ({
-        variables: {
-            postId: props.post
+        let commentList = null;
+        if (comments) {
+            commentList = comments.map((comment, index) => {
+                const isOwnComment = comment.owner.username == props.username;
+                const isInEditMode = comment.id == props.commentInEditMode;
+
+                const commentView = (isInEditMode) ?
+                    <EditableComment originalComment={comment}/> : <Comment comment={comment}/>;
+
+                const actionButtons = (isOwnComment && !isInEditMode) ?
+                    <ButtonGroup className="pull-right">
+                        <Button bsStyle="primary" bsSize="small" onClick={() => switchCommentToEditMode(comment)}>
+                            Edit
+                        </Button>
+
+                        <Button bsStyle="danger" bsSize="small" onClick={() => handleDeleteComment(comment)}>
+                            Delete
+                        </Button>
+                    </ButtonGroup> : null;
+
+                    return (
+                        <div key={index}>
+                            {commentView}
+                            {actionButtons}
+                        </div>
+                    );
+            });
         }
-    })
-})(CommentBox);
+
+        return (
+            <section>
+                <Form horizontal onSubmit={handleCommentSubmit} >
+                    <Col sm={10}>
+                        <FormControl name="comment" type="text" placeholder="comment"/>
+                    </Col>
+                    <Col sm={2}>
+                        <Button type="submit" >comment</Button>
+                    </Col>
+                </Form>
+                { commentList }
+            </section>
+        )
+    }
+};
+
+export default CommentBox;

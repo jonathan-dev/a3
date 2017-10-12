@@ -19,13 +19,6 @@ export const POST_REGISTRATION = 'POST_REGISTRATION';
 export const POST_REGISTRATION_SUCCESS = 'POST_REGISTRATION_SUCCESS';
 export const POST_REGISTRATION_FAIL = 'POST_REGISTRATION_FAIL';
 
-
-// visibility filter types for the application
-export const headerBarVisibilityFilters = {
-    SHOW_AUTHENTICATED: 'SHOW_AUTHENTICATED',
-    SHOW_UNAUTHENTICATED: 'SHOW_UNAUTHENTICATED'
-};
-
 //------------------------------------------
 // RESET PAGE
 //------------------------------------------
@@ -43,6 +36,11 @@ export const REQUEST_RESET_PASSWORD = 'REQUEST_RESET_PASSWORD';
 
 export const REQUEST_RESET_PASSWORD_SUCCESS = 'REQUEST_RESET_PASSWORD_SUCCESS';
 export const REQUEST_RESET_PASSWORD_FAIL = 'REQUEST_RESET_PASSWORD_FAIL';
+
+
+export const EDIT_COMMENT_CLICKED = 'EDIT_COMMENT_CLICKED';
+export const EDIT_COMMENT_TEXT_CHANGED = 'EDIT_COMMENT_TEXT_CHANGED';
+export const UNDO_EDIT_COMMENT_CLICKED = 'UNDO_EDIT_COMMENT_CLICKED';
 
 
 //------------------------------------------

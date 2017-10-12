@@ -1,20 +1,18 @@
-import React, { Component } from 'react';
-import CreateComment from './create_comment'
+import React from 'react';
 
-class Comment extends Component {
-    constructor() {
-        super();
-    }
+const Comment = props => {
+    const {comment, date, owner} = props.comment;
+    let d = new Date(date);
+    let calendarDate = d.toLocaleDateString();
+    let time = d.getHours() + ":" + d.getMinutes();
+    let adjustedDate = time + calendarDate;
+    return (
+        <div>
+            <h2 className="author">{owner.username}</h2>
+            <h6>Posted on { adjustedDate}</h6>
+            { comment }
+        </div>
+    );
+};
 
-    render() {
-        const {comment, date, owner } = this.props.comment
-        return (
-            <section>
-                <p>{owner.username+": "+comment}</p>
-                <p>{date}</p>
-            </section>
-        );
-    }
-}
-
-export default Comment
+export default Comment;

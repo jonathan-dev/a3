@@ -25,7 +25,7 @@ export const TagType = new GraphQLObjectType({
             resolve: (tag) => tag.name
         }
     })
-})
+});
 
 export const TagAttributesInputType = new GraphQLInputObjectType({
     name: 'TagAttributes',
@@ -34,7 +34,7 @@ export const TagAttributesInputType = new GraphQLInputObjectType({
             type: GraphQLString
         }
     })
-})
+});
 
 export const PostType = new GraphQLObjectType({
     name: 'Post',
@@ -126,7 +126,7 @@ export const UserType = new GraphQLObjectType({
             resolve: (user) => user.isLocked
         }
     })
-})
+});
 
 // export const UserInputType = new GraphQLObjectType({
 //     name: 'UserInput',
@@ -152,14 +152,6 @@ export const CommentType = new GraphQLObjectType({
         comment: {
             type: GraphQLString,
             resolve: (comment) => comment.comment
-        },
-        voteup: {
-            type: GraphQLInt,
-            resolve: (comment) => comment.voteup
-        },
-        votedown: {
-            type: GraphQLInt,
-            resolve: (comment) => comment.votedown
         },
         date: {
             type: GraphQLString,

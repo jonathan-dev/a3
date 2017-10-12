@@ -1,0 +1,49 @@
+import { connect } from 'react-redux';
+import EditableComment from '../components/editable_comment';
+import { undoEditCommentClicked, editCommentTextChanged } from '../actions/actions';
+import {gql, graphql } from 'react-apollo';
+const handleUpdateComment = (event) => {
+    event.preventDefault();
+    console.log("Update function not implemented yet");
+};
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        editCommentText: state.commenting.editCommentText,
+        originalComment: ownProps.originalComment
+    };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        onSubmit: (event) => handleUpdateComment(event),
+        onAbort: () => dispatch(undoEditCommentClicked()),
+        onEditInputChange: event => dispatch(editCommentTextChanged(event.target.value))
+    };
+};
+
+const commentListQuery = gql`
+    query commentListQuery($postId: String) {
+        comments (postId: $postId){
+            id
+            comment
+            owner {
+                id
+                username
+            }
+            date
+        }
+    }
+`;
+
+const updateComment = gql`
+    mutation updateComment($comment: Comment!) {
+        updateComment(comment: $comment) {
+            comment
+        }
+    }
+`;
+
+export default graphql(updateComment)(
+    connect(mapStateToProps, mapDispatchToProps)(EditableComment)
+);

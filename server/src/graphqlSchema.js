@@ -164,22 +164,32 @@ const PostMutation = new GraphQLObjectType({
                 comment
             }, context) => {
                 //Get the user from the request
-                var userId = context.req.user.id;
-
-                /* HOW TO QUERY using Graphiql
-                mutation CreateCommentForPost($comment: CommentAttributes!) {
-                  createComment(comment: $comment) {
-                    id
-                    comment
-                  }
-                }
-                *****query variables*****
-                "comment": {
-                  "postId": "599c47e39694f605c06dc5f",
-                  "comment": "Comment text"
-                }
-                */
+                const userId = context.req.user.id;
                 return mongo.createComment(userId, comment.postId, comment.comment);
+            }
+        },
+        updateComment: {
+            type: types.CommentType,
+            description: "Update an existing comment",
+            args: {
+                comment: {
+                    type: new GraphQLNonNull(GraphQLString)
+                }
+            },
+            resolve: (root, {comment}, context) => {
+                return mongo.updateComment(comment);
+            }
+        },
+        deleteComment: {
+            type: new GraphQLNonNull(GraphQLString),
+            description: "Delete an existing comment",
+            args: {
+                commentId: {
+                    type: new GraphQLNonNull(GraphQLString)
+                }
+            },
+            resolve: (root, {commentId}, context) => {
+                return mongo.deleteComment(commentId)
             }
         },
         updatePost: {
@@ -190,14 +200,10 @@ const PostMutation = new GraphQLObjectType({
                     type: types.PostInputType
                 }
             },
-            resolve: (root, {
-                post
-            }) => {
-                console.log('resolve: ', post)
+            resolve: (root, {post}) => {
                 return mongo.updatePost(post);
             }
         },
-
         deletePost: {
             type: types.PostType,
             description: 'Delete an post with id and return the post that was deleted.',
@@ -212,7 +218,6 @@ const PostMutation = new GraphQLObjectType({
                 return mongo.deletePost(id);
             }
         },
-
         banUser: {
             type: types.UserType,
             description: 'Ban or unban a user (prevents from logging in)',
@@ -226,10 +231,13 @@ const PostMutation = new GraphQLObjectType({
                     description: 'Whether the user is banned or not. Defaults to false (unban) if not specified'
                 }
             },
-            resolve: (value, {
-                id,
-                banned
-            }, context) => {
+            resolve: (value, {id}, context) => {
+                //Todo - add isAdmin check
+                return mongo.banUser(id);
+            }
+        }
+        /*unbanUser: {
+            resolve: (value, { id, banned }, context) => {
                 if (context.req.user.isAdmin) {
                     // Performs ban or unban
                     return (banned ? mongo.banUser(id) : mongo.unbanUser(id))
@@ -237,8 +245,7 @@ const PostMutation = new GraphQLObjectType({
                     throw new Error('you need to be an admin to perform this action');
                 }
             }
-        },
-
+        }*/,
         promoteUser: {
             type: types.UserType,
             description: 'Promote a user to admin status',
@@ -248,9 +255,7 @@ const PostMutation = new GraphQLObjectType({
                     description: 'The user id to promote'
                 }
             },
-            resolve: (value, {
-                id
-            }, context) => {
+            resolve: (value, {id}, context) => {
                 //Todo - add isAdmin check
                 if (context.req.user.isAdmin) {
                     //Performs promotion

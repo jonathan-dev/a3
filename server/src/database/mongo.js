@@ -7,30 +7,31 @@ import Tag from './tag'
 import Comment from './comment'
 
 // location of the mongodb
-const MONGO = 'mongodb://localhost/a3'
-mongoose.Promise = Promise
+const MONGO = 'mongodb://localhost/a3';
+mongoose.Promise = Promise;
 mongoose.connect(MONGO, {
     useMongoClient: true // needed to get rid of a error message
-})
+});
 
 //Open connection to mongodb
-let db = mongoose.connection
+let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function () {
     // we're connected!
     console.log(`connected to mongodb at: ${MONGO}`)
-})
+});
 
 // This method initializes the database if it is empty
 async function initDatabase() {
     //insert tags
-    const tags = await Tag.find()
+    const tags = await Tag.find();
+
     if (tags.length === 0) {
-        let ps = []
-        for (var i = 0; i < 10; i++) {
+        let ps = [];
+        for (let i = 0; i < 10; i++) {
             let p = await new Tag({
                 name: casual.word
-            }).save()
+            }).save();
             ps.push(p)
         }
         await Promise.all(ps)
@@ -143,6 +144,22 @@ export default {
         // console.log("User was banned, can't post comment", userId);
         //TODO - add proper error handling here to give better feedback to user
         // }
+    },
+    updateComment(comment) {
+        return new Promise((resolve, reject) => {
+            Comment.findOne({postId: comment.postId, date: comment.date})
+            .then(oldComment => {
+                oldComment.comment = comment.comment;
+                oldComment.save()
+                .then(comment => resolve(comment))
+                .catch(err => reject(err));
+            })
+            .catch(err => reject(err))
+        })
+    },
+    deleteComment(id) {
+        console.log("removing comment with id: ", id);
+        return Comment.findByIdAndRemove(id);
     },
     getUsers() {
         return User.find();
