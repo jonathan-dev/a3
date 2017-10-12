@@ -12,7 +12,7 @@ class EditableComment extends Component {
         const {editCommentText, onSubmit, onAbort, originalComment, onEditInputChange} = this.props;
 
         return (
-            <Form horizontal onSubmit={onSubmit}>
+            <Form horizontal onSubmit={(event) => onSubmit(event, originalComment)}>
                 <h2 className="author">{originalComment.owner.username}</h2>
                 <Col sm={10}>
                     <FormControl name="comment" type="text" placeholder="comment" value={editCommentText} onChange={onEditInputChange}/>

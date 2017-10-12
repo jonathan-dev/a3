@@ -167,9 +167,24 @@ export const CommentInputType = new GraphQLInputObjectType({
         postId: {
             type: GraphQLString
         },
+        commentId: {
+            type: GraphQLString
+        },
         comment: {
             type: GraphQLString
         }
     })
 });
 
+export const VoteInputType = new GraphQLInputObjectType({
+    name: 'VoteInput',
+    description: 'VoteInput',
+    fields: {
+        postId: {
+            type: GraphQLString
+        },
+        action: {
+            type: GraphQLString
+        }
+    }
+})

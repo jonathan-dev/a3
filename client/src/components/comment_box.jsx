@@ -11,7 +11,7 @@ import EditableComment from '../containers/editable_comment_container';
 
 const CommentBox = props => {
 
-    const { data , handleCommentSubmit, handleDeleteComment, switchCommentToEditMode} = props;
+    const { data , handleCommentSubmit, handleDeleteComment, switchCommentToEditMode, handleCommentUpdate} = props;
     if (data) {
         const { loading, error, comments } = data;
 
@@ -30,7 +30,7 @@ const CommentBox = props => {
                 const isInEditMode = comment.id == props.commentInEditMode;
 
                 const commentView = (isInEditMode) ?
-                    <EditableComment originalComment={comment}/> : <Comment comment={comment}/>;
+                    <EditableComment originalComment={comment} onSubmit={handleCommentUpdate}/> : <Comment comment={comment}/>;
 
                 const actionButtons = (isOwnComment && !isInEditMode) ?
                     <ButtonGroup className="pull-right">

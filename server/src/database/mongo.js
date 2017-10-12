@@ -73,7 +73,9 @@ export default {
         return Post.find()
     },
     getPostsByOwner(ownerId) {
-        return Post.find({owner: ownerId})
+        return Post.find({
+            owner: ownerId
+        })
     },
     deletePost(id) {
         return Post.findByIdAndRemove(id)
@@ -87,7 +89,7 @@ export default {
         })
     },
     getTags(ids) {
-        if(ids){
+        if (ids) {
             return Tag.find({
                 _id: {
                     "$in": ids
@@ -133,26 +135,32 @@ export default {
         //Validation
         //Check if user is banned
         // if (!isUserBanned(userId)) {
-            return new Comment({
-                comment: comment,
-                postId: postId,
-                userId: userId
-            }).save();
+        return new Comment({
+            comment: comment,
+            postId: postId,
+            userId: userId
+        }).save();
         // } else {
-            // console.log("User was banned, can't post comment", userId);
-            //TODO - add proper error handling here to give better feedback to user
+        // console.log("User was banned, can't post comment", userId);
+        //TODO - add proper error handling here to give better feedback to user
         // }
     },
     updateComment(comment) {
-        return new Promise((resolve, reject) => {
-            Comment.findOne({postId: comment.postId, date: comment.date})
-            .then(oldComment => {
-                oldComment.comment = comment.comment;
-                oldComment.save()
-                .then(comment => resolve(comment))
-                .catch(err => reject(err));
-            })
-            .catch(err => reject(err))
+        // return new Promise((resolve, reject) => {
+        //     Comment.findOne({postId: comment.postId, date: comment.date})
+        //     .then(oldComment => {
+        //         oldComment.comment = comment.comment;
+        //         oldComment.save()
+        //         .then(comment => resolve(comment))
+        //         .catch(err => reject(err));
+        //     })
+        //     .catch(err => reject(err))
+        // })
+
+        return Comment.findOneAndUpdate({
+            _id: comment.commentId
+        }, {
+            comment: comment.comment
         })
     },
     deleteComment(id) {
@@ -176,7 +184,9 @@ export default {
         return User.findById(id)
     },
     getUserNameById(id) {
-        return User.findById(id,{username:1})
+        return User.findById(id, {
+            username: 1
+        })
     },
     banUser(id) {
         return User.banUser(id);
@@ -187,33 +197,149 @@ export default {
     promoteUser(id) {
         return User.promoteUser(id);
     },
-    setResetToken(email,resetPasswordToken,resetPasswordExpires) {
-        return User.findOneAndUpdate(
-            {
-                email:email
-            },
-            {
-                resetPasswordToken:resetPasswordToken,
-                resetPasswordExpires:resetPasswordExpires
-            })
+    setResetToken(email, resetPasswordToken, resetPasswordExpires) {
+        return User.findOneAndUpdate({
+            email: email
+        }, {
+            resetPasswordToken: resetPasswordToken,
+            resetPasswordExpires: resetPasswordExpires
+        })
     },
     isValidResetToken(token) {
-        return User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } },{resetPasswordExpires:1, username:1});
+        return User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: {
+                $gt: Date.now()
+            }
+        }, {
+            resetPasswordExpires: 1,
+            username: 1
+        });
     },
-    resetPassword(token,password) {
-        return new Promise ((resolve, reject) => {
-            User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } })
-            .then(user => {
-                if (user) {
-                    user.password = password;
-                    user.resetPasswordToken = undefined;
-                    user.resetPasswordExpires = undefined;
-                    user.save()
-                        .then(user => resolve(user))//TODO: not return all user info
-                        .catch(err => reject(err))
-                }
-            })
-            .catch(err => reject(err))
+    resetPassword(token, password) {
+        return new Promise((resolve, reject) => {
+            User.findOne({
+                    resetPasswordToken: token,
+                    resetPasswordExpires: {
+                        $gt: Date.now()
+                    }
+                })
+                .then(user => {
+                    if (user) {
+                        user.password = password;
+                        user.resetPasswordToken = undefined;
+                        user.resetPasswordExpires = undefined;
+                        user.save()
+                            .then(user => resolve(user)) //TODO: not return all user info
+                            .catch(err => reject(err))
+                    }
+                })
+                .catch(err => reject(err))
         })
+    },
+    vote(voteInput, user) {
+        // if (user.id) {
+        const userId = '59dc5cef9291a622b964a3bb';
+        const {
+            action,
+            postId
+        } = voteInput;
+
+        console.log(userId, postId)
+
+        switch (action) {
+            case "up":
+                User.findOneAndUpdate({
+                        _id: userId,
+                        up: {
+                            $nin: [postId]
+                        }
+                    }, {
+                        $pull: {
+                            down: postId
+                        },
+                        $push: {
+                            up: postId
+                        }
+                    })
+                    .then(u =>
+                        Post.findOneAndUpdate({
+                            _id: postId,
+                            up: {
+                                $nin: [userId]
+                            }
+                        }, {
+                            $pull: {
+                                down: userId
+                            },
+                            $push: {
+                                up: userId
+                            }
+                        })
+                    )
+                break;
+
+            case "down":
+                return User.findOneAndUpdate({
+                        _id: userId,
+                        down: {
+                            $nin: [postId]
+                        }
+                    }, {
+                        $pull: {
+                            up: postId
+                        },
+                        $push: {
+                            down: postId
+                        }
+                    })
+                    .then(u =>
+                        Post.findOneAndUpdate({
+                            _id: postId,
+                            down: {
+                                $nin: [userId]
+                            }
+                        }, {
+                            $pull: {
+                                up: userId
+                            },
+                            $push: {
+                                down: userId
+                            }
+                        })
+                    )
+                break;
+
+            case "neutral":
+                return User.findOneAndUpdate({
+                        _id: userId,
+                    }, {
+                        $pull: {
+                            up: postId,
+                            down: postId
+                        }
+                    })
+                    .then(u =>
+                        Post.findOneAndUpdate({
+                            _id: postId,
+                        }, {
+                            $pull: {
+                                up: userId,
+                                down: userId
+                            },
+                        })
+                    )
+                break;
+
+            default:
+                throw new Error('invalid argument on vote input')
+                break;
+        }
+
+
+        // } else {
+        //     console.error('no auth')
+        //     throw new Error('you need to be authorized to vote on a post')
+        // }
     }
 }
