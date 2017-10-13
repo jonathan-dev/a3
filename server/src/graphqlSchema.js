@@ -67,6 +67,19 @@ const QueryType = new GraphQLObjectType({
             }
         },
 
+        tag: {
+            type: types.TagType,
+            description: 'Get a specific tag. Pass in tag id as an argument.',
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLString)
+                }
+            },
+            resolve: (_, args) => {
+                return mongo.getTag(args.id);
+            }
+        },
+
         user: {
             type: types.UserType,
             description: 'Get User',
