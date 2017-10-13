@@ -14,6 +14,7 @@ import {
     graphql
 } from 'react-apollo'; //provides query ability
 import BanButton from '../containers/ban_button_container';
+import ErrorPage from './error_page';
 
 const AdminPage = props => {
 
@@ -40,7 +41,7 @@ const AdminPage = props => {
         }
 
         if (error) {
-            return <div>Error</div>
+            return <ErrorPage error={error}/>
         }
 
         function promoteButton(cell, row, enumObject, rowIndex) {
