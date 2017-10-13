@@ -77,6 +77,11 @@ export default {
             owner: ownerId
         })
     },
+    getPostsByTag(tagId) {
+        return Post.find({
+            tags: tagId
+        })
+    },
     deletePost(id) {
         return Post.findByIdAndRemove(id)
     },
