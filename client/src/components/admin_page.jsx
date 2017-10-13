@@ -13,11 +13,12 @@ import {
     gql,
     graphql
 } from 'react-apollo'; //provides query ability
+import BanButton from '../containers/ban_button_container';
 
 const AdminPage = props => {
 
     //set up local variables from the props object
-    const { data } = props;
+    const { data, handleBanSubmit } = props;
 
     //check if actually admin
     if (props.isAuthenticated)
@@ -42,41 +43,6 @@ const AdminPage = props => {
             return <div>Error</div>
         }
 
-        function banButton(cell, row, enumObject, rowIndex) {
-            return  (!row.isLocked ) ? (
-                //Ban button
-                <Button
-                    onClick={() =>
-                        banUser(row.id, true)}
-                    block>
-                    Ban { row.username }
-                </Button>
-            ) : (
-                //User unban button
-                <Button
-                    onClick={() =>
-                        banUser(row.id, false)}
-                    block>
-                    Unban { row.username }
-                </Button>
-            )
-        }
-
-        function banUser(userid, isBanned) {
-            //Send a mutation request to server
-            props.banUserMutation({
-                variables: {
-                    userid: userid,
-                    userBanned: isBanned
-                },
-                refetchQueries: [{ query: usersListQuery }]
-            }).then(({ data }) => {
-                console.log('got data, user ban changed ', data);
-            }).catch((error) => {
-                console.log('there was an error sending the query', error);
-            });
-        }
-
         function promoteButton(cell, row, enumObject, rowIndex) {
             return  (!row.isAdmin && !row.isLocked ) ? (
                 //Promote user to admin button
@@ -97,19 +63,17 @@ const AdminPage = props => {
                 </Button>
             )
         }
+        //random change
 
-        function promoteUser(userid) {
-            //Send a mutation request to server
-            props.promoteUserMutation({
-                variables: {
-                    userid: userid
-                },
-                refetchQueries: [{ query: usersListQuery }]
-            }).then(({ data }) => {
-                console.log('promote request submitted');
-            }).catch((error) => {
-                console.log('there was an error sending the query', error);
-            });
+        function localBanButton(cell, row, enumObject, rowIndex) {
+            //Populate button container with props
+            console.log('Props to pass in, user id: ', row.id)
+            return (
+                <BanButton
+                    username={row.username}
+                    userId={row.id}
+                    isLocked={row.isLocked}/>
+            );
         }
 
         return (
@@ -124,7 +88,9 @@ const AdminPage = props => {
                     <TableHeaderColumn dataField="button" dataFormat={ promoteButton }>Promote to admin</TableHeaderColumn>
                     <TableHeaderColumn dataField="isLocked" dataSort={true}>User account locked</TableHeaderColumn>
                     <TableHeaderColumn dataField="lockUntil" dataSort={true}>Locked until</TableHeaderColumn>
-                    <TableHeaderColumn dataField="button" dataFormat={ banButton }>Ban user</TableHeaderColumn>
+                    <TableHeaderColumn dataField="button" dataFormat={ localBanButton }>
+
+                    </TableHeaderColumn>
                 </BootstrapTable>
             </section>
         )
