@@ -9,7 +9,7 @@ import { updatePostSearchBarInput,  clearSearchBarInput} from '../actions/action
 const mapStateToProps = (state) => {
     return {
         visiblePostComments: state.postVisibility.visiblePostComments.slice(0),
-        searchBarInput: state.postVisibility.
+        searchBarInput: state.postVisibility.postSearchBarValue.slice(0)
     }
 };
 

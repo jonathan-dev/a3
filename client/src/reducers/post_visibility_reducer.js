@@ -6,7 +6,8 @@ import {
 } from '../constants/action_types';
 
 const initialVisibilityState = {
-    visiblePostComments: []
+    visiblePostComments: [],
+    postSearchBarValue: ""
 };
 
 export function postVisibility (state = initialVisibilityState, action) {
@@ -20,7 +21,9 @@ export function postVisibility (state = initialVisibilityState, action) {
                 visiblePostComments: state.visiblePostComments.filter(post => post.id != action.post.id)
             });
         case POST_SEACHBAR_INPUT_CHANGED:
-            return Object.assign({}, state);
+            return Object.assign({}, state, {postSearchBarValue: action.newInput});
+        case CLEAR_POST_SEARCHBAR_INPUT:
+            return Object.assign({}, state, {postSearchBarValue: ""});
 
         default:
             return state
