@@ -56,7 +56,7 @@ const handleDeleteComment = (comment, postId, mutate) => {
 
 
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
     return {
         username: state.authentication.username,
         isAuthenticated: state.authentication.isAuthenticated,
@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         handleCommentSubmit: event => handleCommentSubmit(event, ownProps.postId, ownProps.newCommentMutation, dispatch),
         switchCommentToEditMode: comment => dispatch(editCommentClicked(comment)),
         undoEditMode: comment => dispatch(undoEditCommentClicked(comment)),
-        handleCommentUpdate: (event, originalComment) => handleCommentUpdate(event, originalComment, dispatch, ownProps.newCommentUpdateMutation), // TODO: REFACTOR
+        handleCommentUpdate: (event, originalComment) => handleCommentUpdate(event, originalComment, dispatch, ownProps.newCommentUpdateMutation),
         handleDeleteComment: comment => handleDeleteComment(comment, ownProps.postId, ownProps.newCommentDeletionMutation),
         onCommentInputBarChange: event => dispatch(updateCommentInputBar(event.target.value)),
         clearCommentInputBar: () => dispatch(clearCommentInputBar())

@@ -17,7 +17,6 @@ const Post = props => {
     const { post, showComments } = props;
     const { showPostComments, hidePostComments } = props;
 
-    console.log("POST COMPONENT HERE; post is: ", post);
 
     let actionButton;
     if (showComments) {

@@ -53,9 +53,6 @@ class HomePage extends React.Component {
                 return <Post key={index} post={post} showComments={showPostComments}/>
             });
 
-
-            console.log("Käse: ", this.props)
-
             return (
                 <section className="col-lg-4" style={colCentered}>
                     <div style={{marginBottom: "50px"}}>
