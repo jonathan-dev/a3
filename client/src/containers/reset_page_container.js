@@ -10,6 +10,9 @@ import {
 import {
     push
 } from 'react-router-redux';
+import {
+    reduxForm
+} from 'redux-form';
 
 const handleSubmit = (dispatch, event, token) => {
     event.preventDefault();
@@ -22,11 +25,28 @@ const handleSubmit = (dispatch, event, token) => {
     }
 };
 
+const validate = values => {
+    const errors = {}
+    const requiredFields = [
+        'password',
+        'password2'
+    ]
+    requiredFields.forEach(field => {
+        if (!values[field]) {
+            errors[field] = 'Required'
+        }
+    })
+    if (values.password2 && values.password2.length > 0 && values.password2 != values.password) {
+        errors.password2 = 'Password does not match'
+    }
+    return errors
+}
+
 const mapStateToProps = state => {
     return {
         username: state.username,
         password: state.password,
-        routeIsValid: state.reset.routeIsValid
+        routeIsValid: state.authentication.routeIsValid
     };
 };
 
@@ -37,6 +57,9 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const ResetPageContainer = connect(mapStateToProps, mapDispatchToProps)(ResetPage);
+const resetForm = reduxForm({
+    form: 'ResetForm', // a unique identifier for this form
+    validate
+})(ResetPage)
 
-export default ResetPageContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(resetForm);

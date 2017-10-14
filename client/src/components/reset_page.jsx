@@ -1,38 +1,54 @@
 import React from 'react';
 import axios from 'axios';
+import {
+    Form,
+    FormGroup,
+    Button,
+    Col,
+    Panel,
+    HelpBlock
+} from 'react-bootstrap';
+import { Field } from 'redux-form'
+import inputField from './inputField'
 
 class ResetPage extends React.Component {
     constructor(props) {
         super(props);
+        if(props.routeIsValid === undefined)
         props.check(props.match.params.id)
     }
 
     resetForm = () => {
-        const {handleSubmit} = this.props
+        const colCentered = {
+            float: 'none',
+            margin: '0 auto',
+        }
+        const { handleSubmit, pristine, reset, submitting, invalid, loginError } = this.props
         console.log(handleSubmit)
         return (
-            <div>
-                <form onSubmit={e =>
-                handleSubmit(e, this.props.match.params.id)}
+            <Panel className="col-lg-4" style={colCentered}>
+                <Form horizontal onSubmit={e =>
+                    handleSubmit(e, this.props.match.params.id)}
                 >
-                    <label>
-                        Password:
-                        <input
+                    <Field
                         name="password"
+                        component={inputField}
+                        label="Password"
                         type="password"
-                         />
-                    </label>
-                    <label>
-                        Re-enter your password:
-                        <input
+                    />
+                    <Field
                         name="password2"
+                        component={inputField}
+                        label="Re-enter your password:"
                         type="password"
-                         />
-                    </label>
-                    {this.props.passwordsMatch?'':<p>passwords not matching</p>}
-                    <button type="submit">register</button>
-                </form>
-            </div>
+                    />
+                    <FormGroup>
+                        <Col smOffset={2} sm={10}>
+                            <Button type="submit" bsStyle="primary" disabled={pristine || submitting || invalid}>Send</Button>
+                        </Col>
+                    </FormGroup>
+                </Form>
+            </Panel>
         )
     }
 
@@ -40,7 +56,6 @@ class ResetPage extends React.Component {
         const { routeIsValid } = this.props;
         return (
             <section>
-                <h1>{this.props.match.params.id}</h1>
                 {routeIsValid ?
                     this.resetForm() :
                     <h1>not valid</h1>}

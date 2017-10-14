@@ -117,7 +117,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const registerForm = reduxForm({
-    form: 'ResetForm', // a unique identifier for this form
+    form: 'RegisterForm', // a unique identifier for this form
     validate,
     asyncValidate
 })(RegisterPage)
