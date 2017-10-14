@@ -21,7 +21,8 @@ import {
     CLEAR_POST_SEARCHBAR_INPUT,
     COMMENT_INPUT_FIELD_CHANGED,
     CLEAR_COMMENT_INPUT_BAR,
-    CLEAN_REGISTRATION_STATE
+    CLEAR_AUTHENTICATION_STATE,
+    RESET_PASSWORD_SUCCESS
 } from '../constants/action_types';
 
 // action generator for posting login information
@@ -54,7 +55,7 @@ export function postRegistration(registrationData) {
 
 export function clearRegistrationState () {
     return {
-        type: CLEAN_REGISTRATION_STATE
+        type: CLEAR_AUTHENTICATION_STATE
     }
 }
 
@@ -174,5 +175,11 @@ export function updateCommentInputBar (newInput) {
 export function clearCommentInputBar () {
     return {
         type: CLEAR_COMMENT_INPUT_BAR
+    }
+}
+
+export function clearAuthentication () {
+    return {
+        type: CLEAR_AUTHENTICATION_STATE
     }
 }

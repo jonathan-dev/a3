@@ -18,7 +18,7 @@ export const POST_LOGIN_FAIL = 'POST_LOGIN_FAIL';
 export const POST_REGISTRATION = 'POST_REGISTRATION';
 export const POST_REGISTRATION_SUCCESS = 'POST_REGISTRATION_SUCCESS';
 export const POST_REGISTRATION_FAIL = 'POST_REGISTRATION_FAIL';
-export const CLEAN_REGISTRATION_STATE = 'CLEAN_REGISTRATION_STATE';
+export const CLEAR_AUTHENTICATION_STATE = 'CLEAR_AUTHENTICATION_STATE';
 //------------------------------------------
 // RESET PAGE
 //------------------------------------------
@@ -27,6 +27,8 @@ export const RESET_PASSWORD = 'RESET_PASSWORD';
 
 export const CHECK_RESET_ROUTE_SUCCESS = 'CHECK_RESET_ROUTE_SUCCESS';
 export const CHECK_RESET_ROUTE_FAIL = 'CHECK_RESET_ROUTE_FAIL';
+export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
+export const RESET_PASSWORD_FAIL = 'RESET_PASSWORD_FAIL';
 
 //------------------------------------------
 // FORGOT PAGE

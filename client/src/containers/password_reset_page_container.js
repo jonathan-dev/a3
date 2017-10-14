@@ -1,11 +1,11 @@
 import {
     connect
 } from 'react-redux';
-import ResetPage from '../components/reset_page'
+import ResetPage from '../components/password_reset_page'
 import {
     checkResetRoute,
     resetPassword,
-    routeValidation
+    clearAuthentication
 } from '../actions/actions';
 import {
     push
@@ -46,14 +46,16 @@ const mapStateToProps = state => {
     return {
         username: state.username,
         password: state.password,
-        routeIsValid: state.authentication.routeIsValid
+        routeIsValid: state.authentication.routeIsValid,
+        passwordResetCompleted: state.authentication.passwordResetCompleted
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         check: token => dispatch(checkResetRoute(token)),
-        handleSubmit: (event, token) => handleSubmit(dispatch, event, token)
+        handleSubmit: (event, token) => handleSubmit(dispatch, event, token),
+        clearAuthentication: () => clearAuthentication()
     }
 };
 

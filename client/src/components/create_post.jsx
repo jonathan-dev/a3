@@ -27,7 +27,7 @@ class createPost extends Component {
     render() {
 
         const { handleSubmit, pristine, reset, submitting, invalid } = this.props;
-        const { image, imageId, onDropHandler, onUpdateTags, progress } = this.props
+        const { image, imageId, onDropHandler, onUpdateTags, progress, getTags } = this.props
 
         const colCentered = {
             float: 'none',
@@ -57,7 +57,7 @@ class createPost extends Component {
                     />
                     <FormGroup>
                         <Col smOffset={2} sm={10}>
-                            <AutocompleteTagsInput onUpdateTags={this.props.onUpdateTags} tags={this.props.getTags} />
+                            <AutocompleteTagsInput onUpdateTags={onUpdateTags} tags={getTags}/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
