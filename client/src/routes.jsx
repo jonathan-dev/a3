@@ -7,7 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import LoginPage from './containers/login_page_container';
 import ResetPage from './containers/reset_page_container';
-import HotPage from './components/hot_page';
+import HomePage from './containers/home_page_container';
 import CreatePost from './containers/create_post_container';
 import RegisterPage from './containers/register_page_container';
 import ForgotPage from './containers/forgot_page_container';
@@ -30,7 +30,7 @@ class Routes extends Component {
   render () {
     return (
       <Switch>
-        <Route exact path={HOME_PATH} component={HotPage}/>
+        <Route exact path={HOME_PATH} component={HomePage}/>
         <Route path={CREATE_POST_PATH} component={CreatePost}/>
         <Route path={LOGIN_PATH} component={LoginPage}/>
         <Route path={REGISTER_PATH} component={RegisterPage}/>

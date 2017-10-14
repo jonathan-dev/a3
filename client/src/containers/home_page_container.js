@@ -1,15 +1,9 @@
 import { connect } from 'react-redux';
-import React from 'react';
 import {
     gql,
     graphql,
 } from 'react-apollo';
-
-import Post from './post';
-
-
-
-
+import HomePage from '../components/hot_page';
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -45,4 +39,6 @@ query postListQuery {
 }
 `;
 
-export default graphql(postsListQuery)(HotPage);
+export default graphql(postsListQuery)(
+    connect(mapStateToProps, mapDispatchToProps)(HomePage)
+);
