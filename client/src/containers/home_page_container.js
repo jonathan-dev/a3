@@ -4,16 +4,18 @@ import {
     graphql,
 } from 'react-apollo';
 import HomePage from '../components/hot_page';
+import { showPostComments, hidePostComments } from '../actions/actions';
 
 const mapStateToProps = (state, ownProps) => {
     return {
-
+        visiblePostComments: state.postVisibility.visiblePostComments.slice(0)
     }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-
+        showPostComments: post => dispatch(showPostComments(post)),
+        hidePostComments: post => dispatch(hidePostComments(post))
     }
 };
 
