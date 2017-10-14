@@ -17,8 +17,9 @@ import {
 const AdminPage = props => {
 
     //check if actually admin
-    if (!props.isAuthenticated)
-    return <Redirect to={"/login"} />;
+    if (!props.isAuthenticated) {
+        return <Redirect to={"/login"} />;
+    }
 
     const colCentered = {
         float: 'none',
