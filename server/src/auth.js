@@ -7,12 +7,13 @@ import {
 } from 'passport-jwt'
 import mailgun from 'mailgun-js'
 import mailgunConfig from '../config/mailgun'
+import key from '../config/key'
 
 import mongo from './database/mongo'
 
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'tasmanianDevil' // TODO: change put in config
+    secretOrKey:  key
 }
 
 export function authApp(app) {
