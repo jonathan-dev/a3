@@ -50,14 +50,16 @@ class createPost extends Component {
                         name="image"
                         component={DropzoneInput}
                         label="Image"
-                        imageId = {imageId}
-                        image = {image}
-                        progress = {progress}
-                        onDropHandler = {onDropHandler}
+                        imageId={imageId}
+                        image={image}
+                        progress={progress}
+                        onDropHandler={onDropHandler}
                     />
                     <FormGroup>
                         <Col smOffset={2} sm={10}>
-                            <AutocompleteTagsInput onUpdateTags={this.props.onUpdateTags} tags={this.props.getTags} />
+                            <AutocompleteTagsInput
+                                onUpdateTags={this.props.onUpdateTags}
+                                tags={this.props.data.tags} />
                         </Col>
                     </FormGroup>
                     <FormGroup>

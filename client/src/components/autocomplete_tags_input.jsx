@@ -27,13 +27,13 @@ class AutocompleteTagsInput extends Component {
         const inputValue = (props.value && props.value.trim().toLowerCase()) || ''
         const inputLength = inputValue.length
 
-        let tags = this.props.tags ||[];
+        let tags = this.props.tags || [];
 
         let suggestions = tags.filter((state) => {
             if (state.name) {
                 return state.name.toLowerCase().slice(0, inputLength) === inputValue && !tags.includes(state.name)
             }
-        })
+        }).slice(0,5)
 
         const styles = {
             container: {
@@ -91,7 +91,12 @@ class AutocompleteTagsInput extends Component {
     }
 
     render() {
-        return <TagsInput addKeys={[32, 9, 13]} renderInput={this.autocompleteRenderInput} value={this.state.tags} onChange={this.handleChange} onlyUnique={true} />
+        return <TagsInput
+        addKeys={[32, 9, 13]}
+        renderInput={this.autocompleteRenderInput}
+        value={this.state.tags}
+        onChange={this.handleChange}
+        onlyUnique={true} />
     }
 }
 
