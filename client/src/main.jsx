@@ -11,7 +11,7 @@ import {
 import axios from 'axios';
 import { createStore, applyMiddleware } from 'redux';
 import axiosMiddleware from 'redux-axios-middleware';
-import { harrismusApp } from './reducers/index'
+import { harrismusApp } from './reducers/index_reducer'
 import { routerMiddleware, push } from 'react-router-redux';
 import App from './components/app';
 

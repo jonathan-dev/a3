@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import createPost from '../components/create_post'
+import createPost from '../components/create_post_page'
 import {
     uploadImage,
     updateTags,

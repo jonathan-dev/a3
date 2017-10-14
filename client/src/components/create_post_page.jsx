@@ -14,25 +14,21 @@ import inputField from './inputField'
 import DropzoneInput from './DropzoneInput'
 
 
-class createPost extends Component {
-    constructor() {
-        super();
-    }
+class CreatePostPage extends Component {
 
     componentDidMount() {
         this.props.resetState();
     }
 
-
     render() {
 
-        const { handleSubmit, pristine, reset, submitting, invalid } = this.props;
-        const { image, imageId, onDropHandler, onUpdateTags, progress, getTags } = this.props
+        const { handleSubmit, submitting, invalid } = this.props;
+        const { image, imageId, onDropHandler, onUpdateTags, progress, getTags } = this.props;
 
         const colCentered = {
             float: 'none',
             margin: '0 auto',
-        }
+        };
 
         if (!this.props.isAuthenticated)
             return <Redirect to={'/login'} />;
@@ -62,7 +58,13 @@ class createPost extends Component {
                     </FormGroup>
                     <FormGroup>
                         <Col smOffset={2} sm={10}>
-                            <Button type="submit" bsStyle="primary" disabled={submitting || invalid}>Send</Button>
+                            <Button
+                                type="submit"
+                                bsStyle="primary"
+                                disabled={submitting || invalid}
+                            >
+                                Send
+                            </Button>
                         </Col>
                     </FormGroup>
                 </Form>
@@ -71,4 +73,4 @@ class createPost extends Component {
     }
 }
 
-export default (createPost)
+export default CreatePostPage;
