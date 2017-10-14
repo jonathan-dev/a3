@@ -14,11 +14,11 @@ import {
 } from 'react-apollo';
 
 
-const banUser = (userid, isBanned, ownProps) => {
+const banUser = (userId, isBanned, ownProps) => {
     //Send a mutation request to server
     ownProps.banUserMutation({
         variables: {
-            userid: userid,
+            userid: userId,
             userBanned: isBanned
         },
         refetchQueries: [{ query: usersListQuery }]
@@ -27,7 +27,7 @@ const banUser = (userid, isBanned, ownProps) => {
     }).catch((error) => {
         console.log('there was an error sending the query', error);
     });
-}
+};
 
 //Redux function - maps current state to props object so it can be given to the component to render the page
 const mapStateToProps = state => {
@@ -37,7 +37,7 @@ const mapStateToProps = state => {
         isAdmin: state.authentication.isAdmin,
         myUsername: state.authentication.username
     };
-}
+};
 
 // redux function to map dispatch functions to props to invoke callback in admin page component from props
 // note: this is how actions are dispatched as a result of interaction on the view components
