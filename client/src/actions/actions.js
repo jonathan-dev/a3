@@ -18,7 +18,9 @@ import {
     SHOW_POST_COMMENTS,
     HIDE_POST_COMMENTS,
     POST_SEACHBAR_INPUT_CHANGED,
-    CLEAR_POST_SEARCHBAR_INPUT
+    CLEAR_POST_SEARCHBAR_INPUT,
+    COMMENT_INPUT_FIELD_CHANGED,
+    CLEAR_COMMENT_INPUT_BAR
 } from '../constants/action_types';
 
 // action generator for posting login information
@@ -152,5 +154,18 @@ export function updatePostSearchBarInput (newInput) {
 export function clearSearchBarInput () {
     return {
         type: CLEAR_POST_SEARCHBAR_INPUT
+    }
+}
+
+export function updateCommentInputBar (newInput) {
+    return {
+        type: COMMENT_INPUT_FIELD_CHANGED,
+        newInput: newInput
+    }
+}
+
+export function clearCommentInputBar () {
+    return {
+        type: CLEAR_COMMENT_INPUT_BAR
     }
 }

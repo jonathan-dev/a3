@@ -57,7 +57,7 @@ const CommentBox = props => {
                 { isAuthenticated ?
                     <Form horizontal onSubmit={handleCommentSubmit} >
                         <Col sm={10}>
-                            <FormControl name="comment" type="text" placeholder="comment"/>
+                            <FormControl name="comment" type="text" placeholder="comment" onChange={props.onCommentInputBarChange} value={props.commentInputBarValue}/>
                         </Col>
                         <Col sm={2}>
                             <Button type="submit" >comment</Button>

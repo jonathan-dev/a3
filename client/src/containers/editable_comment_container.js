@@ -3,12 +3,6 @@ import EditableComment from '../components/editable_comment';
 import { undoEditCommentClicked, editCommentTextChanged } from '../actions/actions';
 import {gql, graphql } from 'react-apollo';
 
-const handleUpdateComment = (event) => {
-    event.preventDefault();
-    console.log(event.target.comment);
-    console.log("Update function not implemented yet");
-};
-
 const mapStateToProps = (state, ownProps) => {
     return {
         editCommentText: state.commenting.editCommentText,
