@@ -102,9 +102,10 @@ export default {
         //TODO - add proper error handling here to give better feedback to user
         // }
     },
-    updateComment(comment) {
+    updateComment(comment, userId) {
         return Comment.findOneAndUpdate({
-            _id: comment.commentId
+            _id: comment.commentId,
+            userId: userId
         }, {
             comment: comment.comment
         })

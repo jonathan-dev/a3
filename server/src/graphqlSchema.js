@@ -130,7 +130,6 @@ const PostMutation = new GraphQLObjectType({
                     let userId = context.req.user.id
                     return actions.createPost(userId, post)
                 } else {
-                    console.error('no auth')
                     throw new Error('you need to be authorized to create a post')
                 }
             }
@@ -161,7 +160,7 @@ const PostMutation = new GraphQLObjectType({
                 }
             },
             resolve: (root, {comment}, context) => {
-                return mongo.updateComment(comment);
+                return mongo.updateComment(comment,context.req.user.id);
             }
         },
         deleteComment: {
