@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Col, Panel } from 'react-bootstrap';
 
-const colCentered = {
-        float: 'none',
-        margin: '0 auto',
-    };
-
 class ErrorPage extends Component {
     constructor(props) {
         super(props);
