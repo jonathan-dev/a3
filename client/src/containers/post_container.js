@@ -2,20 +2,27 @@ import { connect } from 'react-redux';
 import Post from '../components/post';
 import { showPostComments, hidePostComments } from '../actions/actions';
 
-const mapStateToProps = (state, ownProps) => {
-    const visiblePostCommentsList = state.postVisibility.visiblePostComments.slice(0);
-    const showComments = visiblePostCommentsList.filter(post => post.id === ownProps.post.id).length === 0;
+const a = (post, dispatch) => {
+    console.log("Showing post comments: ", post);
+    dispatch(showPostComments(post));
+};
 
+const b = (post, dispatch) => {
+    console.log("Hiding post comments: ", post);
+    dispatch(hidePostComments(post));
+};
+
+const mapStateToProps = (state, ownProps) => {
     return {
         post: ownProps.post,
-        showComments: showComments
+        showComments: ownProps.showComments
     };
 };
 
-const mapDispatchToProps = (state, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        showPostComments: post => dispatch(showPostComments(post)),
-        hidePostComments: post => dispatch(hidePostComments(post))
+        showPostComments: post => a(post, dispatch),
+        hidePostComments: post => b(post, dispatch)
     };
 };
 

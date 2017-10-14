@@ -1,6 +1,5 @@
 import React from 'react';
-import Post from './post';
-import { Button } from 'react-bootstrap';
+import Post from '../containers/post_container';
 
 const HotPage = props => {
 
@@ -9,7 +8,7 @@ const HotPage = props => {
         margin: '0 auto',
     };
 
-    const { data, visiblePostComments, showPostComments, hidePostComments } = props;
+    const { data, visiblePostComments } = props;
 
     if (data) {
         const { loading, error, posts } = data;
@@ -23,29 +22,8 @@ const HotPage = props => {
         }
 
         const postList = posts.map((post, index) => {
-            let actionButton;
-            const showPostComments = visiblePostComments.filter(p => p.id = post.id).length === 0;
-
-            if (showPostComments) {
-                actionButton =
-                <Button bsStyle="primary" bsSize="small" onClick={(post) => hidePostComments(post)}>
-                    hide comments
-                </Button>;
-            }
-            else {
-                actionButton =
-                <Button bsStyle="primary" bsSize="small" onClick={(post) => showPostComments(post)}>
-                    show comments
-                </Button>
-            }
-
-            return (
-                <div key={index}>
-                    <Post post={post} showComments={showPostComments}/>
-                    { actionButton }
-                </div>
-            );
-
+            const showPostComments = visiblePostComments.filter(p => p.id === post.id).length !== 0;
+            return <Post key={index} post={post} showComments={showPostComments}/>
         });
 
         return (

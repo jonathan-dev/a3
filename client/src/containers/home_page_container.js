@@ -7,15 +7,9 @@ import HomePage from '../components/hot_page';
 import { showPostComments, hidePostComments } from '../actions/actions';
 
 const mapStateToProps = (state, ownProps) => {
+    console.log("HAHAH: ", state.postVisibility.visiblePostComments);
     return {
         visiblePostComments: state.postVisibility.visiblePostComments.slice(0)
-    }
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        showPostComments: post => dispatch(showPostComments(post)),
-        hidePostComments: post => dispatch(hidePostComments(post))
     }
 };
 
@@ -42,5 +36,5 @@ query postListQuery {
 `;
 
 export default graphql(postsListQuery)(
-    connect(mapStateToProps, mapDispatchToProps)(HomePage)
+    connect(mapStateToProps)(HomePage)
 );

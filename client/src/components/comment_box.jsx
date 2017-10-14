@@ -11,7 +11,7 @@ import EditableComment from '../containers/editable_comment_container';
 
 const CommentBox = props => {
 
-    const { data , handleCommentSubmit, handleDeleteComment, switchCommentToEditMode, handleCommentUpdate} = props;
+    const { data, isAuthenticated, handleCommentSubmit, handleDeleteComment, switchCommentToEditMode, handleCommentUpdate} = props;
     if (data) {
         const { loading, error, comments } = data;
 
@@ -54,14 +54,17 @@ const CommentBox = props => {
 
         return (
             <section>
-                <Form horizontal onSubmit={handleCommentSubmit} >
-                    <Col sm={10}>
-                        <FormControl name="comment" type="text" placeholder="comment"/>
-                    </Col>
-                    <Col sm={2}>
-                        <Button type="submit" >comment</Button>
-                    </Col>
-                </Form>
+                { isAuthenticated ?
+                    <Form horizontal onSubmit={handleCommentSubmit} >
+                        <Col sm={10}>
+                            <FormControl name="comment" type="text" placeholder="comment"/>
+                        </Col>
+                        <Col sm={2}>
+                            <Button type="submit" >comment</Button>
+                        </Col>
+                    </Form> :
+                    <p>Login to join the conversation!</p>
+                }
                 { commentList }
             </section>
         )

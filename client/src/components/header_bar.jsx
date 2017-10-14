@@ -17,7 +17,7 @@ import {
 
 class HeaderBar extends Component {
     render() {
-        const { isAuthenticated, isAdmin, username } = this.props
+        const { isAuthenticated, isAdmin, username } = this.props;
         return (
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
