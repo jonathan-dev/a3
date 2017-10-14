@@ -160,39 +160,6 @@ userSchema.statics.unbanUser = function (userid) {
     });
 }
 
-userSchema.statics.promoteUser = function (userid) {
-    return this.findByIdAndUpdate(userid, {
-        $set: {
-            isAdmin: true
-        }
-    });
-}
-
-// /**
-//  * Gets user and updates it with the given update details
-//  */
-// userSchema.statics.updateUser = function (userid, updates) {
-//     return new Promise((resolve, reject) => {
-//         this.findOne({
-//             _id: userid
-//         }).then(user => {
-//             // make sure the user exists
-//             if (!user) resolve({
-//                 reason: reasons.NOT_FOUND
-//             });
-//             console.log('=====Updating user details ', user);
-//             //Set ban time on user to be almost nothing
-//             //Update db
-//             user.update(updates)
-//                 .then(() => resolve(user))
-//                 .catch(err => function (error) {
-//                     console.log("Couldn't update the db to remove the ban :( ");
-//                     reject(err);
-//                 })
-//         });
-//     });
-// }
-
 userSchema.statics.getAuthenticated = function (username, password) {
     return new Promise((resolve, reject) => {
         this.findOne({
