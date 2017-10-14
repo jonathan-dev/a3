@@ -2,7 +2,8 @@ import {
     connect
 } from 'react-redux';
 import {
-    postRegistration
+    postRegistration,
+    clearRegistrationState
 } from '../actions/actions';
 import RegisterPage from '../components/register_page';
 import {
@@ -70,8 +71,6 @@ const validate = values => {
     return errors
 };
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
 const asyncValidate = (values) => {
     return axios({
             method: 'post',
@@ -105,13 +104,15 @@ const asyncValidate = (values) => {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.authentication.isAuthenticated || false
+        isAuthenticated: state.authentication.isAuthenticated || false,
+        registrationCompleted: state.authentication.registrationCompleted
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         handleSubmit: (event) => handleSubmit(dispatch, event),
+        clearRegistrationState: () => dispatch(clearRegistrationState())
     }
 };
 

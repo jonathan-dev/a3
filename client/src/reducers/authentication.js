@@ -7,7 +7,8 @@ import {
     CHECK_RESET_ROUTE_SUCCESS,
     CHECK_RESET_ROUTE_FAIL,
     REQUEST_RESET_PASSWORD_SUCCESS,
-    REQUEST_RESET_PASSWORD_FAIL
+    REQUEST_RESET_PASSWORD_FAIL,
+    CLEAN_REGISTRATION_STATE
 } from '../constants/action_types';
 
 export function authentication(state = {}, action) {
@@ -33,8 +34,7 @@ export function authentication(state = {}, action) {
             console.log("Success");
             return Object.assign({},
                 state, {
-                    isAuthenticated: true,
-                    username: action.payload.data.username,
+                    registrationCompleted: true,
                     registrationErrors: null
                 }
             );
@@ -42,6 +42,12 @@ export function authentication(state = {}, action) {
         case POST_REGISTRATION_FAIL:
             return Object.assign({}, state, {
                 registrationErrors: action.error.response.data.errors.slice(0)
+            });
+
+        case CLEAN_REGISTRATION_STATE:
+            return Object.assign({}, state, {
+                registrationErrors: null,
+                registrationCompleted: null
             });
 
 
@@ -71,7 +77,8 @@ export function authentication(state = {}, action) {
                 isAuthenticated: false,
                 username: null,
                 isAdmin: false,
-                token: null
+                token: null,
+                registrationCompleted: false
             });
 
             //------------------------------------------
