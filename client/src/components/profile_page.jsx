@@ -4,12 +4,7 @@ import {
 } from 'react-apollo';
 import React, { Component } from 'react';
 import Post from './post';
-import ErrorPage from './error_page';
 
-const colCentered = {
-    float: 'none',
-    margin: '0 auto',
-}
 
 class ProfilePage extends Component {
     constructor(props) {
@@ -17,27 +12,22 @@ class ProfilePage extends Component {
         this.state = {};
     }
 
-
     render() {
         if (this.props.data && this.props.data.loading) {
             return <div>Loading</div>
         }
         if (this.props.data && this.props.data.error) {
-            return <ErrorPage error={error}/>
+            return <div>Error</div>
         }
 
         const posts = this.props.data.posts;
         const username = this.props.data.user.username;
         return (
             <div>
-                <section className="col-lg-4" style={colCentered}>
-                    <h3> all posts by </h3>
-                    <h1>{username}</h1>
-                    <br/>
-                    {posts.map(post => {
-                        return <Post key={post.id} post={post} />
-                    })}
-                </section>
+                <h1>{username}</h1>
+                {posts.map(post => {
+                    return <Post key={post.id} post={post} />
+                })}
             </div>
         )
     }
