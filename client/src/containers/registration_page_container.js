@@ -5,7 +5,7 @@ import {
     postRegistration,
     clearRegistrationState
 } from '../actions/actions';
-import RegisterPage from '../components/register_page';
+import RegisterPage from '../components/registration_page';
 import {
     reduxForm
 } from 'redux-form';

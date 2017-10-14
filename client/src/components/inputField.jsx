@@ -3,7 +3,6 @@ import { Field } from 'redux-form'
 import {
     FormGroup,
     ControlLabel,
-    InputGroup,
     FormControl,
     HelpBlock,
     Col
