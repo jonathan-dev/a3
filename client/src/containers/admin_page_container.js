@@ -75,5 +75,5 @@ const banUserGraphql = gql`
 
 export default
 graphql(banUserGraphql, { name: 'banUserMutation' })(
-        graphql(usersListQuery, { options: { pollInterval: 2000 }, })
+        graphql(usersListQuery, { options: { pollInterval: 2000 }})
             (connect(mapStateToProps, mapDispatchToProps)(AdminPage)));

@@ -188,20 +188,7 @@ const PostMutation = new GraphQLObjectType({
                 return mongo.updatePost(post);
             }
         },
-        deletePost: {
-            type: types.PostType,
-            description: 'Delete an post with id and return the post that was deleted.',
-            args: {
-                id: {
-                    type: new GraphQLNonNull(GraphQLString)
-                }
-            },
-            resolve: (value, {
-                id
-            }) => {
-                return mongo.deletePost(id);
-            }
-        },
+
         banUser: {
             type: types.UserType,
             description: 'Ban or unban a user (prevents from logging in)',
@@ -227,24 +214,6 @@ const PostMutation = new GraphQLObjectType({
                     } else {
                         throw new Error('you need to be an admin to perform this action');
                     }
-                }
-            }
-        },
-        promoteUser: {
-            type: types.UserType,
-            description: 'Promote a user to admin status',
-            args: {
-                id: {
-                    type: new GraphQLNonNull(GraphQLString),
-                    description: 'The user id to promote'
-                }
-            },
-            resolve: (value, {id}, context) => {
-                if (context.req.user.isAdmin) {
-                    //Performs promotion
-                    return mongo.promoteUser(id);
-                } else {
-                    throw new Error('you need to be an admin to perform this action.');
                 }
             }
         }

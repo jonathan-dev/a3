@@ -13,10 +13,11 @@ const mapStateToProps = (state) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onSearchBarInputChange: event => dispatch(updatePostSearchBarInput(event.target.value)),
-        clearPostSearch: () => dispatch(clearSearchBarInput())
+        clearPostSearch: () => dispatch(clearSearchBarInput()),
+        refetch: () => ownProps.refetch()
     }
 };
 
@@ -40,6 +41,7 @@ query postListQuery {
 }
 `;
 
-export default graphql(postsListQuery)(
+export default graphql(postsListQuery, { options: { pollInterval: 2000 }})(
     connect(mapStateToProps, mapDispatchToProps)(HomePage)
 );
+
