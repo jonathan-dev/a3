@@ -8,6 +8,7 @@ import {
     CHECK_RESET_ROUTE_FAIL,
     REQUEST_RESET_PASSWORD_SUCCESS,
     REQUEST_RESET_PASSWORD_FAIL,
+    RESET_REQUEST_RESET_PASSWORD,
     CLEAN_REGISTRATION_STATE
 } from '../constants/action_types';
 
@@ -93,6 +94,11 @@ export function authentication(state = {}, action) {
         case REQUEST_RESET_PASSWORD_FAIL:
             return Object.assign({}, state, {
                 resetInfo: 'fail'
+            });
+
+        case RESET_REQUEST_RESET_PASSWORD:
+            return Object.assign({}, state, {
+                resetInfo: null
             });
 
 

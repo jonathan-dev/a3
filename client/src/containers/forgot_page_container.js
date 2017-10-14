@@ -4,7 +4,8 @@ import {
 } from 'react-redux';
 import ForgotPage from '../components/forgot_page'
 import {
-    requestPasswordReset
+    requestPasswordReset,
+    resetRequestPasswordRequest
 } from '../actions/actions';
 import {
     push
@@ -15,7 +16,6 @@ import { reduxForm } from 'redux-form'
 const handleSubmit = (dispatch, event, token) => {
     event.preventDefault();
 
-    console.log('---request reset')
     const email = event.target.email.value;
     dispatch(requestPasswordReset(email));
 };
@@ -39,20 +39,6 @@ const validate = values => {
     return errors
 }
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-
-const asyncValidate = (values /*, dispatch */ ) => {
-    return sleep(1000).then(() => {
-        // simulate server latency
-        if (['foo@foo.com', 'bar@bar.com'].includes(values.email)) {
-            // eslint-disable-next-line no-throw-literal
-            throw {
-                email: 'Email already Exists'
-            }
-        }
-    })
-}
-
 const mapStateToProps = state => {
     return {
         resetInfo: state.authentication.resetInfo || false,
@@ -62,13 +48,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         handleSubmit: (event) => handleSubmit(dispatch, event),
+        resetResetInfo: () => dispatch(resetRequestPasswordRequest())
     }
 };
 
 const forgotForm = reduxForm({
     form: 'ForgotForm', // a unique identifier for this form
-    validate,
-    asyncValidate
+    validate
 })(ForgotPage)
 
 export default connect(mapStateToProps, mapDispatchToProps)(forgotForm);

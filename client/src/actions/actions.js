@@ -11,6 +11,7 @@ import {
     RESET_PASSWORD,
     POST_REGISTRATION,
     REQUEST_RESET_PASSWORD,
+    RESET_REQUEST_RESET_PASSWORD,
     EDIT_COMMENT_CLICKED,
     UNDO_EDIT_COMMENT_CLICKED,
     EDIT_COMMENT_TEXT_CHANGED,
@@ -70,6 +71,12 @@ export function requestPasswordReset(email) {
                 }
             }
         }
+    }
+}
+
+export function resetRequestPasswordRequest(){
+    return {
+        type: RESET_REQUEST_RESET_PASSWORD
     }
 }
 

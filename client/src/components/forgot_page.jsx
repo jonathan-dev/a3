@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component }from 'react'
 import { Field } from 'redux-form'
 import inputField from './inputField'
 import { LinkContainer } from 'react-router-bootstrap';
@@ -10,8 +10,14 @@ import {
     Panel
 } from 'react-bootstrap';
 
-const ForgotPage = props => {
-    const { handleSubmit, pristine, reset, submitting, invalid, resetInfo } = props
+class ForgotPage extends Component {
+
+    componentWillUnmount() {
+        this.props.resetResetInfo()
+    }
+
+    render(){
+        const { handleSubmit, pristine, reset, submitting, invalid, resetInfo } = this.props
 
     const colCentered = {
         float: 'none',
@@ -43,6 +49,7 @@ const ForgotPage = props => {
             }
         </Panel>
     );
+    }
 }
 
 export default ForgotPage;
