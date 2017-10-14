@@ -3,12 +3,10 @@ import Post from '../components/post';
 import { showPostComments, hidePostComments } from '../actions/actions';
 
 const a = (post, dispatch) => {
-    console.log("Showing post comments: ", post);
     dispatch(showPostComments(post));
 };
 
 const b = (post, dispatch) => {
-    console.log("Hiding post comments: ", post);
     dispatch(hidePostComments(post));
 };
 
