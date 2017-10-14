@@ -38,30 +38,18 @@ let userSchema = mongoose.Schema({
     lockUntil: {
         type: Number
     },
-    //If null, not banned
-    bannedUntil: {
-        type: Number
-    },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
-    pendingTransactions: {
-        type: String
-    },
-    up: {
-        type: String
-    },
-    down: {
-        type: String
-    }
 });
 
-userSchema.plugin(uniqueValidator, {type: 'already in use'});
+userSchema.plugin(uniqueValidator, {
+    type: 'already in use'
+});
 
 /**
- * Checks if the user is currently locked out
+ * Checks if the user is currently locked (timestamp in the future)
  */
 userSchema.virtual('isLocked').get(
-    // check for a future lockUntil timestamp
     function () {
         return (this.lockUntil && this.lockUntil > Date.now());
     }
@@ -74,6 +62,12 @@ var reasons = userSchema.statics.failedLogin = {
     MAX_ATTEMPTS: 2
 };
 
+/**
+ * Hook that is called every time a user gets saved to the database.
+ *
+ * We check if the password has been modified
+ * and we hash it if this has been the case
+ */
 userSchema.pre('save', function (next) {
     let user = this;
     // only hash the password if it has been modified (or is new)
@@ -102,11 +96,12 @@ userSchema.methods.comparePassword = function (candidatePassword) {
     })
 };
 
+/**
+ * This method handles the logic to lock a user after too many login attempts
+ */
 userSchema.methods.incLoginAttempts = function () {
     return new Promise((resolve, reject) => {
         // if we have a previous lock that has expired, restart at 1
-        console.log('Checking login lock, current time ', Date.now());
-        console.log('   This object is locked until ', this.lockUntil);
         if (this.lockUntil && this.lockUntil < Date.now()) {
             console.log("lock expired")
             this.update({
@@ -147,7 +142,7 @@ userSchema.methods.incLoginAttempts = function () {
  */
 userSchema.statics.banUser = function (userid) {
     var bantime = Number.MAX_SAFE_INTEGER;
-    return this.updateUser(userid, {
+    return this.findByIdAndUpdate(userid, {
         $set: {
             lockUntil: bantime
         }
@@ -158,7 +153,7 @@ userSchema.statics.banUser = function (userid) {
  * Unbans a user by finding them in DB, and then clearing 'lock until' value
  */
 userSchema.statics.unbanUser = function (userid) {
-    return this.updateUser(userid, {
+    return this.findByIdAndUpdate(userid, {
         $unset: {
             lockUntil: 1
         }
@@ -166,37 +161,37 @@ userSchema.statics.unbanUser = function (userid) {
 }
 
 userSchema.statics.promoteUser = function (userid) {
-    return this.updateUser(userid, {
+    return this.findByIdAndUpdate(userid, {
         $set: {
             isAdmin: true
         }
     });
 }
 
-/**
- * Gets user and updates it with the given update details
- */
-userSchema.statics.updateUser = function (userid, updates) {
-    return new Promise((resolve, reject) => {
-        this.findOne({
-            _id: userid
-        }).then(user => {
-            // make sure the user exists
-            if (!user) resolve({
-                reason: reasons.NOT_FOUND
-            });
-            console.log('=====Updating user details ', user);
-            //Set ban time on user to be almost nothing
-            //Update db
-            user.update(updates)
-                .then(() => resolve(user))
-                .catch(err => function(error) {
-                    console.log("Couldn't update the db to remove the ban :( ");
-                    reject(err);
-                })
-        });
-    });
-}
+// /**
+//  * Gets user and updates it with the given update details
+//  */
+// userSchema.statics.updateUser = function (userid, updates) {
+//     return new Promise((resolve, reject) => {
+//         this.findOne({
+//             _id: userid
+//         }).then(user => {
+//             // make sure the user exists
+//             if (!user) resolve({
+//                 reason: reasons.NOT_FOUND
+//             });
+//             console.log('=====Updating user details ', user);
+//             //Set ban time on user to be almost nothing
+//             //Update db
+//             user.update(updates)
+//                 .then(() => resolve(user))
+//                 .catch(err => function (error) {
+//                     console.log("Couldn't update the db to remove the ban :( ");
+//                     reject(err);
+//                 })
+//         });
+//     });
+// }
 
 userSchema.statics.getAuthenticated = function (username, password) {
     return new Promise((resolve, reject) => {
@@ -205,24 +200,16 @@ userSchema.statics.getAuthenticated = function (username, password) {
             })
             .then(user => {
                 // make sure the user exists
-                if (!user) resolve({
-                    reason: reasons.NOT_FOUND
-                });
+                if (!user) {
+                    resolve({ reason: reasons.NOT_FOUND });
+                }
 
-                // check if account is locked to prevent login
                 if (user.isLocked) {
-                    //if lock not expired, prevent login
-                    if (user.lockUntil < Date.now()) {
-                        //account still locked, just increment login attempts
-                        console.log('This account is locked, dont log them in');
-                        user.incLoginAttempts()
-                            .then(() => resolve({
-                                reason: reasons.MAX_ATTEMPTS
-                            }))
-                            .catch(err => reject(err))
-                    } else {
-                        //unlock them?
-                    }
+                    return user.incLoginAttempts()
+                        .then(() => resolve({
+                            reason: reasons.MAX_ATTEMPTS
+                        }))
+                        .catch(err => reject(err))
                 }
 
                 // test for a matching password
@@ -232,13 +219,9 @@ userSchema.statics.getAuthenticated = function (username, password) {
                         if (isMatch) {
                             // if there's no lock or failed attempts, just return the user
                             if (!user.loginAttempts && !user.lockUntil) {
-                                console.log('Authenticated successfully, not user locked = ', !user.lockUntil);
-                                resolve({
-                                    user: user
-                                });
+                                resolve({user: user});
                             }
                             // reset attempts and lock info
-                            //if their password matches then reset lock
                             var updates = {
                                 $set: {
                                     loginAttempts: 0
@@ -247,12 +230,12 @@ userSchema.statics.getAuthenticated = function (username, password) {
                                     lockUntil: 1
                                 }
                             };
-                            user.update(updates)
-                                .then(() => resolve(user))
+                            return user.update(updates)
+                                .then(() => resolve({user: user}))
                                 .catch(err => reject(err))
                         } else {
                             // password is incorrect, so increment login attempts before responding
-                            user.incLoginAttempts()
+                            return user.incLoginAttempts()
                                 .then(() => resolve({
                                     reason: reasons.PASSWORD_INCORRECT
                                 }))
