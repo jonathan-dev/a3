@@ -53,7 +53,6 @@ app.use('/graphql', graphQLHTTP(req => {
     }
 }));
 
-
 // serve the index page if nothing else fits (fix for client side routing)
 app.get('/*', function (req, res) {
     res.sendFile(path.resolve(resolve('../dist/index.html')));

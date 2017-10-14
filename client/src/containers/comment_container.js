@@ -10,12 +10,4 @@ const mapStateToProps = (state, ownProps) => {
     }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        // TODO: implement dispatch to props mapping
-    }
-};
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Comment)
+export default connect(mapStateToProps)(Comment)

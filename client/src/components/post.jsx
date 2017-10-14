@@ -1,13 +1,10 @@
-import React, { Component } from 'react';
-import Tag from './tag';
+import React from 'react';
 import CommentBox from '../containers/comment_box_container';
-import languages from 'src/language/language';
 
-import { Panel, Label } from 'react-bootstrap';
+import { Panel, Label, Button } from 'react-bootstrap';
 
-
-let currentLanguage = "english"; // default, TODO: change when user changes his local language later on
 const Post = props => {
+
 
     const margin10 = {
         margin: '10px',
@@ -17,7 +14,24 @@ const Post = props => {
         margin: '20px',
     };
 
-    const { post } = props;
+    const { post, showComments } = props;
+    const { showPostComments, hidePostComments } = props;
+
+    console.log("POST COMPONENT HERE; post is: ", post);
+
+    let actionButton;
+    if (showComments) {
+        actionButton =
+            <Button bsStyle="primary" bsSize="small" onClick={() => hidePostComments(post)}>
+                hide comments
+            </Button>;
+    }
+    else {
+        actionButton =
+            <Button bsStyle="primary" bsSize="small" onClick={() => showPostComments(post)}>
+                show comments
+            </Button>
+    }
 
     return (
         <Panel>
@@ -39,10 +53,11 @@ const Post = props => {
                 })
                 }
             </section>
-            <CommentBox postId={post.id} />
+            { actionButton }
+            { showComments ? <CommentBox postId={post.id} /> : null }
         </Panel>
     );
-}
+};
 
 export default Post;
 /**

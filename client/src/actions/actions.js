@@ -15,6 +15,10 @@ import {
     UNDO_EDIT_COMMENT_CLICKED,
     EDIT_COMMENT_TEXT_CHANGED,
     UPDATE_UPLOAD_PROGRESS,
+    SHOW_POST_COMMENTS,
+    HIDE_POST_COMMENTS,
+    POST_SEACHBAR_INPUT_CHANGED,
+    CLEAR_POST_SEARCHBAR_INPUT
 } from '../constants/action_types';
 
 // action generator for posting login information
@@ -121,5 +125,32 @@ export function editCommentTextChanged (newCommentText) {
 export function undoEditCommentClicked () {
     return {
         type: UNDO_EDIT_COMMENT_CLICKED,
+    }
+}
+
+export function showPostComments (post) {
+    return {
+        type: SHOW_POST_COMMENTS,
+        post: post
+    }
+}
+
+export function hidePostComments (post) {
+    return {
+        type: HIDE_POST_COMMENTS,
+        post: post
+    }
+}
+
+export function updatePostSearchBarInput (newInput) {
+    return {
+        type: POST_SEACHBAR_INPUT_CHANGED,
+        newInput: newInput
+    }
+}
+
+export function clearSearchBarInput () {
+    return {
+        type: CLEAR_POST_SEARCHBAR_INPUT
     }
 }

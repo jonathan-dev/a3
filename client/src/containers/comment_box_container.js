@@ -68,6 +68,7 @@ const handleDeleteComment = (comment, postId, mutate) => {
 const mapStateToProps = (state, ownProps) => {
     return {
         username: state.authentication.username,
+        isAuthenticated: state.authentication.isAuthenticated,
         commentInEditMode: state.commenting.editCommentWithId
     }
 };
@@ -117,14 +118,6 @@ const deleteComment = gql`
     mutation deleteComment($commentId: String!) {
         deleteComment(commentId: $commentId)
     }
-`;
-
-const CommentMutations = gql`
-mutation CommentMutations($comment: CommentInput!) {
-    createComment(comment: $comment) {
-    comment
-    }
-}
 `;
 
 export default graphql(createComment, {name: 'newCommentMutation'})(
