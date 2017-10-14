@@ -16,7 +16,10 @@ const inputField = ({
     children,
     ...custom
     }) =>
-    <FormGroup controlId="formHorizontalEmail" validationState={touched && error ? 'error' : touched && !error ? 'success' : null}>
+    <FormGroup
+        controlId="formHorizontalEmail"
+        validationState={(touched && error) ? 'error' : touched && !error ? 'success' : null}
+    >
         <Col componentClass={ControlLabel} sm={2}>
             <ControlLabel>{label}</ControlLabel>
         </Col>
@@ -30,6 +33,6 @@ const inputField = ({
             <FormControl.Feedback />
             {touched && error && <HelpBlock>{error}</HelpBlock>}
         </Col>
-    </FormGroup>
+    </FormGroup>;
 
 export default inputField;
