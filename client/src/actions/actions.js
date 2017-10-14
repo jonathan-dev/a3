@@ -20,7 +20,8 @@ import {
     POST_SEACHBAR_INPUT_CHANGED,
     CLEAR_POST_SEARCHBAR_INPUT,
     COMMENT_INPUT_FIELD_CHANGED,
-    CLEAR_COMMENT_INPUT_BAR
+    CLEAR_COMMENT_INPUT_BAR,
+    CLEAN_REGISTRATION_STATE
 } from '../constants/action_types';
 
 // action generator for posting login information
@@ -48,6 +49,12 @@ export function postRegistration(registrationData) {
                 data: Object.assign({}, registrationData)
             }
         }
+    }
+}
+
+export function clearRegistrationState () {
+    return {
+        type: CLEAN_REGISTRATION_STATE
     }
 }
 

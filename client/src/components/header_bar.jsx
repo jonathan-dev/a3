@@ -32,13 +32,13 @@ class HeaderBar extends Component {
                     <Nav>
                         { isAuthenticated ?
                             <LinkContainer to={CREATE_POST_PATH} >
-                                <NavItem href={CREATE_POST_PATH}>{CREATE_POST_PATH}</NavItem>
+                                <NavItem href={CREATE_POST_PATH}>{CREATE_POST_PATH.slice(1)}</NavItem>
                             </LinkContainer>
                             : null
                         }
                         { isAdmin ?
                             <LinkContainer to={ADMIN_PATH} >
-                                <NavItem href={ADMIN_PATH}>{ADMIN_PATH}</NavItem>
+                                <NavItem href={ADMIN_PATH}>{ADMIN_PATH.slice(1)}</NavItem>
                             </LinkContainer>
                             : null
                         }
@@ -54,10 +54,10 @@ class HeaderBar extends Component {
                             :
                             [
                                 <LinkContainer key={1} to={REGISTER_PATH} >
-                                    <NavItem href={REGISTER_PATH}>{REGISTER_PATH}</NavItem>
+                                    <NavItem href={REGISTER_PATH}>{REGISTER_PATH.slice(1)}</NavItem>
                                 </LinkContainer>,
                                 <LinkContainer key={2} to={LOGIN_PATH} >
-                                    <NavItem href={LOGIN_PATH}>{LOGIN_PATH}</NavItem>
+                                    <NavItem href={LOGIN_PATH}>{LOGIN_PATH.slice(1)}</NavItem>
                                 </LinkContainer>
                             ]
                         }

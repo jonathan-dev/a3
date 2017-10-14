@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
-import { HOME_PATH } from '../paths';
+import { HOME_PATH, LOGIN_PATH } from '../paths';
 import inputField from './inputField'
 import {
     Form,
@@ -11,53 +11,63 @@ import {
     Panel
 } from 'react-bootstrap';
 import { Field } from 'redux-form'
+import {clearRegistrationState} from "../actions/actions";
 
-const RegisterPage = props => {
+class RegistrationPage extends Component {
 
-    const { handleSubmit, pristine, reset, submitting, invalid } = props
-
-    const colCentered = {
-        float: 'none',
-        margin: '0 auto',
+    onComponentWillUnmount () {
+        this.props.clearRegistrationState();
     }
-    // if logged in redirect to home TODO: check if works properly with saving stuff to local storage
-    if (props.isAuthenticated)
-        return <Redirect to={HOME_PATH} />;
 
-    return (
-        <Panel className="col-lg-4" style={colCentered}>
-            <Form horizontal onSubmit={props.handleSubmit}>
-                <Field
-                    name="username"
-                    component={inputField}
-                    label="Username"
-                />
-                <Field
-                    name="email"
-                    component={inputField}
-                    label="Email"
-                    type='email'
-                />
-                <Field
-                    name="password"
-                    component={inputField}
-                    label="Password"
-                    type='password'
-                />
-                <Field
-                    name="password2"
-                    component={inputField}
-                    label="Retype Password"
-                    type='password'
-                />
-                <FormGroup>
-                    <Col smOffset={2} sm={10}>
-                        <Button type="submit" bsStyle="primary" disabled={pristine || submitting || invalid}>Send</Button>
-                    </Col>
-                </FormGroup>
-            </Form>
-        </Panel>
-    );
+    render () {
+        const { pristine, submitting, invalid } = this.props;
+
+        const colCentered = {
+            float: 'none',
+            margin: '0 auto',
+        };
+
+        if (this.props.isAuthenticated)
+            return <Redirect to={HOME_PATH} />;
+
+        if (this.props.registrationCompleted)
+            return <Redirect to={LOGIN_PATH} />;
+
+        return (
+            <Panel className="col-lg-4" style={colCentered}>
+                <Form horizontal onSubmit={this.props.handleSubmit}>
+                    <Field
+                        name="username"
+                        component={inputField}
+                        label="Username"
+                    />
+                    <Field
+                        name="email"
+                        component={inputField}
+                        label="Email"
+                        type='email'
+                    />
+                    <Field
+                        name="password"
+                        component={inputField}
+                        label="Password"
+                        type='password'
+                    />
+                    <Field
+                        name="password2"
+                        component={inputField}
+                        label="Retype Password"
+                        type='password'
+                    />
+                    <FormGroup>
+                        <Col smOffset={2} sm={10}>
+                            <Button type="submit" bsStyle="primary" disabled={pristine || submitting || invalid}>Send</Button>
+                        </Col>
+                    </FormGroup>
+                </Form>
+            </Panel>
+        );
+    }
 }
 
-export default RegisterPage;
+export default RegistrationPage;
