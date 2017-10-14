@@ -40,7 +40,8 @@ class ResetPage extends React.Component {
         }
 
         if (passwordResetCompleted) {
-            return <Redirect to={LOGIN_PATH}/>
+            console.log('---reroute')
+            return <Redirect to={LOGIN_PATH}/>;
         }
 
         const colCentered = {

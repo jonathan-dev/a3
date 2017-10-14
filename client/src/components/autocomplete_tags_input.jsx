@@ -3,6 +3,11 @@ import './autocomplete_tags_input.sass'
 import TagsInput from 'react-tagsinput'
 import Autosuggest from 'react-autosuggest';
 
+/**
+ * Combine TagsInput Autosuggest to a custom input for Tag selection
+ *
+ * The state is handled intern to keep this component modular and independent
+ */
 class AutocompleteTagsInput extends Component {
     constructor(props) {
         super(props)
