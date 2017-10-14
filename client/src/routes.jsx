@@ -12,7 +12,7 @@ import CreatePost from './containers/create_post_container';
 import RegisterPage from './containers/register_page_container';
 import ForgotPage from './containers/forgot_page_container';
 import ProfilePage from './components/profile_page';
-import AdminPage from './components/admin_page';
+import AdminPage from './containers/admin_page_container';
 
 import {
   HOME_PATH,
