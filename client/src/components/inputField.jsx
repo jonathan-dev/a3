@@ -11,11 +11,11 @@ import {
 
 
 const inputField = ({
-        input,
-        label,
-        meta: {asyncValidating, touched, error },
-        children,
-        ...custom
+    input,
+    label,
+    meta: {asyncValidating, touched, error },
+    children,
+    ...custom
     }) =>
     <FormGroup controlId="formHorizontalEmail" validationState={touched && error ? 'error' : touched && !error ? 'success' : null}>
         <Col componentClass={ControlLabel} sm={2}>

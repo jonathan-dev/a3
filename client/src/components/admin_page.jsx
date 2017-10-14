@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { LinkContainer } from 'react-router-bootstrap'; //links to user profile
 import {
     BootstrapTable,
     TableHeaderColumn
