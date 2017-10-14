@@ -45,6 +45,9 @@ export const UNDO_EDIT_COMMENT_CLICKED = 'UNDO_EDIT_COMMENT_CLICKED';
 export const SHOW_POST_COMMENTS = 'SHOW_POST_COMMENTS';
 export const HIDE_POST_COMMENTS = 'HIDE_POST_COMMENTS';
 
+export const POST_SEACHBAR_INPUT_CHANGED = 'POST_SEACHBAR_INPUT_CHANGED';
+export const CLEAR_POST_SEARCHBAR_INPUT = 'CLEAR_SEARCHBAR_INPUT';
+
 //------------------------------------------
 // CREATE POST PAGE
 //------------------------------------------

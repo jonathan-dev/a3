@@ -4,12 +4,19 @@ import {
     graphql,
 } from 'react-apollo';
 import HomePage from '../components/hot_page';
-import { showPostComments, hidePostComments } from '../actions/actions';
+import { updatePostSearchBarInput,  clearSearchBarInput} from '../actions/actions';
 
-const mapStateToProps = (state, ownProps) => {
-    console.log("HAHAH: ", state.postVisibility.visiblePostComments);
+const mapStateToProps = (state) => {
     return {
-        visiblePostComments: state.postVisibility.visiblePostComments.slice(0)
+        visiblePostComments: state.postVisibility.visiblePostComments.slice(0),
+        searchBarInput: state.postVisibility.
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSearchBarInputChange: event => dispatch(updatePostSearchBarInput(event.target.value)),
+        clearPostSearch: () => dispatch(clearSearchBarInput())
     }
 };
 
@@ -36,5 +43,5 @@ query postListQuery {
 `;
 
 export default graphql(postsListQuery)(
-    connect(mapStateToProps)(HomePage)
+    connect(mapStateToProps, mapDispatchToProps)(HomePage)
 );

@@ -1,10 +1,12 @@
 import {
     SHOW_POST_COMMENTS,
-    HIDE_POST_COMMENTS
+    HIDE_POST_COMMENTS,
+    POST_SEACHBAR_INPUT_CHANGED,
+    CLEAR_POST_SEARCHBAR_INPUT
 } from '../constants/action_types';
 
 const initialVisibilityState = {
-    visiblePostComments: new Array()
+    visiblePostComments: []
 };
 
 export function postVisibility (state = initialVisibilityState, action) {
@@ -17,7 +19,10 @@ export function postVisibility (state = initialVisibilityState, action) {
             return Object.assign({}, state, {
                 visiblePostComments: state.visiblePostComments.filter(post => post.id != action.post.id)
             });
+        case POST_SEACHBAR_INPUT_CHANGED:
+            return Object.assign({}, state);
+
         default:
-            return Object.assign({}, state, initialVisibilityState);
+            return state
     }
 }
