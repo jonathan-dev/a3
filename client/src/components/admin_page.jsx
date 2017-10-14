@@ -34,13 +34,10 @@ const AdminPage = props => {
     if (data) {
         const { loading, error, users } = data;
 
-        if (loading) {
-            return <div>Loading</div>
-        }
-
-        if (error) {
-            return <div>Error</div>
-        }
+        //Cell editing mode for react bootstrap table
+        // const cellEdit = {
+        //     mode: 'click' // click cell to edit
+        // };
 
         function banButton(cell, row, enumObject, rowIndex) {
             return  (!row.isLocked ) ? (
@@ -77,39 +74,12 @@ const AdminPage = props => {
             });
         }
 
-        function promoteButton(cell, row, enumObject, rowIndex) {
-            return  (!row.isAdmin && !row.isLocked ) ? (
-                //Promote user to admin button
-                <Button
-                    onClick={() =>
-                        promoteUser(row.id)}
-                    block>
-                    Promote { row.username }
-                </Button>
-            ) : (
-                //Disabled promote button, user already admin
-                <Button
-                    onClick={() =>
-                        promoteUser(row.id)}
-                    block
-                    disabled>
-                    Promote { row.username }
-                </Button>
-            )
+        if (loading) {
+            return <div>Loading</div>
         }
 
-        function promoteUser(userid) {
-            //Send a mutation request to server
-            props.promoteUserMutation({
-                variables: {
-                    userid: userid
-                },
-                refetchQueries: [{ query: usersListQuery }]
-            }).then(({ data }) => {
-                console.log('promote request submitted');
-            }).catch((error) => {
-                console.log('there was an error sending the query', error);
-            });
+        if (error) {
+            return <div>Error</div>
         }
 
         return (
@@ -121,7 +91,12 @@ const AdminPage = props => {
                     <TableHeaderColumn dataField="id" isKey={true} dataAlign="left" dataSort={true}>User ID</TableHeaderColumn>
                     <TableHeaderColumn dataField="username" dataSort={true}>Username</TableHeaderColumn>
                     <TableHeaderColumn dataField="isAdmin" dataSort={true}>Administrator</TableHeaderColumn>
-                    <TableHeaderColumn dataField="button" dataFormat={ promoteButton }>Promote to admin</TableHeaderColumn>
+                    {/* <TableHeaderColumn
+                        dataField="isAdmin"
+                        dataSort={true}
+                        editable={ { type: 'checkbox', options: { values: 'Y:N' } } }>
+                        Is administrator
+                    </TableHeaderColumn> */}
                     <TableHeaderColumn dataField="isLocked" dataSort={true}>User account locked</TableHeaderColumn>
                     <TableHeaderColumn dataField="lockUntil" dataSort={true}>Locked until</TableHeaderColumn>
                     <TableHeaderColumn dataField="button" dataFormat={ banButton }>Ban user</TableHeaderColumn>
