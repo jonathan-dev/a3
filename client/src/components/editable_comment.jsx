@@ -8,6 +8,11 @@ import {
 } from 'react-bootstrap';
 
 class EditableComment extends Component {
+
+    onComponentWillUnmount() {
+
+    }
+
     render () {
         const {editCommentText, onSubmit, onAbort, originalComment, onEditInputChange} = this.props;
 

@@ -4,50 +4,44 @@ import {
     graphql
 } from 'react-apollo';
 import CommentBox from '../components/comment_box';
-import { editCommentClicked, undoEditCommentClicked } from '../actions/actions';
+import { editCommentClicked, undoEditCommentClicked, updateCommentInputBar, clearCommentInputBar } from '../actions/actions';
 
-const handleCommentSubmit = (event, postId, mutate) => {
+const handleCommentSubmit = (event, postId, mutate, dispatch) => {
     event.preventDefault();
     let comment = event.target.comment.value;
 
-    mutate({
-        variables: {
-            comment: {
-                comment: comment,
-                postId: postId
-            }
-        },
-        refetchQueries: [{ query: commentListQuery, variables: { postId: postId } }]
-    })
-    .then(({ data }) => {
-        console.log('got data', data)
-    })
-    .catch(err => console.log("Error sending comment quAry", err));
+   if (comment) {
+       mutate({
+           variables: {
+               comment: {
+                   comment: comment,
+                   postId: postId
+               }
+           },
+           refetchQueries: [{ query: commentListQuery, variables: { postId: postId } }]
+       })
+           .then(() => dispatch(clearCommentInputBar()))
+           .catch(err => console.log("Error sending comment query", err));
+   }
 };
 
 const handleCommentUpdate = (event, originalComment, dispatch, mutate) => {
     event.preventDefault();
     let newComment = event.target.comment.value
-    console.log("---comment wtf",event.target.comment.value);
-    console.log("Original Comment was: ", originalComment);
-    console.log("Updating comments not implemented yet");
 
-    mutate({
-        variables: {
-            comment: {
-                comment: newComment,
-                commentId: originalComment.id
-            }
-        },
-        refetchQueries: [{ query: commentListQuery, variables: { postId: originalComment.postId } }]
-    })
-    .then(e => dispatch(undoEditCommentClicked()))
-    .catch(err => console.log('error updating comment: ',err))
-
-    // TODO: post update comment mutation to server
-
-    // clear form
-    // dispatch(undoEditCommentClicked());
+    if (newComment) {
+        mutate({
+            variables: {
+                comment: {
+                    comment: newComment,
+                    commentId: originalComment.id
+                }
+            },
+            refetchQueries: [{ query: commentListQuery, variables: { postId: originalComment.postId } }]
+        })
+            .then(e => dispatch(undoEditCommentClicked()))
+            .catch(err => console.log('error updating comment: ',err))
+    }
 };
 
 const handleDeleteComment = (comment, postId, mutate) => {
@@ -57,29 +51,29 @@ const handleDeleteComment = (comment, postId, mutate) => {
         },
         refetchQueries: [{ query: commentListQuery, variables: { postId: postId } }]
     })
-    .then(({data}) => {
-        console.log("Deleted comment", data);
-    })
     .catch(err => console.log("Error deleting comment: ", err));
 };
 
 
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
     return {
         username: state.authentication.username,
         isAuthenticated: state.authentication.isAuthenticated,
-        commentInEditMode: state.commenting.editCommentWithId
+        commentInEditMode: state.commenting.editCommentWithId,
+        commentInputBarValue: state.commenting.commentInputText
     }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        handleCommentSubmit: event => handleCommentSubmit(event, ownProps.postId, ownProps.newCommentMutation),
+        handleCommentSubmit: event => handleCommentSubmit(event, ownProps.postId, ownProps.newCommentMutation, dispatch),
         switchCommentToEditMode: comment => dispatch(editCommentClicked(comment)),
         undoEditMode: comment => dispatch(undoEditCommentClicked(comment)),
-        handleCommentUpdate: (event, originalComment) => handleCommentUpdate(event, originalComment, dispatch, ownProps.newCommentUpdateMutation), // TODO: REFACTOR
-        handleDeleteComment: comment => handleDeleteComment(comment, ownProps.postId, ownProps.newCommentDeletionMutation)
+        handleCommentUpdate: (event, originalComment) => handleCommentUpdate(event, originalComment, dispatch, ownProps.newCommentUpdateMutation),
+        handleDeleteComment: comment => handleDeleteComment(comment, ownProps.postId, ownProps.newCommentDeletionMutation),
+        onCommentInputBarChange: event => dispatch(updateCommentInputBar(event.target.value)),
+        clearCommentInputBar: () => dispatch(clearCommentInputBar())
     }
 };
 

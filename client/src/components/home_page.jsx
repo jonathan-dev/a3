@@ -28,6 +28,7 @@ class HomePage extends React.Component {
         };
 
         const { data, visiblePostComments } = this.props;
+        const { onSearchBarInputChange, clearPostSearch, searchBarInput } = this.props;
 
         if (data) {
             const { loading, error, posts } = data;
@@ -40,19 +41,23 @@ class HomePage extends React.Component {
                 return <div>Error</div>
             }
 
-            const postList = posts.map((post, index) => {
+            const filteredPosts = posts.filter(post => {
+                let postTitle = post.title.toLowerCase().slice(0, searchBarInput.length);
+                let searchBarLowered = searchBarInput.toLowerCase();
+
+                return postTitle.localeCompare(searchBarLowered) === 0;
+            });
+
+            const postList = filteredPosts.map((post, index) => {
                 const showPostComments = visiblePostComments.filter(p => p.id === post.id).length !== 0;
                 return <Post key={index} post={post} showComments={showPostComments}/>
             });
 
-            const { onSearchBarInputChange } = this.props;
-            console.log("Käse: ", this.props)
-
             return (
                 <section className="col-lg-4" style={colCentered}>
                     <div style={{marginBottom: "50px"}}>
-                        <FormControl type="text" placeholder="Search for titles or tags" onChange={onSearchBarInputChange}/>
-                        <Button className="pull-right" style={{marginTop: "5px"}} bsStyle="primary" bsSize="small">Clear</Button>
+                        <FormControl type="text" placeholder="Search for titles" value={searchBarInput} onChange={onSearchBarInputChange}/>
+                        <Button className="pull-right" style={{marginTop: "5px"}} bsStyle="primary" bsSize="small" onClick={clearPostSearch}>Clear</Button>
                     </div>
                     { postList }
                 </section>

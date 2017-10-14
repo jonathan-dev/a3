@@ -3,7 +3,7 @@ import {
     gql,
     graphql,
 } from 'react-apollo';
-import HomePage from '../components/hot_page';
+import HomePage from '../components/home_page';
 import { updatePostSearchBarInput,  clearSearchBarInput} from '../actions/actions';
 
 const mapStateToProps = (state) => {
