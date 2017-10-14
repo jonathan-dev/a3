@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { authentication } from './authentication';
+import { authentication } from './authentication_reducer';
 import { commenting } from './comment_reducers'
 import { createPost } from './create_post';
 import { postVisibility } from './post_visibility_reducer';

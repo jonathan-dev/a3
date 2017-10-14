@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import LoginPage from './containers/login_page_container';
-import ResetPage from './containers/reset_page_container';
+import ResetPage from './containers/password_reset_page_container';
 import HomePage from './containers/home_page_container';
 import CreatePost from './containers/create_post_container';
 import RegisterPage from './containers/register_page_container';

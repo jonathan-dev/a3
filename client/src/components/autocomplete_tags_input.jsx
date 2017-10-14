@@ -4,8 +4,8 @@ import TagsInput from 'react-tagsinput'
 import Autosuggest from 'react-autosuggest';
 
 class AutocompleteTagsInput extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = { tags: [] }
     }
 
@@ -16,7 +16,6 @@ class AutocompleteTagsInput extends Component {
 
     autocompleteRenderInput = ({ addTag, ...props }) => {
         const handleOnChange = (e, { newValue, method }) => {
-            console.log('---method', method)
             if (method === 'enter') {
                 e.preventDefault()
             } else {
@@ -24,7 +23,7 @@ class AutocompleteTagsInput extends Component {
             }
         }
 
-        const inputValue = (props.value && props.value.trim().toLowerCase()) || ''
+        const inputValue = (props.value && props.value.trim().toLowerCase()) || '';
         const inputLength = inputValue.length
 
         let tags = this.props.tags || [];
@@ -33,7 +32,7 @@ class AutocompleteTagsInput extends Component {
             if (state.name) {
                 return state.name.toLowerCase().slice(0, inputLength) === inputValue && !tags.includes(state.name)
             }
-        }).slice(0,5)
+        }).slice(0,5);
 
         const styles = {
             container: {

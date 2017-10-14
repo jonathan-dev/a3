@@ -27,7 +27,7 @@ class createPost extends Component {
     render() {
 
         const { handleSubmit, pristine, reset, submitting, invalid } = this.props;
-        const { image, imageId, onDropHandler, onUpdateTags, progress } = this.props
+        const { image, imageId, onDropHandler, onUpdateTags, progress, getTags } = this.props
 
         const colCentered = {
             float: 'none',

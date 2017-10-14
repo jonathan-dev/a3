@@ -4,18 +4,16 @@ import { HOME_PATH, LOGIN_PATH } from '../paths';
 import inputField from './inputField'
 import {
     Form,
-    FormControl,
     FormGroup,
     Button,
     Col,
     Panel
 } from 'react-bootstrap';
 import { Field } from 'redux-form'
-import {clearRegistrationState} from "../actions/actions";
 
 class RegistrationPage extends Component {
 
-    onComponentWillUnmount () {
+    componentWillUnmount () {
         this.props.clearRegistrationState();
     }
 
