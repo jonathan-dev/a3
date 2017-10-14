@@ -13,6 +13,10 @@ class HomePage extends React.Component {
         super (props);
     }
 
+    onComponentDidMount() {
+        this.props.refetch()
+    }
+
     onComponentWillUnmount () {
         this.props.clearPostSearch();
     }
