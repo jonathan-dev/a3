@@ -19,38 +19,34 @@ const CommentBox = props => {
             return <div>Loading</div>
         }
         if (error) {
-            console.log(error);
             return <div>Error</div>
         }
 
-        let commentList = null;
-        if (comments) {
-            commentList = comments.map((comment, index) => {
-                const isOwnComment = comment.owner.username == props.username;
-                const isInEditMode = comment.id == props.commentInEditMode;
+        let commentList = comments.map((comment, index) => {
+            const isOwnComment = comment.owner.username == props.username;
+            const isInEditMode = comment.id == props.commentInEditMode;
 
-                const commentView = (isInEditMode) ?
-                    <EditableComment originalComment={comment} onSubmit={handleCommentUpdate}/> : <Comment comment={comment}/>;
+            const commentView = (isInEditMode) ?
+                <EditableComment originalComment={comment} onSubmit={handleCommentUpdate}/> : <Comment comment={comment}/>;
 
-                const actionButtons = (isOwnComment && !isInEditMode) ?
-                    <ButtonGroup className="pull-right">
-                        <Button bsStyle="primary" bsSize="small" onClick={() => switchCommentToEditMode(comment)}>
-                            Edit
-                        </Button>
+            const actionButtons = (isOwnComment && !isInEditMode) ?
+                <ButtonGroup className="pull-right">
+                    <Button bsStyle="primary" bsSize="small" onClick={() => switchCommentToEditMode(comment)}>
+                        Edit
+                    </Button>
 
-                        <Button bsStyle="danger" bsSize="small" onClick={() => handleDeleteComment(comment)}>
-                            Delete
-                        </Button>
-                    </ButtonGroup> : null;
+                    <Button bsStyle="danger" bsSize="small" onClick={() => handleDeleteComment(comment)}>
+                        Delete
+                    </Button>
+                </ButtonGroup> : null;
 
-                    return (
-                        <div key={index}>
-                            {commentView}
-                            {actionButtons}
-                        </div>
-                    );
-            });
-        }
+                return (
+                    <div key={index}>
+                        {commentView}
+                        {actionButtons}
+                    </div>
+                );
+        });
 
         return (
             <section>
@@ -65,7 +61,7 @@ const CommentBox = props => {
                     </Form> :
                     <p>Login to join the conversation!</p>
                 }
-                { commentList }
+                { commentList.length ? commentList : <p>be the first to comment!</p> }
             </section>
         )
     }
