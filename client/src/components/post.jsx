@@ -59,12 +59,3 @@ const Post = props => {
 };
 
 export default Post;
-/**
- * TODO: create container
- *
- * TODO: do proper error checking (for null/undefined)
- *
- * TODO: add proper placeholder img which is show when
- *       no image is found or the image is still loading
- *       maybe it would be nice to use an svg
- */
