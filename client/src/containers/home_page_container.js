@@ -32,8 +32,6 @@ query postListQuery {
         username
     }
     imageId
-    voteup
-    votedown
     tags {
       id
       name
