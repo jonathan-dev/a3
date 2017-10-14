@@ -42,10 +42,10 @@ class HomePage extends React.Component {
             }
 
             const filteredPosts = posts.filter(post => {
-                let postTitle = post.title.toLowerCase().slice(0, searchBarInput.length);
+                let postTitle = post.title.toLowerCase();
                 let searchBarLowered = searchBarInput.toLowerCase();
 
-                return postTitle.localeCompare(searchBarLowered) === 0;
+                return postTitle.indexOf(searchBarLowered) !== -1;
             });
 
             const postList = filteredPosts.map((post, index) => {
