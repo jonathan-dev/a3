@@ -115,22 +115,6 @@ const PostMutation = new GraphQLObjectType({
     description: 'Post API Mutations',
     fields: () => ({
 
-        voteAction: {
-            type: types.PostType,
-            description: 'Vote action',
-            args: {
-                voteInput: {
-                    type: types.VoteInputType
-                }
-            },
-            resolve: (root, {
-                voteInput
-            }, context) => {
-                console.log('---vote---')
-                return mongo.vote(voteInput, context.req.user);
-            }
-        },
-
         createPost: {
             type: types.PostType,
             description: 'Create a new post.',

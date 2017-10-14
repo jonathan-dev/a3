@@ -57,14 +57,6 @@ export const PostType = new GraphQLObjectType({
             type: UserType,
             resolve: (post) => mongo.getUserNameById(post.owner)
         },
-        voteup: {
-            type: GraphQLInt,
-            resolve: (post) => post.voteup
-        },
-        votedown: {
-            type: GraphQLInt,
-            resolve: (post) => post.votedown
-        },
         view: {
             type: GraphQLInt,
             resolve: (post) => post.view
@@ -175,16 +167,3 @@ export const CommentInputType = new GraphQLInputObjectType({
         }
     })
 });
-
-export const VoteInputType = new GraphQLInputObjectType({
-    name: 'VoteInput',
-    description: 'VoteInput',
-    fields: {
-        postId: {
-            type: GraphQLString
-        },
-        action: {
-            type: GraphQLString
-        }
-    }
-})

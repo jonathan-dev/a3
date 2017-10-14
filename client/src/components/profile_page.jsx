@@ -43,8 +43,6 @@ query postListQuery ($owner: String) {
         username
     }
     imageId
-    voteup
-    votedown
     tags {
       id
       name

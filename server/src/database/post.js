@@ -10,14 +10,6 @@ let postSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    voteup: {
-        type: Number,
-        default: 0
-    },
-    votedown: {
-        type: Number,
-        default: 0
-    },
     view: {
         type: Number,
         default: 0

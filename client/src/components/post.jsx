@@ -33,9 +33,6 @@ const Post = props => {
                 } width={"100%"} />
 
             }
-            <p>
-                {post.voteup} {languages[currentLanguage]["upvotes"]}, {post.votedown} {languages[currentLanguage]["downvotes"]}
-            </p>
             <section style={margin20}>
                 {post.tags.map((tag, index) => {
                     return <Label bsStyle="info" key={index} style={margin10} >{tag.name}</Label>
