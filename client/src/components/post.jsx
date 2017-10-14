@@ -17,7 +17,21 @@ const Post = props => {
         margin: '20px',
     };
 
-    const { post } = props;
+    const { post, showComments } = props;
+
+    let actionButton;
+    if (showComments) {
+        actionButton =
+            <Button bsStyle="primary" bsSize="small" onClick={(post) => hidePostComments(post)}>
+                hide comments
+            </Button>;
+    }
+    else {
+        actionButton =
+            <Button bsStyle="primary" bsSize="small" onClick={(post) => showPostComments(post)}>
+                show comments
+            </Button>
+    }
 
     return (
         <Panel>
@@ -33,19 +47,16 @@ const Post = props => {
                 } width={"100%"} />
 
             }
-            <p>
-                {post.voteup} {languages[currentLanguage]["upvotes"]}, {post.votedown} {languages[currentLanguage]["downvotes"]}
-            </p>
             <section style={margin20}>
                 {post.tags.map((tag, index) => {
                     return <Label bsStyle="info" key={index} style={margin10} >{tag.name}</Label>
                 })
                 }
             </section>
-            <CommentBox postId={post.id} />
+            { showComments ? <CommentBox postId={post.id} /> : null }
         </Panel>
     );
-}
+};
 
 export default Post;
 /**
