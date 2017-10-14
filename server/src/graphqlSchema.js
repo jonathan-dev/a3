@@ -21,31 +21,19 @@ const QueryType = new GraphQLObjectType({
     fields: () => ({
 
         posts: {
-            description: 'Query to get a list of posts. Can pass in arguments to filter lists.',
             type: new GraphQLList(types.PostType),
             args: {
                 owner: {
-                    description: 'Optional. Pass in userid to search for all that user\'s posts',
-                    type: GraphQLString
-                },
-                tag: {
-                    description: 'Optional. Pass in tagid to get posts with that tag',
                     type: GraphQLString
                 }
             },
             resolve: (x, args) => {
-                //TODO:- Allow for both tag and owner search
-                if (args.tag) {
-                    console.log('Getting posts by tag...');
-                    return mongo.getPostsByTag(args.tag);
-                }
                 if (args.owner) {
-                    return mongo.getPostsByOwner(args.owner);
+                    return mongo.getPostsByOwner(args.owner)
                 }
                 return mongo.getPosts();
             }
         },
-
         post: {
             type: types.PostType,
             description: 'Get a specific post. Pass in post id as an argument.',
