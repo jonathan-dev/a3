@@ -13,7 +13,7 @@ import {
     LOGIN_PATH,
     REGISTER_PATH,
     ADMIN_PATH
-} from '../paths'
+} from '../constants/paths'
 
 const HeaderBar = props => {
     const { isAuthenticated, isAdmin, username } = props;
@@ -63,6 +63,5 @@ const HeaderBar = props => {
         </Navbar>
     );
 };
-
 
 export default HeaderBar;

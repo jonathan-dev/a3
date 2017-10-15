@@ -1,4 +1,3 @@
-import React from 'react'
 import { connect } from 'react-redux';
 import createPost from '../components/create_post_page'
 import {
@@ -8,7 +7,6 @@ import {
     updateImage,
     resetState
 } from '../actions/create_posts_actions';
-import { push } from 'react-router-redux';
 import {
     gql,
     graphql
@@ -46,15 +44,13 @@ const handleSubmit = (event, stateProps, dispatchProps, ownProps) => {
                 tags: stateProps.tags ||[]
             }
         }
-    }
+    };
 
     ownProps.mutate(mutationData)
-        .then(({
-            data
-        }) => {
-            console.log('got data', data);
+        .then(() => {
             ownProps.history.push('/')
-        }).catch((error) => {
+        })
+        .catch((error) => {
             console.log('there was an error sending the query', error);
         });
 };
@@ -74,18 +70,18 @@ const onUpdateTags = (dispatch, tags) => {
 }
 
 const validate = values => {
-    const errors = {}
+    const errors = {};
     const requiredFields = [
         'title',
         'image'
-    ]
+    ];
     requiredFields.forEach(field => {
         if (!values[field]) {
             errors[field] = 'Required'
         }
-    })
+    });
     return errors
-}
+};
 
 const mapStateToProps = state => {
     return {
@@ -97,7 +93,7 @@ const mapStateToProps = state => {
     }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
     return {
         onDropHandler: (accepted, rejected) => onDropHandler(dispatch, accepted, rejected),
         onUpdateTags: (tags) => onUpdateTags(dispatch, tags),
@@ -109,12 +105,12 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     return Object.assign({}, ownProps, stateProps, dispatchProps, {
         handleSubmit: (event) => handleSubmit(event, stateProps, dispatchProps, ownProps)
     })
-}
+};
 
 const createPostForm = reduxForm({
     form: 'createPostForm', // a unique identifier for this form
     validate,
-})(createPost)
+})(createPost);
 
 export default
 graphql(PostMutations)(

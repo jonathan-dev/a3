@@ -9,7 +9,7 @@ import {
 import { Field } from 'redux-form'
 import inputField from './inputField'
 import { Redirect } from 'react-router';
-import { LOGIN_PATH } from '../paths';
+import { LOGIN_PATH } from '../constants/paths';
 
 class ResetPage extends React.Component {
     constructor(props) {

@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 import { Field } from 'redux-form';
 import { Redirect } from 'react-router';
-import { LOGIN_PATH } from "../paths";
+import { LOGIN_PATH } from "../constants/paths";
 
 class RegistrationPage extends Component {
 

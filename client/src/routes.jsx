@@ -21,7 +21,7 @@ import {
   FORGOT_PASSWORD_PATH,
   RESET_PASSWORD_PATH,
   ADMIN_PATH
-} from './paths';
+} from './constants/paths';
 
 class Routes extends Component {
   // enter all routes for the application here

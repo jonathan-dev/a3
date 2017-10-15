@@ -11,7 +11,7 @@ import {
     Panel
 } from 'react-bootstrap'; //provides rest of bootstrap styled stuff
 //provides query ability
-import {LOGIN_PATH} from '../paths'
+import {LOGIN_PATH} from '../constants/paths'
 
 
 

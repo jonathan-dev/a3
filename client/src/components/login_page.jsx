@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
-import { HOME_PATH } from "../paths";
+import { HOME_PATH } from "../constants/paths";
 import { Field } from 'redux-form'
 import { LinkContainer } from 'react-router-bootstrap';
 import inputField from './inputField'
