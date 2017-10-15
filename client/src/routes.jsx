@@ -11,7 +11,6 @@ import HomePage from './containers/home_page_container';
 import CreatePost from './containers/create_post_container';
 import RegisterPage from './containers/registration_page_container';
 import ForgotPage from './containers/forgot_page_container';
-import ProfilePage from './components/profile_page';
 import AdminPage from './containers/admin_page_container';
 
 import {
@@ -21,9 +20,8 @@ import {
   REGISTER_PATH,
   FORGOT_PASSWORD_PATH,
   RESET_PASSWORD_PATH,
-  USER_PROFILE_PATH,
   ADMIN_PATH
-} from './paths';
+} from './constants/paths';
 
 class Routes extends Component {
   // enter all routes for the application here
@@ -36,7 +34,6 @@ class Routes extends Component {
         <Route path={REGISTER_PATH} component={RegisterPage}/>
         <Route path={FORGOT_PASSWORD_PATH} component={ForgotPage}/>
         <Route path={RESET_PASSWORD_PATH} component={ResetPage}/>
-        <Route path={USER_PROFILE_PATH} component={ProfilePage}/>
         <Route path={ADMIN_PATH} component={AdminPage}/>
       </Switch>
     );

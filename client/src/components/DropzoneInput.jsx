@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import { Field } from 'redux-form'
+import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import {
     FormGroup,
@@ -51,7 +50,6 @@ class DropzoneInput extends Component {
                     {image && <img src={image.preview} style={{"width" : "100%"}}/>}
                     <ProgressBar now={progress} />
                     {error && <HelpBlock>{error}</HelpBlock>}
-                    {console.log(imageId)}
                 </Col>
             </FormGroup>
         );

@@ -5,7 +5,6 @@ import {
     ExtractJwt,
     Strategy as JwtStrategy
 } from 'passport-jwt'
-import mailgun from 'mailgun-js'
 import mailgunConfig from '../config/mailgun'
 import key from '../config/key'
 
@@ -14,13 +13,12 @@ import mongo from './database/mongo'
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey:  key
-}
+};
 
 export function authApp(app) {
 
-    var strategy = new JwtStrategy(jwtOptions, function (jwt_payload, done) {
+    const strategy = new JwtStrategy(jwtOptions, function (jwt_payload, done) {
         //Authorization: Bearer <Token>
-        console.log('---jwt-payload', jwt_payload);
         const {
             id,
             isAdmin
@@ -29,7 +27,7 @@ export function authApp(app) {
         const user = {
             id,
             isAdmin
-        }
+        };
 
         done(null, user);
     });
@@ -44,34 +42,16 @@ export function authApp(app) {
             req.user = user;
             next();
         })(req, res, next);
-    })
-
-    //Takes a token & checks if admin true in token
-    //Does this every time user visits admin route
-    // app.get('/admin', function checkIfAdmin(userToken) {
-    //     //TODO - handle error if not valid token
-    //     var decodedToken = jwt.verify(userToken, jwtOptions.secretOrKey);
-    //     console.log("(REMOVE LATER) Decoded token ", decodedToken);
-    //     //Can simplify to 'return decodedToken.isAdmin';
-    //     //TODO - remove second thing here
-    //     if (decodedToken.isAdmin || userToken == "iamanadmin") {
-    //         console.log("User verified as admin");
-    //         return true;
-    //     } else {
-    //         console.log("User not an admin");
-    //         return false;
-    //     }
-    // });
+    });
 
     app.post('/validateRegistration', (req, res) => {
         const {
             email,
             username
         } = req.body;
-        console.log(username, email)
-        let promises = []
-        promises.push(mongo.isUsernameAvailable(username))
-        promises.push(mongo.isEmailAvailable(email)),
+        let promises = [];
+        promises.push(mongo.isUsernameAvailable(username));
+        promises.push(mongo.isEmailAvailable(email));
         Promise.all(promises)
         .then(e => {
             res.json({
@@ -81,13 +61,10 @@ export function authApp(app) {
         })
         .catch(err => console.log(err))
 
-    })
+    });
 
     app.post('/login', (req, res) => {
-        let {
-            username,
-            password
-        } = req.body;
+        let { username, password } = req.body;
 
         if (username && password) {
             //Checks user/pw against database, returns user if valid
@@ -95,11 +72,11 @@ export function authApp(app) {
                 .then(data => {
                     if (data.user) {
                         //Prepare token payload from user
-                        var payload = {
+                        let payload = {
                             id: data.user._id,
                             isAdmin: data.user.isAdmin
                         };
-                        var token = jwt.sign(payload, jwtOptions.secretOrKey);
+                        let token = jwt.sign(payload, jwtOptions.secretOrKey);
                         //Return success with token inside
                         res.statusCode = 200;
                         res.json({
@@ -149,11 +126,9 @@ export function authApp(app) {
     });
 
     app.post('/forgot', (req, res) => {
-        const {
-            email
-        } = req.body;
+        const { email } = req.body;
+
         if (email) {
-            console.log('reset request received for ', email);
             const buf = crypto.randomBytes(20);
             const token = buf.toString('hex');
 
@@ -161,29 +136,26 @@ export function authApp(app) {
             const resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
             mongo.setResetToken(email, resetPasswordToken, resetPasswordExpires)
-                .then(e => {
+                .then(() => {
                     const text = 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
                         'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-                        'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                        'If you did not request this, please ignore this email and your password will remain unchanged.\n';
                     sendMail(email, text);
                     res.send('send')
                 })
                 .catch(err => console.log(err))
         }
-    })
+    });
 
     app.post('/reset', (req, res) => {
-        const {
-            token,
-            password
-        } = req.body
+        const { token, password } = req.body;
+
         if (token) {
             if (password) {
-                console.log('reset password', password)
                 mongo.resetPassword(token, password)
                     .then(user => {
-                        const text = 'password reset successfully!'
+                        const text = 'password reset successfully!';
                         sendMail(user.email, text)
                         res.send()
                     })
@@ -199,22 +171,24 @@ export function authApp(app) {
     })
 
     function sendMail(email, text) {
-        var api_key = mailgunConfig.key;
-        var domain = 'sandboxa9461c2dc5d64c618caaec296ca33955.mailgun.org';
-        var mailgun = require('mailgun-js')({
+        const api_key = mailgunConfig.key;
+        const domain = 'sandboxa9461c2dc5d64c618caaec296ca33955.mailgun.org';
+        const mailgun = require('mailgun-js')({
             apiKey: api_key,
             domain: domain
         });
 
-        var data = {
+        const data = {
             from: 'no reply<am@am.com>',
             to: email,
             subject: 'Password reset',
             text: text
         };
 
-        mailgun.messages().send(data, function (error, body) {
-            console.log(body);
+        mailgun.messages().send(data, function (error) {
+            if (error) {
+                console.log(error)
+            }
         });
     }
 }

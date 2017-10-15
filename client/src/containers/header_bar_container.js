@@ -6,13 +6,12 @@ import {
     CREATE_POST_PATH,
     LOGIN_PATH,
     REGISTER_PATH
-} from '../paths';
+} from '../constants/paths';
 
 import { logoutUser } from '../actions/actions';
 
 
 const logout = (dispatch) => {
-    console.log("Im here");
     dispatch(logoutUser());
     dispatch(push(HOME_PATH));
 };
