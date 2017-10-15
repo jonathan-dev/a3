@@ -9,15 +9,12 @@ import {
 } from 'react-bootstrap';
 
 class HomePage extends React.Component {
-    constructor (props) {
-        super (props);
-    }
 
     componentDidMount() {
         this.props.refetch();
     }
 
-    onComponentWillUnmount () {
+    componentWillUnmount () {
         this.props.clearPostSearch();
     }
 
@@ -34,18 +31,18 @@ class HomePage extends React.Component {
             const { loading, error, posts } = data;
 
             if (loading) {
-                return <div>Loading</div>
+                return <div>Loading</div>;
             }
 
             if (error) {
-                return <div>Error</div>
+                return <div>Error</div>;
             }
 
             const filteredPosts = posts.filter(post => {
-                let postTitle = post.title.toLowerCase().slice(0, searchBarInput.length);
+                let postTitle = post.title.toLowerCase();
                 let searchBarLowered = searchBarInput.toLowerCase();
 
-                return postTitle.localeCompare(searchBarLowered) === 0;
+                return postTitle.indexOf(searchBarLowered) !== -1;
             });
 
             const postList = filteredPosts.map((post, index) => {
@@ -56,8 +53,21 @@ class HomePage extends React.Component {
             return (
                 <section className="col-lg-4" style={colCentered}>
                     <div style={{marginBottom: "50px"}}>
-                        <FormControl type="text" placeholder="Search for titles" value={searchBarInput} onChange={onSearchBarInputChange}/>
-                        <Button className="pull-right" style={{marginTop: "5px"}} bsStyle="primary" bsSize="small" onClick={clearPostSearch}>Clear</Button>
+                        <FormControl
+                            type="text"
+                            placeholder="Search for titles"
+                            value={searchBarInput}
+                            onChange={onSearchBarInputChange}
+                        />
+                        <Button
+                            className="pull-right"
+                            style={{marginTop: "5px"}}
+                            bsStyle="primary"
+                            bsSize="small"
+                            onClick={clearPostSearch}
+                        >
+                            Clear
+                        </Button>
                     </div>
                     { postList }
                 </section>

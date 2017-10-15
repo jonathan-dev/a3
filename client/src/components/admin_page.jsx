@@ -18,8 +18,9 @@ import {LOGIN_PATH} from '../paths'
 const AdminPage = props => {
 
     //check if actually admin
-    if (!props.isAuthenticated)
-    return <Redirect to={LOGIN_PATH} />;
+    if (!props.isAuthenticated){
+        return <Redirect to={LOGIN_PATH} />;
+    }
 
     const colCentered = {
         float: 'none',
@@ -29,22 +30,21 @@ const AdminPage = props => {
     const { myUsername, banUser } = props;
     const { loading, error, users } = props.data;
 
-    const banButton = (cell, row, enumObject, rowIndex) => {
-        // const banButton = (cell, row, enumObject, rowIndex) => {
+    const banButton = (cell, row) => {
         const { isLocked, id, username } = row;
         return (
             <Button block
                 onClick={() => banUser(id, !isLocked)}>
                 {(isLocked ? "Unban" : "Ban") + " " + username}
             </Button>)
-    }
+    };
 
     if (loading) {
-        return <div>Loading</div>
+        return <div>Loading</div>;
     }
 
     if (error) {
-        return <div>Error</div>
+        return <div>Error</div>;
     }
     const filteredUsers = users.filter(u => u.username.localeCompare(myUsername));
     return (
@@ -62,7 +62,6 @@ const AdminPage = props => {
             </BootstrapTable>
         </section>
     )
-
-}
+};
 
 export default AdminPage;

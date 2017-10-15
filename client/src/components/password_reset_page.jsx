@@ -1,12 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import {
     Form,
     FormGroup,
     Button,
     Col,
-    Panel,
-    HelpBlock
+    Panel
 } from 'react-bootstrap';
 import { Field } from 'redux-form'
 import inputField from './inputField'

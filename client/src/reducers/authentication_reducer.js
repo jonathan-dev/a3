@@ -20,7 +20,7 @@ const initialState = {
     isAuthenticated: false,
     isAdmin: false,
     token: null,
-    routeIsValid: false,
+    routeIsValid: false, // dynamic reset password route
     registrationErrors: null,
     registrationCompleted: false,
     resetInfo: null,

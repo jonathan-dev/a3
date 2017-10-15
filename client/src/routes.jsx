@@ -9,7 +9,7 @@ import LoginPage from './containers/login_page_container';
 import ResetPage from './containers/password_reset_page_container';
 import HomePage from './containers/home_page_container';
 import CreatePost from './containers/create_post_container';
-import RegisterPage from './containers/register_page_container';
+import RegisterPage from './containers/registration_page_container';
 import ForgotPage from './containers/forgot_page_container';
 import ProfilePage from './components/profile_page';
 import AdminPage from './containers/admin_page_container';

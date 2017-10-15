@@ -3,9 +3,9 @@ import {
 } from 'react-redux';
 import {
     postRegistration,
-    clearRegistrationState
+    clearAuthentication
 } from '../actions/actions';
-import RegisterPage from '../components/register_page';
+import RegisterPage from '../components/registration_page';
 import {
     reduxForm
 } from 'redux-form';
@@ -112,7 +112,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         handleSubmit: (event) => handleSubmit(dispatch, event),
-        clearRegistrationState: () => dispatch(clearRegistrationState())
+        clearAuthenticationState: () => dispatch(clearAuthentication())
     }
 };
 

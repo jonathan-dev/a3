@@ -70,7 +70,7 @@ $ npm start
 **Note:** Starting the server with
 ```
 # do not start your server like this:
-$ node index.js
+$ node index_reducer.js
 
 ```
 will fail due to the use of ES6 in this project. BabelJS is used in this project as a
@@ -85,7 +85,7 @@ or the correpsonding start command of your package manager.
 # Structure
 
 ### Routes
-All main routes are held in the *index.js* file.
+All main routes are held in the *index_reducer.js* file.
 
 ### Views
 All main views are held in `public/views`

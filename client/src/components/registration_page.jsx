@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
-import { HOME_PATH, LOGIN_PATH } from '../paths';
 import inputField from './inputField'
 import {
     Form,
@@ -14,7 +12,7 @@ import { Field } from 'redux-form'
 class RegistrationPage extends Component {
 
     componentWillUnmount () {
-        this.props.clearRegistrationState();
+        this.props.clearAuthenticationState();
     }
 
     render () {
@@ -24,12 +22,6 @@ class RegistrationPage extends Component {
             float: 'none',
             margin: '0 auto',
         };
-
-        if (this.props.isAuthenticated)
-            return <Redirect to={HOME_PATH} />;
-
-        if (this.props.registrationCompleted)
-            return <Redirect to={LOGIN_PATH} />;
 
         return (
             <Panel className="col-lg-4" style={colCentered}>

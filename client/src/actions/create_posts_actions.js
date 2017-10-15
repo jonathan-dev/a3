@@ -5,7 +5,7 @@ import {
     UPDATE_TAGS,
     UPDATE_IMAGE,
     UPDATE_UPLOAD_PROGRESS,
-    RESET_STATE
+    RESET_CREATE_POST_STATE
 } from '../constants/action_types'
 
 export function updateUploadProgress(progress) {
@@ -50,6 +50,6 @@ export function updateImage(image) {
 
 export function resetState(){
     return {
-        type: RESET_STATE
+        type: RESET_CREATE_POST_STATE
     }
 }
