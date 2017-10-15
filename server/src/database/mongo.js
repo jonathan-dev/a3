@@ -4,7 +4,7 @@
  * Exposes all functions in order for graphql API to use.
  */
 
-import mongoose from 'mongoose' // connection to the mongodb
+import mongoose from 'mongoose' // connection to mongodb
 import casual from 'casual' // creating mock data
 
 //Mongoose schema imports
@@ -13,7 +13,7 @@ import Post from './post'
 import Tag from './tag'
 import Comment from './comment'
 
-// location of the mongodb
+//Connection details for Mongoose to connect to mongodb
 const MONGO = 'mongodb://localhost/a3';
 mongoose.Promise = Promise;
 mongoose.connect(MONGO, {
@@ -28,7 +28,7 @@ db.once('open', function () {
     console.log(`connected to mongodb at: ${MONGO}`)
 });
 
-// exporting all methods to work with the db
+// exporting all methods for app to access the db
 export default {
     getPost(id) {
         return Post.findById(id)

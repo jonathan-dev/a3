@@ -1,20 +1,29 @@
-import jwt from 'jsonwebtoken'
-import passport from 'passport'
+/**
+ * Provides all authentication logic for the app.
+ * Handles bearer token creation & checking,
+ * and provides server auth API (separate from graphql)
+ */
+import jwt from 'jsonwebtoken' //provides token signing / unsigning
+import passport from 'passport' //middleware, decodes token on each request
 import crypto from 'crypto'
 import {
     ExtractJwt,
     Strategy as JwtStrategy
-} from 'passport-jwt'
+} from 'passport-jwt' //hooks passport into jwt
 import mailgunConfig from '../config/mailgun'
 import key from '../config/key'
-
 import mongo from './database/mongo'
 
+//Initialises JWT options for passport-jwt
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey:  key
 };
 
+/**
+ * Allows given Express app to use all authentication functions
+ * @param {ExpressApp} app - The Express app object.
+ */
 export function authApp(app) {
 
     const strategy = new JwtStrategy(jwtOptions, function (jwt_payload, done) {
@@ -32,11 +41,11 @@ export function authApp(app) {
         done(null, user);
     });
 
+    //Initialize passport & add to app
     passport.use(strategy);
-
     app.use(passport.initialize());
 
-    // makes user object available on request if a user is logged in
+    // makes whole user object available on request if a user is logged in
     app.use(function (req, res, next) {
         passport.authenticate('jwt', function (err, user, info) {
             req.user = user;
@@ -44,6 +53,7 @@ export function authApp(app) {
         })(req, res, next);
     });
 
+    //Provides continual validation of username / email
     app.post('/validateRegistration', (req, res) => {
         const {
             email,
@@ -63,6 +73,7 @@ export function authApp(app) {
 
     });
 
+    //Handles login logic and provides response
     app.post('/login', (req, res) => {
         let { username, password } = req.body;
 
@@ -93,6 +104,7 @@ export function authApp(app) {
         }
     });
 
+    //Creates a new user and adds to database
     app.post('/register', (req, res) => {
         let {
             username,
@@ -108,6 +120,7 @@ export function authApp(app) {
                     });
                 })
                 .catch(error => {
+                    //Returns errors to user
                     if (error._message === 'User validation failed') {
                         let errors = [];
                         Object.keys(error.errors).forEach(key => errors.push(key + " " + error.errors[key].kind));
@@ -125,6 +138,7 @@ export function authApp(app) {
         }
     });
 
+    // Resets a user's password and sends email with reset link
     app.post('/forgot', (req, res) => {
         const { email } = req.body;
 
@@ -148,6 +162,7 @@ export function authApp(app) {
         }
     });
 
+    // Handles password resetting
     app.post('/reset', (req, res) => {
         const { token, password } = req.body;
 
@@ -170,6 +185,11 @@ export function authApp(app) {
         }
     })
 
+    /**
+     * Sends an email message via Mailgun
+     * @param {string} email - the email address to send to
+     * @param {string} text - the text of the email
+     */
     function sendMail(email, text) {
         const api_key = mailgunConfig.key;
         const domain = 'sandboxa9461c2dc5d64c618caaec296ca33955.mailgun.org';

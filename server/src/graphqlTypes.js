@@ -1,3 +1,6 @@
+/**
+ * Defines all graphql data types used within the app
+ */
 import {
     graphql,
     GraphQLSchema,
@@ -72,6 +75,7 @@ export const PostType = new GraphQLObjectType({
     })
 });
 
+//Defines fields needed to make a new post
 export const PostInputType = new GraphQLInputObjectType({
     name: 'PostInput',
     fields: () => ({
@@ -152,6 +156,7 @@ export const CommentType = new GraphQLObjectType({
     })
 });
 
+//Defines fields that are allowed to make a new comment
 export const CommentInputType = new GraphQLInputObjectType({
     name: 'CommentInput',
     description: "Comment input type",
