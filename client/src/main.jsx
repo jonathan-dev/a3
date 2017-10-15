@@ -21,7 +21,7 @@ const axiosClient = axios.create({ // all axios can be used, shown in axios docu
 });
 const browserHistory = createBrowserHistory();
 
-
+//Creates redux global state store
 let store = createStore(
     harrismusApp,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
