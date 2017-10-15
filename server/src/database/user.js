@@ -1,10 +1,13 @@
+/**
+ * Provides a Mongoose schema data model for storing/retrieving users in MongoDB
+ * Also contains user methods for registering, logging in and locking account
+ */
 import mongoose from 'mongoose' // connection to the mongodb
 import uniqueValidator from 'mongoose-unique-validator' // pre save validation plugin for unique fields
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcryptjs' //provides password encryption
 
 const MAX_LOGIN_ATTEMPTS = 5;
-const LOCK_TIME = 2 * 60 * 60 * 1000;
-const BAN_TIME = 86400000; //default ban time of a day
+const LOCK_TIME = 2 * 60 * 60 * 1000; //default lockout time of 2 hours
 
 let userSchema = mongoose.Schema({
     username: {
@@ -42,6 +45,9 @@ let userSchema = mongoose.Schema({
     resetPasswordExpires: Date,
 });
 
+/**
+ * pre save validation plugin to ensure fields are unique, e.g. username
+ */
 userSchema.plugin(uniqueValidator, {
     type: 'already in use'
 });
@@ -55,7 +61,9 @@ userSchema.virtual('isLocked').get(
     }
 );
 
-// expose enum on the model, and provide an internal convenience reference
+/**
+ * expose login failure enum on the model, and provide an internal convenience reference
+ */
 var reasons = userSchema.statics.failedLogin = {
     NOT_FOUND: 0,
     PASSWORD_INCORRECT: 1,
@@ -88,6 +96,9 @@ userSchema.pre('save', function (next) {
         .catch(err => next(err))
 });
 
+/**
+ * Hashes a given password and compares against the hash for the current user
+ */
 userSchema.methods.comparePassword = function (candidatePassword) {
     return new Promise((resolve, reject) => {
         bcrypt.compare(candidatePassword, this.password)
@@ -157,6 +168,11 @@ userSchema.statics.unbanUser = function (userid) {
     });
 }
 
+/**
+ * Authenticates a given username and password against the db for login
+ * Returns the user if valid login,
+ * otherwise returns error with reason for failure
+ */
 userSchema.statics.getAuthenticated = function (username, password) {
     return new Promise((resolve, reject) => {
         this.findOne({
@@ -168,6 +184,7 @@ userSchema.statics.getAuthenticated = function (username, password) {
                     resolve({ reason: reasons.NOT_FOUND });
                 }
 
+                //Prevent user from logging in if they are locked
                 if (user.isLocked) {
                     return user.incLoginAttempts()
                         .then(() => resolve({
@@ -185,7 +202,7 @@ userSchema.statics.getAuthenticated = function (username, password) {
                             if (!user.loginAttempts && !user.lockUntil) {
                                 resolve({user: user});
                             }
-                            // reset attempts and lock info
+                            // reset attempts and unlock account
                             var updates = {
                                 $set: {
                                     loginAttempts: 0

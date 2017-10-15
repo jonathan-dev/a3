@@ -1,6 +1,13 @@
+/**
+ * Provides functionality for connecting to,
+ * reading and modifying from MongoDB, using Mongoose schema.
+ * Exposes all functions in order for graphql API to use.
+ */
+
 import mongoose from 'mongoose' // connection to the mongodb
 import casual from 'casual' // creating mock data
 
+//Mongoose schema imports
 import User from './user'
 import Post from './post'
 import Tag from './tag'
@@ -21,7 +28,7 @@ db.once('open', function () {
     console.log(`connected to mongodb at: ${MONGO}`)
 });
 
-// exporting functionality
+// exporting all methods to work with the db
 export default {
     getPost(id) {
         return Post.findById(id)
@@ -84,8 +91,6 @@ export default {
     },
     createComment(userId, postId, comment) {
         //Validation
-        //Check if user is banned
-        // if (!isUserBanned(userId)) {
         return new Comment({
             comment: comment,
             postId: postId,
