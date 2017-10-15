@@ -21,8 +21,11 @@ const HeaderBar = props => {
         <Navbar inverse collapseOnSelect>
             <Navbar.Header>
                 <Navbar.Brand>
+                    { username ? <p>Hello {username}, welcome back!</p> : null }
+                </Navbar.Brand>
+                <Navbar.Brand>
                     <LinkContainer to={HOME_PATH} >
-                        <a>Name</a>
+                        <a>Home</a>
                     </LinkContainer>
                 </Navbar.Brand>
                 <Navbar.Toggle />
@@ -44,12 +47,7 @@ const HeaderBar = props => {
                 </Nav>
                 <Nav pullRight>
                     { isAuthenticated ?
-                        [
-                            <LinkContainer key={1} to={username}>
-                                <NavItem href={username}>{username}</NavItem>
-                            </LinkContainer>,
                             <NavItem key={2} onClick={props.logout}>Logout</NavItem>
-                        ]
                         :
                         [
                             <LinkContainer key={1} to={REGISTER_PATH} >

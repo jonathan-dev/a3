@@ -1,14 +1,13 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import mongo from './database/mongo'
+import express from 'express';
+import bodyParser from 'body-parser';
 
-import path from 'path'
-import cors from 'cors'
-import graphQLHTTP from 'express-graphql'
+import path from 'path';
+import cors from 'cors';
+import graphQLHTTP from 'express-graphql';
 import schema from './graphqlSchema'
 
-import upload from './upload'
-import { authApp } from './auth'
+import upload from './upload';
+import { authApp } from './authentication';
 
 function resolve(dir) {
     return path.join(__dirname, dir)

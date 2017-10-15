@@ -7,7 +7,9 @@ import {
     Col,
     Panel
 } from 'react-bootstrap';
-import { Field } from 'redux-form'
+import { Field } from 'redux-form';
+import { Redirect } from 'react-router';
+import { LOGIN_PATH } from "../paths";
 
 class RegistrationPage extends Component {
 
@@ -16,7 +18,11 @@ class RegistrationPage extends Component {
     }
 
     render () {
-        const { pristine, submitting, invalid } = this.props;
+        const { pristine, submitting, invalid, registrationCompleted } = this.props;
+
+        if (registrationCompleted) {
+            return <Redirect to={LOGIN_PATH}/>;
+        }
 
         const colCentered = {
             float: 'none',

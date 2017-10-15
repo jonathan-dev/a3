@@ -12,7 +12,6 @@ import { logoutUser } from '../actions/actions';
 
 
 const logout = (dispatch) => {
-    console.log("Im here");
     dispatch(logoutUser());
     dispatch(push(HOME_PATH));
 };
