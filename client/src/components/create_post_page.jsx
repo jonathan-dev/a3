@@ -55,7 +55,8 @@ class CreatePostPage extends Component {
                         <Col smOffset={2} sm={10}>
                             <AutocompleteTagsInput
                                 onUpdateTags={this.props.onUpdateTags}
-                                tags={this.props.data.tags} />
+                                tags={this.props.data.tags}
+                                selectedTags={this.props.tags} />
                         </Col>
                     </FormGroup>
                     <FormGroup>

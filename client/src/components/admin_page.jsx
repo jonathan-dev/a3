@@ -11,14 +11,14 @@ import {
     Panel
 } from 'react-bootstrap'; //provides rest of bootstrap styled stuff
 //provides query ability
-import {LOGIN_PATH} from '../paths'
+import { LOGIN_PATH } from '../paths'
 
 
 
 const AdminPage = props => {
 
     //check if actually admin
-    if (!props.isAuthenticated){
+    if (!props.isAuthenticated) {
         return <Redirect to={LOGIN_PATH} />;
     }
 

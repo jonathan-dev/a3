@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './autocomplete_tags_input.sass'
-import TagsInput from 'react-tagsinput'
+import './autocomplete_tags_input.sass';
+import TagsInput from 'react-tagsinput';
 import Autosuggest from 'react-autosuggest';
 
 /**
@@ -9,30 +9,12 @@ import Autosuggest from 'react-autosuggest';
  * The state is handled intern to keep this component modular and independent
  */
 class AutocompleteTagsInput extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { tags: [] }
-    }
-
-    handleChange = (tags) => {
-        this.setState({ tags })
-        this.props.onUpdateTags(tags)
-    }
 
     autocompleteRenderInput = ({ addTag, ...props }) => {
-        const handleOnChange = (e, { newValue, method }) => {
-            if (method === 'enter') {
-                e.preventDefault()
-            } else {
-                props.onChange(e)
-            }
-        }
 
         const inputValue = (props.value && props.value.trim().toLowerCase()) || '';
         const inputLength = inputValue.length
-
         let tags = this.props.tags || [];
-
         let suggestions = tags.filter((state) => {
             if (state.name) {
                 return state.name.toLowerCase().slice(0, inputLength) === inputValue && !tags.includes(state.name)
@@ -83,7 +65,7 @@ class AutocompleteTagsInput extends Component {
                 shouldRenderSuggestions={(value) => value && value.trim().length > 0}
                 getSuggestionValue={(suggestion) => suggestion.name}
                 renderSuggestion={(suggestion) => <span>{suggestion.name}</span>}
-                inputProps={{ ...props, onChange: handleOnChange }}
+                inputProps={{ ...props, onChange: props.onChange }}
                 onSuggestionSelected={(e, { suggestion }) => {
                     addTag(suggestion.name)
                 }}
@@ -98,8 +80,8 @@ class AutocompleteTagsInput extends Component {
         return <TagsInput
         addKeys={[32, 9, 13]}
         renderInput={this.autocompleteRenderInput}
-        value={this.state.tags}
-        onChange={this.handleChange}
+        value={this.props.selectedTags}
+        onChange={this.props.onUpdateTags}
         onlyUnique={true} />
     }
 }

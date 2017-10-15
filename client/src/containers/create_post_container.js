@@ -91,9 +91,9 @@ const mapStateToProps = state => {
     return {
         isAuthenticated: state.authentication.isAuthenticated,
         progress: state.createPost.uploadProgress,
-        tags: state.createPost.tags ? state.createPost.tags.slice(0) : null,
+        tags: state.createPost.tags ? state.createPost.tags.slice(0) : [],
         imageId: state.createPost.imageId,
-        image: state.createPost.image
+        image: state.createPost.image,
     }
 };
 
