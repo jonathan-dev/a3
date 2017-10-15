@@ -64,9 +64,7 @@ export default {
         return new Post(postInput).save()
     },
     updatePost(postInput) {
-        console.log("update post1: ", postInput)
         if (postInput.id && postInput.title && postInput.imageId) {
-            console.log("update post2: ", postInput)
             postInput.tags = postInput.tags.map(x => x.id)
             return Post.findByIdAndUpdate(postInput.id, postInput)
         }
@@ -85,10 +83,6 @@ export default {
         })
     },
     createComment(userId, postId, comment) {
-        console.log("Creating comment: ");
-        console.log("    userId: ", userId);
-        console.log("    postId: ", userId);
-        console.log("   comment: ", comment);
         //Validation
         //Check if user is banned
         // if (!isUserBanned(userId)) {
@@ -97,10 +91,6 @@ export default {
             postId: postId,
             userId: userId
         }).save();
-        // } else {
-        // console.log("User was banned, can't post comment", userId);
-        //TODO - add proper error handling here to give better feedback to user
-        // }
     },
     updateComment(comment, userId) {
         return Comment.findOneAndUpdate({
@@ -111,7 +101,6 @@ export default {
         })
     },
     deleteComment(id) {
-        console.log("removing comment with id: ", id);
         return Comment.findByIdAndRemove(id);
     },
     getUsers() {

@@ -18,9 +18,7 @@ const handleSubmit = (dispatch, event, token) => {
     event.preventDefault();
     const password = event.target.password.value;
     const password2 = event.target.password2.value;
-    console.log('passwords: ', password, password2);
     if (password === password2) {
-        console.log('reset password')
         dispatch(resetPassword(token, password));
     }
 };

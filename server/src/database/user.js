@@ -103,7 +103,6 @@ userSchema.methods.incLoginAttempts = function () {
     return new Promise((resolve, reject) => {
         // if we have a previous lock that has expired, restart at 1
         if (this.lockUntil && this.lockUntil < Date.now()) {
-            console.log("lock expired")
             this.update({
                     $set: {
                         loginAttempts: 1
@@ -122,12 +121,10 @@ userSchema.methods.incLoginAttempts = function () {
                 }
             };
             // lock the account if we've reached max attempts and it's not locked already
-            console.log("attempts", this.loginAttempts)
             if (this.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked) {
                 updates.$set = {
                     lockUntil: Date.now() + LOCK_TIME
                 };
-                console.log('lock')
             }
             this.update(updates)
                 .then(res => resolve(res))

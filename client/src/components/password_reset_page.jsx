@@ -38,7 +38,6 @@ class ResetPage extends React.Component {
         }
 
         if (passwordResetCompleted) {
-            console.log('---reroute')
             return <Redirect to={LOGIN_PATH}/>;
         }
 

@@ -22,8 +22,6 @@ const banUser = (userId, isBanned, ownProps) => {
             userBanned: isBanned
         },
         refetchQueries: [{ query: usersListQuery }]
-    }).then(({ data }) => {
-        console.log('got data, user ban changed ', data);
     }).catch((error) => {
         console.log('there was an error sending the query', error);
     });
