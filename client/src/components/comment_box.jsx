@@ -55,13 +55,13 @@ const CommentBox = props => {
         const isInEditMode = comment.id === props.commentInEditMode;
 
         // If comment is selected to be in edit mode, show editable comment, else normal comment view
-        const commentView = (isInEditMode) ?
+        const commentView = (isInEditMode && isAuthenticated) ?
             <EditableComment originalComment={comment} onSubmit={handleCommentUpdate}/> :
             <Comment comment={comment}/>;
 
         // if comment is not in edit mode and own comment -> show edit and delete buttons, the other
         // action buttons for comment in edit mode will be handled by the <EditableComment /> itself
-        const actionButtons = (isOwnComment && !isInEditMode) ?
+        const actionButtons = (isOwnComment && !isInEditMode && isAuthenticated) ?
             <ButtonGroup className="pull-right">
                 <Button bsStyle="primary" bsSize="small" onClick={() => switchCommentToEditMode(comment)}>
                     Edit
