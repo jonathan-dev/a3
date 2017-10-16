@@ -1,3 +1,6 @@
+/**
+ * Defines main react application
+ */
 import React, { Component } from 'react';
 import HeaderBar from '../containers/header_bar_container';
 import Routes from '../routes';

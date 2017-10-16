@@ -1,3 +1,7 @@
+/**
+ * Provides main app 'entry point'
+ * Initialises middleware and app
+ */
 import React from 'react';
 import { render } from 'react-dom';
 import { withRouter } from 'react-router';
@@ -10,12 +14,12 @@ import {
 } from 'react-apollo';
 import axios from 'axios';
 import { createStore, applyMiddleware } from 'redux';
-import axiosMiddleware from 'redux-axios-middleware';
+import axiosMiddleware from 'redux-axios-middleware'; //Allows Axios HTTP requests to be defined as redux actions
 import { harrismusApp } from './reducers/index_reducer'
 import { routerMiddleware, push } from 'react-router-redux';
 import App from './components/app';
 
-
+//Initialise axios client (http client)
 const axiosClient = axios.create({ // all axios can be used, shown in axios documentation
    baseURL: window.location.origin,
 });
@@ -53,6 +57,7 @@ const apolloClient = new ApolloClient({
 
 const NoBlockApp = withRouter(App);
 
+//Initialises app with router and middleware
 render(
   <ApolloProvider client={apolloClient} store={store}>
     <ConnectedRouter history={browserHistory}>

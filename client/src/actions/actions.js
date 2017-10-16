@@ -1,7 +1,13 @@
 /**
  * File for declaring actions in our application.
- * Actions are payloads of information that send data from our application to our store.
- * See the react redux actions documentation for further details
+ * Actions are payloads of information with a specific purpose,
+ *      that send data from our application to our store.
+ * See the react redux actions documentation for further details.
+ *
+ * Note: Actions with payload:request are redux-axios-middleware actions.
+ *       They allow axios HTTP requests to be defined and dispatched as redux actions.
+ *       Middleware will dispatch a _SUCCESS or _FAIL action when HTTP request is fulfilled.
+*  See redux-axios-middleware docs and reducers/user_authentication.js for more info.
  * */
 
 import {
@@ -26,7 +32,10 @@ import {
     RESET_PASSWORD_SUCCESS
 } from '../constants/action_types';
 
-// action generator for posting login information
+/**
+ * Action generator for posting login information
+ * @param {LoginData} loginData - Object containing username & pw
+ */
 export function postLogin(loginData) {
     return {
         type: POST_LOGIN,
@@ -40,7 +49,10 @@ export function postLogin(loginData) {
     }
 }
 
-// action generator for posting login information
+/**
+ * Action generator for posting login information
+ * @param {RegistrationData} registrationData - Object containing username, pw, email
+ */
 export function postRegistration(registrationData) {
     return {
         type: POST_REGISTRATION,
@@ -54,12 +66,18 @@ export function postRegistration(registrationData) {
     }
 }
 
+/**
+ * action generator for clearing rego state
+ */
 export function clearRegistrationState () {
     return {
         type: CLEAR_AUTHENTICATION_STATE
     }
 }
 
+/**
+ * action generator for posting a password reset request
+ */
 export function requestPasswordReset(email) {
     return {
         type: REQUEST_RESET_PASSWORD,
@@ -75,12 +93,20 @@ export function requestPasswordReset(email) {
     }
 }
 
+/**
+ * action generator for removing a password reset request (unused)
+ */
 export function resetRequestPasswordRequest(){
     return {
         type: RESET_REQUEST_RESET_PASSWORD
     }
 }
 
+/**
+ * action generator for request to confirm that reset token is valid
+ * (valid = not fake or expired)
+ */
+// (valid = not fake or expired)
 export function checkResetRoute(token) {
     return {
         type: CHECK_RESET_ROUTE,
@@ -96,6 +122,7 @@ export function checkResetRoute(token) {
     }
 }
 
+// action generator for reset password
 export function resetPassword(token, password) {
     return {
         type: RESET_PASSWORD,

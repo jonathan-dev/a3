@@ -1,3 +1,6 @@
+/**
+ * Defines a tag & styling, used to display a single tag on a post
+ */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './tag.sass'

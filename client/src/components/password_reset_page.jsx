@@ -16,7 +16,7 @@ class ResetPage extends React.Component {
         super(props);
 
         if(!props.routeIsValid) {
-            // token read out of dynamically generated url
+            // token is read from dynamically generated url
             const token = props.match.params.id;
             props.check(token);
         }
