@@ -16,7 +16,9 @@ import {
 } from 'redux-form';
 import axios from 'axios'
 
-//Handles submission of register form
+/**
+ * Handles submission of register form
+ */
 const handleSubmit = (dispatch, event) => {
     event.preventDefault(); //Stops page refresh
 
@@ -47,7 +49,7 @@ const stringIsEmail = string => {
     let emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     if (string) {
         // if string is not empty, test if it matches the email regex
-        return emailRegEx.test(string)
+        return emailRegEx.test(string);
     }
     return false;
 };
@@ -70,7 +72,7 @@ const validate = values => {
     // check if a required field is empty
     requiredFields.forEach(field => {
         if (!values[field]) {
-            errors[field] = 'Required'
+            errors[field] = 'Required';
         }
     });
 
@@ -81,9 +83,9 @@ const validate = values => {
 
     //Ensure passwords match
     if (values.password2 && values.password2.length > 0 && values.password2 != values.password) {
-        errors.password2 = 'Password does not match'
+        errors.password2 = 'Password does not match';
     }
-    return errors
+    return errors;
 };
 
 /**
@@ -102,24 +104,24 @@ const asyncValidate = (values) => {
         .then(res => {
             //Checks response and throws errors accordingly
             const {email, username} = res.data
-            if(email === "taken" && username === "taken") {
+            if (email === 'taken' && username === 'taken') {
                 throw {
                     email: 'Email already Exists',
                     username: 'Username already Exists'
                 }
-            }else{
-                if (email === "taken") {
+            } else {
+                if (email === 'taken') {
                     throw {
                         email: 'Email already Exists'
                     }
                 }
-                if (username === "taken") {
+                if (username === 'taken') {
                     throw {
                         username: 'Username already Exists'
                     }
                 }
             }
-        })
+        });
 }
 
 /**
@@ -130,7 +132,7 @@ const mapStateToProps = state => {
     return {
         isAuthenticated: state.authentication.isAuthenticated || false,
         registrationCompleted: state.authentication.registrationCompleted
-    }
+    };
 };
 
 /**
@@ -141,7 +143,7 @@ const mapDispatchToProps = dispatch => {
     return {
         handleSubmit: (event) => handleSubmit(dispatch, event),
         clearAuthenticationState: () => dispatch(clearAuthentication())
-    }
+    };
 };
 
 /**
@@ -151,7 +153,7 @@ const registerForm = reduxForm({
     form: 'RegisterForm', // a unique identifier for this form
     validate,
     asyncValidate
-})(RegisterPage)
+})(RegisterPage);
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(registerForm);
