@@ -15,7 +15,7 @@ import {
 
 const LoginPage = props => {
 
-    const { handleSubmit, pristine, reset, submitting, invalid, loginError } = props
+    const { handleSubmit, pristine,  submitting, invalid, loginError } = props
 
     // if already logged in, reroute to home
     if (props.isAuthenticated)
