@@ -2,7 +2,7 @@ import React from 'react'
 import {
     connect
 } from 'react-redux';
-import ForgotPage from '../components/forgot_page'
+import ForgotPage from '../components/forgot_password_page'
 import {
     requestPasswordReset,
     resetRequestPasswordRequest
