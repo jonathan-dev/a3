@@ -10,7 +10,7 @@ import { postVisibility } from './post_visibility_reducer';
 import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form'
 
-
+// combines all reducers and returns the concatenated object for the redux store, usage in main.jsx
 export const harrismusApp = combineReducers({
     postVisibility,
     authentication,

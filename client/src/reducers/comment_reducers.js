@@ -11,6 +11,7 @@ import {
     COMMENT_INPUT_FIELD_CHANGED,
 } from '../constants/action_types';
 
+// inital state for the commenting state
 const initalState = {
     editCommentWithId: null,
     editCommentText: "",

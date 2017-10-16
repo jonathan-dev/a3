@@ -21,6 +21,7 @@ import {
     RESET_PASSWORD_FAIL
 } from '../constants/action_types';
 
+// initial state of the authentication state
 const initialState = {
     username: null,
     isAuthenticated: false,
@@ -34,6 +35,8 @@ const initialState = {
     resetPasswordErrors: []
 };
 
+// authentication reducer, gets passed the current state and action dispatched and will return the new state according
+// to that particular action
 export function authentication(state = initialState, action) {
     switch (action.type) {
 

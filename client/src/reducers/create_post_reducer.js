@@ -12,38 +12,31 @@ import {
     RESET_CREATE_POST_STATE
 } from '../constants/action_types';
 
-export function createPost(state = {}, action) {
+// initial state for the create post state
+const initialState = {
+    uploadProgress: 0, // upload progress value for the progress bar
+    imageId: null,
+    image: null,
+    tags: null
+};
+
+export function createPost(state = initialState, action) {
     switch (action.type) {
 
         case UPDATE_UPLOAD_PROGRESS:
-            return Object.assign({}, state, {
-                uploadProgress: action.payload
-            });
+            return Object.assign({}, state, { uploadProgress: action.payload });
 
         case UPLOAD_IMAGE_SUCCESS:
-            return Object.assign({}, state, {
-                imageId: action.payload.data.imageId
-            });
-
-        case UPLOAD_IMAGE_FAIL:
-            return Object.assign({}, state, {});
+            return Object.assign({}, state, { imageId: action.payload.data.imageId });
 
         case UPDATE_TAGS:
-            return Object.assign({}, state, {
-                tags: action.payload
-            });
+            return Object.assign({}, state, { tags: action.payload });
 
         case UPDATE_IMAGE:
-            return Object.assign({}, state, {
-                image: action.payload
-            });
+            return Object.assign({}, state, { image: action.payload });
 
         case RESET_CREATE_POST_STATE:
-            return Object.assign({}, state, {
-                image: null,
-                tags: null,
-                uploadProgress: 0
-            });
+            return Object.assign({}, state, initialState);
 
         default:
             return state

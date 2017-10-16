@@ -1,11 +1,8 @@
 /**
  * Container for the admin page. This file handles all logic behind the admin page.
- * Logic includes: Displaying all users. Allowing users to be blocked / enabled / promoted.
- *      Filtering / searching list of users.
- *
+ * Logic includes: Own user data and callbacks for banning / unbanning users
  */
 
-//component import
 import { connect } from 'react-redux';
 import AdminPage from '../components/admin_page';
 import {
@@ -15,19 +12,20 @@ import {
 
 
 const banUser = (userId, isBanned, ownProps) => {
-    //Send a mutation request to server
+    //Send a mutation request to server, the mutation name is defined in the graphql wrapper on the bottom of the file
     ownProps.banUserMutation({
         variables: {
             userid: userId,
             userBanned: isBanned
         },
+        // update the users list by refetching the data after successfully sending the mutation
         refetchQueries: [{ query: usersListQuery }]
-    }).catch((error) => {
+    }).catch(error => {
         console.log('there was an error sending the query', error);
     });
 };
 
-//Redux function - maps current state to props object so it can be given to the component to render the page
+// Redux function - maps current state to props object so it can be given to the component to render the page
 const mapStateToProps = state => {
     return {
         //Properties that the component needs to render
