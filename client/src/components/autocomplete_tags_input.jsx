@@ -13,7 +13,7 @@ class AutocompleteTagsInput extends Component {
     autocompleteRenderInput = ({ addTag, ...props }) => {
 
         const inputValue = (props.value && props.value.trim().toLowerCase()) || '';
-        const inputLength = inputValue.length
+        const inputLength = inputValue.length;
         let tags = this.props.tags || [];
         let suggestions = tags.filter((state) => {
             if (state.name) {
@@ -29,11 +29,8 @@ class AutocompleteTagsInput extends Component {
             },
             suggestionsContainerOpen: {
                 position: 'absolute',
-                // marginTop: 10,
-                // marginBottom: 10 * 3,
                 left: 0,
-                right: 0,
-                // 'border-color': 'black'
+                right: 0
             },
             suggestion: {
                 display: 'block',
@@ -56,7 +53,7 @@ class AutocompleteTagsInput extends Component {
             suggestionHighlighted: {
                 background: 'grey'
             }
-        }
+        };
 
         return (
             <Autosuggest
@@ -74,7 +71,7 @@ class AutocompleteTagsInput extends Component {
                 theme={styles}
             />
         )
-    }
+    };
 
     render() {
         return <TagsInput
