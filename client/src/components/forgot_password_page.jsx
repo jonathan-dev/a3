@@ -3,10 +3,10 @@
  * as well as functionality in form of callbacks will be passed by its corresponding container.
  * */
 
-import React, {Component} from 'react'
-import {Field} from 'redux-form'
+import React, { Component } from 'react'
+import { Field } from 'redux-form'
 import inputField from './input_field'
-import {LinkContainer} from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import {
     Form,
     FormGroup,
