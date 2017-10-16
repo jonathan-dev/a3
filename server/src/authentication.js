@@ -48,7 +48,7 @@ export function authApp(app) {
 
     // makes whole user object available on request if a user is logged in
     app.use(function (req, res, next) {
-        passport.authenticate('jwt', function (err, user, info) {
+        passport.authenticate('jwt', function (err, user) {
             req.user = user;
             next();
         })(req, res, next);
@@ -81,34 +81,34 @@ export function authApp(app) {
         if (username && password) {
             //Checks user/pw against database, returns user if valid
             mongo.getAuthenticated(username, password)
-                .then(data => {
-                    if (data.user) {
-                        //Prepare token payload from user
-                        let payload = {
-                            id: data.user._id,
-                            isAdmin: data.user.isAdmin
-                        };
-                        let token = jwt.sign(payload, jwtOptions.secretOrKey);
-                        //Return success with token inside
-                        res.statusCode = 200;
-                        res.json({
-                            message: "login succeeded",
-                            username: username,
-                            isAdmin: data.user.isAdmin,
-                            token: token
-                        });
-                    } else if (data.reason === 2) {
-                        // user is blocked
-                        res.status(401).json({
-                            reason: "User currently blocked"
-                        });
-                    } else {
-                        res.status(401).json({
-                            reason: "Username or password is incorrect!"
-                        });
-                    }
-                })
-                .catch(err => console.log(err))
+            .then(data => {
+                if (data.user) {
+                    //Prepare token payload from user
+                    let payload = {
+                        id: data.user._id,
+                        isAdmin: data.user.isAdmin
+                    };
+                    let token = jwt.sign(payload, jwtOptions.secretOrKey);
+                    //Return success with token inside
+                    res.statusCode = 200;
+                    res.json({
+                        message: "login succeeded",
+                        username: username,
+                        isAdmin: data.user.isAdmin,
+                        token: token
+                    });
+                } else if (data.reason === 2) {
+                    // user is blocked
+                    res.status(401).json({
+                        reason: "User currently blocked"
+                    });
+                } else {
+                    res.status(401).json({
+                        reason: "Username or password is incorrect!"
+                    });
+                }
+            })
+            .catch(err => console.log(err))
         }
     });
 
@@ -119,30 +119,31 @@ export function authApp(app) {
             password,
             email
         } = req.body;
+
         if (username && password && email) {
             mongo.createUser(username, email, password)
-                .then(() => {
-                    res.statusCode = 200;
-                    res.json({
-                        username: username
-                    });
-                })
-                .catch(error => {
-                    //Returns errors to user
-                    if (error._message === 'User validation failed') {
-                        let errors = [];
-                        Object.keys(error.errors).forEach(key => errors.push(key + " " + error.errors[key].kind));
-                        res.statusCode = 401;
-                        res.json({
-                            errors: errors.slice(0)
-                        });
-                    } else {
-                        res.statusCode = 500;
-                        // send error as array of strings to be able to add additional error messages
-                        let serverError = `Server error, please try again later ${500}`;
-                        res.json([serverError].slice(0));
-                    }
+            .then(() => {
+                res.statusCode = 200;
+                res.json({
+                    username: username
                 });
+            })
+            .catch(error => {
+                //Returns errors to user
+                if (error._message === 'User validation failed') {
+                    let errors = [];
+                    Object.keys(error.errors).forEach(key => errors.push(key + " " + error.errors[key].kind));
+                    res.statusCode = 401;
+                    res.json({
+                        errors: errors.slice(0)
+                    });
+                } else {
+                    res.statusCode = 500;
+                    // send error as array of strings to be able to add additional error messages
+                    let serverError = `Server error, please try again later ${500}`;
+                    res.json([serverError].slice(0));
+                }
+            });
         }
     });
 
@@ -158,15 +159,15 @@ export function authApp(app) {
             const resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
             mongo.setResetToken(email, resetPasswordToken, resetPasswordExpires)
-                .then(() => {
-                    const text = 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-                        'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                        'http://www.studio17.com.au/reset/' + token + '\n\n' +
-                        'If you did not request this, please ignore this email and your password will remain unchanged.\n';
-                    sendMail(email, text);
-                    res.send('send')
-                })
-                .catch(err => console.log(err))
+            .then(() => {
+                const text = 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                    'http://www.studio17.com.au/reset/' + token + '\n\n' +
+                    'If you did not request this, please ignore this email and your password will remain unchanged.\n';
+                sendMail(email, text);
+                res.send('send')
+            })
+            .catch(err => console.log(err))
         }
     });
 
@@ -177,21 +178,21 @@ export function authApp(app) {
         if (token) {
             if (password) {
                 mongo.resetPassword(token, password)
-                    .then(user => {
-                        const text = generateEmailText(token);
-                        sendMail(user.email, text);
-                        res.sendStatus(200);
-                    })
-                    .catch(err => res.status(401).send('Unauthorized'))
+                .then(user => {
+                    const text = generateEmailText(token);
+                    sendMail(user.email, text);
+                    res.sendStatus(200);
+                })
+                .catch(err => res.status(401).send('Unauthorized'))
             }
 
             mongo.isValidResetToken(token)
-                .then(user => {
-                    user ? res.json(user) : res.status(401).send('Unauthorized')
-                })
-                .catch(err => res.status(500).send('Internal Error'))
+            .then(user => {
+                user ? res.json(user) : res.status(401).send('Unauthorized')
+            })
+            .catch(err => res.status(500).send('Internal Error'))
         }
-    })
+    });
 
     /**
      * Sends an email message via Mailgun
