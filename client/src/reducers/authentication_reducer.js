@@ -80,7 +80,7 @@ export function authentication(state = initialState, action) {
 
         case POST_LOGIN_FAIL:
             return Object.assign({}, state, {
-                loginErrors: ['Username or password is incorrect!']
+                loginErrors: action.error.response.data.reason
             });
 
         case LOGOUT_USER:
