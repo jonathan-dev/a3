@@ -40,24 +40,34 @@ export const RESET_REQUEST_RESET_PASSWORD = 'RESET_REQUEST_RESET_PASSWORD';
 export const REQUEST_RESET_PASSWORD_SUCCESS = 'REQUEST_RESET_PASSWORD_SUCCESS';
 export const REQUEST_RESET_PASSWORD_FAIL = 'REQUEST_RESET_PASSWORD_FAIL';
 
-
+//------------------------------------------
+// COMMENT EDITING
+//------------------------------------------
 export const EDIT_COMMENT_CLICKED = 'EDIT_COMMENT_CLICKED';
 export const EDIT_COMMENT_TEXT_CHANGED = 'EDIT_COMMENT_TEXT_CHANGED';
 export const UNDO_EDIT_COMMENT_CLICKED = 'UNDO_EDIT_COMMENT_CLICKED';
 
+//------------------------------------------
+// COMMENT CREATION
+//------------------------------------------
 export const COMMENT_INPUT_FIELD_CHANGED = 'COMMENT_INPUT_FIELD_CHANGED';
 export const CLEAR_COMMENT_INPUT_BAR = 'CLEAR_COMMENT_INPUT_BAR';
 
+//------------------------------------------
+// COMMENT BOX VISIBILITY
+//------------------------------------------
 export const SHOW_POST_COMMENTS = 'SHOW_POST_COMMENTS';
 export const HIDE_POST_COMMENTS = 'HIDE_POST_COMMENTS';
 
+//------------------------------------------
+// POST LIST SEARCH BAR
+//------------------------------------------
 export const POST_SEACHBAR_INPUT_CHANGED = 'POST_SEACHBAR_INPUT_CHANGED';
 export const CLEAR_POST_SEARCHBAR_INPUT = 'CLEAR_SEARCHBAR_INPUT';
 
 //------------------------------------------
 // CREATE POST PAGE
 //------------------------------------------
-
 export const UPDATE_UPLOAD_PROGRESS = 'UPDATE_UPLOAD_PROGRESS';
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 export const UPLOAD_IMAGE_SUCCESS = 'UPLOAD_IMAGE_SUCCESS';
