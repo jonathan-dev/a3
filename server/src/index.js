@@ -1,3 +1,7 @@
+/**
+ * This file creates an express server, applies all middleware and starts the server on the specified port
+ * */
+
 import express from 'express';
 import bodyParser from 'body-parser';
 
@@ -57,6 +61,7 @@ app.get('/*', function (req, res) {
     res.sendFile(path.resolve(resolve('../dist/index.html')));
 });
 
+// start the server on the specified port
 app.listen(PORT, () => {
     console.log(`server listening on http://localhost:${PORT}`);
 });
