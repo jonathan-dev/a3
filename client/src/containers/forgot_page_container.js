@@ -1,3 +1,7 @@
+/**
+ * Logic for forgot page
+ */
+
 import React from 'react'
 import {
     connect
@@ -13,6 +17,12 @@ import {
 
 import { reduxForm } from 'redux-form'
 
+/**
+ * submit form data
+ * @param {*} dispatch
+ * @param {*} event
+ * @param {*} token
+ */
 const handleSubmit = (dispatch, event, token) => {
     event.preventDefault();
 
@@ -20,6 +30,10 @@ const handleSubmit = (dispatch, event, token) => {
     dispatch(requestPasswordReset(email));
 };
 
+/**
+ * validation function for redux form
+ * @param {*} values
+ */
 const validate = values => {
     const errors = {}
     const requiredFields = [
@@ -39,12 +53,20 @@ const validate = values => {
     return errors
 }
 
+/**
+ * Grab needed props from redux store
+ * @param {*} state
+ */
 const mapStateToProps = state => {
     return {
         resetInfo: state.authentication.resetInfo || false,
     }
 };
 
+/**
+ * map methods to props
+ * @param {*} dispatch
+ */
 const mapDispatchToProps = dispatch => {
     return {
         handleSubmit: (event) => handleSubmit(dispatch, event),
@@ -52,6 +74,9 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
+/**
+ * wrap ForgotPage with reduxForm
+ */
 const forgotForm = reduxForm({
     form: 'ForgotForm', // a unique identifier for this form
     validate
