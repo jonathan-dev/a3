@@ -85,8 +85,14 @@ export function authApp(app) {
                             isAdmin: data.user.isAdmin,
                             token: token
                         });
+                    } else if (data.reason === 2) {
+                        res.status(401).json({
+                            reason: "User currently blocked"
+                        });
                     } else {
-                        res.sendStatus(401);
+                        res.status(401).json({
+                            reason: "Username or password is incorrect!"
+                        });
                     }
                 })
                 .catch(err => console.log(err))
