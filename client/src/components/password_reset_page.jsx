@@ -7,7 +7,7 @@ import {
     Panel
 } from 'react-bootstrap';
 import { Field } from 'redux-form'
-import inputField from './inputField'
+import inputField from './input_field'
 import { Redirect } from 'react-router';
 import { LOGIN_PATH } from '../constants/paths';
 

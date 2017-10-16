@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import inputField from './inputField'
+import inputField from './input_field'
 import {
     Form,
     FormGroup,
