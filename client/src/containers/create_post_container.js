@@ -1,3 +1,7 @@
+/**
+ * Logic for create_post page
+ */
+
 import { connect } from 'react-redux';
 import createPost from '../components/create_post_page'
 import {
