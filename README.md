@@ -39,7 +39,6 @@ npm run watch
 ### Starting the server
 The commands below will start the mongo db and the server.
 Do this in a separate terminal window.
-The server will automatically restart when the source files are changed
 ```bash
 # Terminal 2
 cd server
