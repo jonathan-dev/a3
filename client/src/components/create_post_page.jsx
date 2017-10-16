@@ -10,7 +10,7 @@ import {
     Form
 } from 'react-bootstrap'
 import { Field } from 'redux-form'
-import inputField from './inputField'
+import inputField from './input_field'
 import DropzoneInput from './DropzoneInput'
 
 

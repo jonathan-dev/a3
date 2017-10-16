@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router';
 import { HOME_PATH } from "../constants/paths";
 import { Field } from 'redux-form'
 import { LinkContainer } from 'react-router-bootstrap';
-import inputField from './inputField'
+import inputField from './input_field'
 import {
     Form,
     FormGroup,

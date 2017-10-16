@@ -1,6 +1,6 @@
 import React, { Component }from 'react'
 import { Field } from 'redux-form'
-import inputField from './inputField'
+import inputField from './input_field'
 import { LinkContainer } from 'react-router-bootstrap';
 import {
     Form,

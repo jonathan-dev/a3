@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router';
-import { LinkContainer } from 'react-router-bootstrap'; //links to user profile
 import {
     BootstrapTable,
     TableHeaderColumn
 } from 'react-bootstrap-table'; //provides bootstrap table
-import {
-    Button,
-    Col,
-    Panel
-} from 'react-bootstrap'; //provides rest of bootstrap styled stuff
-//provides query ability
-import {LOGIN_PATH} from '../constants/paths'
+import { Button } from 'react-bootstrap'; //provides rest of bootstrap styled stuff
+import {LOGIN_PATH} from '../constants/paths' // provides static route paths for redirection
 
 
 
