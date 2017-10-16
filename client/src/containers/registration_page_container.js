@@ -1,3 +1,8 @@
+/**
+ * Container for the registartion page.
+ * This file handles all the logic behind the register page
+ * and maps the current state to the props which is rednered by the component.
+ * */
 import {
     connect
 } from 'react-redux';
@@ -33,6 +38,10 @@ const handleSubmit = (dispatch, event) => {
     dispatch(postRegistration(trimmedFormData));
 };
 
+/**
+ * Tests if a string is a valid email address
+ * @param {String} string - The email address as string to check
+ */
 const stringIsEmail = string => {
     // email regular expression to test if string is an valid email address string
     let emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -43,6 +52,10 @@ const stringIsEmail = string => {
     return false;
 };
 
+/**
+ * Locally validates all given registration details and returns any problems
+ * @param {RegistrationValues} values - Json containing username, email, password1 and password2
+ */
 const validate = values => {
     const errors = {};
 
@@ -61,16 +74,22 @@ const validate = values => {
         }
     });
 
+    //Ensure email address is valid
     if (values.email && !stringIsEmail(values.email)) {
         errors.email = 'Invalid email address';
     }
 
+    //Ensure passwords match
     if (values.password2 && values.password2.length > 0 && values.password2 != values.password) {
         errors.password2 = 'Password does not match'
     }
     return errors
 };
 
+/**
+ * Validates given registration details against the server
+ * @param {RegistrationValues} values - Json containing username, email, password1 and password2
+ */
 const asyncValidate = (values) => {
     return axios({
             method: 'post',
@@ -81,6 +100,7 @@ const asyncValidate = (values) => {
             }
         })
         .then(res => {
+            //Checks response and throws errors accordingly
             const {email, username} = res.data
             if(email === "taken" && username === "taken") {
                 throw {
@@ -102,6 +122,10 @@ const asyncValidate = (values) => {
         })
 }
 
+/**
+ * Maps all state objects to props that the component needs to display
+ * @param {ReduxState} state
+ */
 const mapStateToProps = state => {
     return {
         isAuthenticated: state.authentication.isAuthenticated || false,
@@ -109,6 +133,10 @@ const mapStateToProps = state => {
     }
 };
 
+/**
+ * Maps all functions to props that component needs to call
+ * @param {ReduxDispatch} dispatch
+ */
 const mapDispatchToProps = dispatch => {
     return {
         handleSubmit: (event) => handleSubmit(dispatch, event),
@@ -116,6 +144,9 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
+/**
+ * Creates component as a redux form
+ */
 const registerForm = reduxForm({
     form: 'RegisterForm', // a unique identifier for this form
     validate,
