@@ -1,7 +1,9 @@
+/**
+ * This file contains all the action generators for creating posts, usage can be seen in the create post container
+ * */
+
 import {
     UPLOAD_IMAGE,
-    UPLOAD_IMAGE_SUCCESS,
-    UPLOAD_IMAGE_FAIL,
     UPDATE_TAGS,
     UPDATE_IMAGE,
     UPDATE_UPLOAD_PROGRESS,
@@ -18,6 +20,7 @@ export function updateUploadProgress(progress) {
 export function uploadImage(dispatch, FormData) {
     return {
         type: UPLOAD_IMAGE,
+        // reminder, all actions with a payload key will get handled by the axios middleware
         payload: {
             request: {
                 url: '/upload',
