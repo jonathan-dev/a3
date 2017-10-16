@@ -30,4 +30,4 @@ module.exports = function (app) {
             res.end('Something went wrong on there server side. Your file may not have yet uploaded.');
         });
     });
-}
+};

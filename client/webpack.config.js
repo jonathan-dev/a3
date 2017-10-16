@@ -1,5 +1,9 @@
+/**
+ * Webpack configuration file for transpiling languages to supported ones (ES6 -> ES5, SASS -> CSS, ...)
+ * */
+
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var path = require('path')
+var path = require('path');
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -58,4 +62,4 @@ module.exports = {
     port: 9000
   },
   devtool:'source-map'
-}
+};
