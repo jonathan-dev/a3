@@ -68,14 +68,17 @@ The app is secured by HTTPS and encrypts data using the private key and certific
 ## Client side
 The **client side** is a React app that uses Redux to maintain the app state, an Apollo client to use the server's GraphQL endpoint, and Axios to issue other HTTP requests to the server. 
 
-### Routes
-All main routes are held in the *index_reducer.js* file.
+#### Main
+Main file is main.jsx. It creates and intialises the react app with all middleware. `routes.js` provides the router and all routes within the app.
 
-### Views
-All main views are held in `public/views`
+#### React components
+All of the front facing ui of the app is held in the /components folder. These provide all react components that are in use throughout the app. As per Redux design guidelines, these are all presentational components - they do not contain any logic but instead perform actions by using props callbacks. Please refer to [Redux Usage with React](http://redux.js.org/docs/basics/UsageWithReact.html) document for more information 
 
-### Database access
-Configured in `mongo.js`
+#### Redux Containers
+The next layer is the /containers file. These provide the basic logic of the app and are linked to a presentational component. Please refer to [Redux Usage with React](http://redux.js.org/docs/basics/UsageWithReact.html) for container components. These files also perform any Apollo graphql requests that are necessary to be displayed on the page.
+
+#### Redux actions & reducers
+We define redux action generators in /actions. These provide methods that can be used by the containers to create actions to dispatch to a Redux reducer. The reducers are held in /reducers and provide all logic to update the application state. Please refer to [Redux Reducers](http://redux.js.org/docs/basics/Reducers.html) for more information.
 
 # Coding conventions
 1. CamelCase throughout code
