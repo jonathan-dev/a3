@@ -68,7 +68,13 @@ class RegistrationPage extends Component {
                     />
                     <FormGroup>
                         <Col smOffset={2} sm={10}>
-                            <Button type="submit" bsStyle="primary" disabled={pristine || submitting || invalid}>Send</Button>
+                            <Button
+                                type="submit"
+                                bsStyle="primary"
+                                disabled={pristine || submitting || invalid}
+                            >
+                                Send
+                            </Button>
                         </Col>
                     </FormGroup>
                 </Form>
