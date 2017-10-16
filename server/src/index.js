@@ -23,8 +23,8 @@ function resolve(dir) {
 //------------------------------------------
 const PORT = 8000;
 const IMAGES_URL = '../public/uploads/images/';
-const privateKey = fs.readFileSync(path.join(__dirname,'../ssl/test.key'))
-const certificate = fs.readFileSync(path.join(__dirname,'../ssl/test.crt'))
+const privateKey = fs.readFileSync('/home/jonathan/Documents/graphql/server/ssl/test.key')
+const certificate = fs.readFileSync('/home/jonathan/Documents/graphql/server/ssl/test.crt')
 const credentials = {key: privateKey, cert: certificate}
 //------------------------------------------
 
