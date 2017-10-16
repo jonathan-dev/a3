@@ -26,7 +26,7 @@ cd ..\server
 npm install
 ```
 
-## Development (NEW)
+## Development
 ### Starting the client
 The client will automatically be **rebuilt** when changes are made to the source files.
 
@@ -49,40 +49,24 @@ docker-compose -d
 npm start
 ```
 
-## OLD
-1. Install the dependencies:
-```
-# use the corresponding install command of your package manager
-$ npm install
-```
-3. Start an instance of MongoDB
-    - Run instance `localhost` on the default port (`27017`)
-    - *Note: You can modify the settings for this in `mongo.js`*
-4. Generate .js files from the react source files:
-```
-$ npm run build
-```
-5. Start the server:
-```
-$ npm start
-```
-
-**Note:** Starting the server with
-```
-# do not start your server like this:
-$ node index_reducer.js
-
-```
-will fail due to the use of ES6 in this project. BabelJS is used in this project as a
-ES6 to ES5 transpiler, which allows us to make use of new functions not yet available on
-ES5. In order to start the project correctly use:
-```
-# correct way of starting your server
-$ npm start
-```
-or the correpsonding start command of your package manager.
-
 # Structure
+Project is split into client & server side.
+Please refer to package.json in both client and server to see all packages used for the project. 
+
+## Server side
+The **server side** runs Node on Express and provides basic routes and a GraphQL API endpoint to query data and perform actions. 
+
+#### DB access 
+The app uses Mongoose to interact with the mongo DB instance. All database connection, change and update logic is held within `src/database/` files. `Mongo.js` opens the connection and populates the database with mock data using Casual.
+
+#### GraphQL API
+The app uses Facebook's Graphql-js library to define GraphQL types and schemas. The types are defined in `graphqlTypes.js` and the schema itself is held in `graphqlSchema.js`. Each GraphQL type corresponds to a data type in the database. The schema defines the path for the request and how it is resolved to return data.
+
+#### Security
+The app is secured by HTTPS and encrypts data using the private key and certificate file in ./SSL/. You will need to provide your own private key and certificate and put them in these files.
+
+## Client side
+The **client side** is a React app that uses Redux to maintain the app state, an Apollo client to use the server's GraphQL endpoint, and Axios to issue other HTTP requests to the server. 
 
 ### Routes
 All main routes are held in the *index_reducer.js* file.
@@ -92,19 +76,6 @@ All main views are held in `public/views`
 
 ### Database access
 Configured in `mongo.js`
-
-# Links to used struff
-progress bar:
-https://github.com/react-component/progress
-
-drop zone:
-https://react-dropzone.js.org/
-
-react-autosuggest:
-https://github.com/moroshko/react-autosuggest
-
-react-tagsinput:
-https://github.com/olahol/react-tagsinput
 
 # Coding conventions
 1. CamelCase throughout code
