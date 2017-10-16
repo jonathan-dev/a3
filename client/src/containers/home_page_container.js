@@ -1,3 +1,7 @@
+/**
+ * home page logic
+ */
+
 import { connect } from 'react-redux';
 import {
     gql,
@@ -44,5 +48,3 @@ query postListQuery {
 export default graphql(postsListQuery)(
     connect(mapStateToProps, mapDispatchToProps)(HomePage)
 );
-
-//, { options: { pollInterval: 2000 }}
