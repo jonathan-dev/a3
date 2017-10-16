@@ -104,7 +104,6 @@ const CommentBox = props => {
             {commentList.length ? commentList : <p>be the first to comment!</p>}
         </section>
     )
-
 };
 
 export default CommentBox;
