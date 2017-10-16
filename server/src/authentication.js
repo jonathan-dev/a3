@@ -86,6 +86,7 @@ export function authApp(app) {
                             token: token
                         });
                     } else if (data.reason === 2) {
+                        // user is blocked
                         res.status(401).json({
                             reason: "User currently blocked"
                         });

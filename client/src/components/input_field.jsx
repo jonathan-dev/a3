@@ -1,3 +1,7 @@
+/**
+ * Wraps a text input field styled with react bootstrap to be used with redux form
+ */
+
 import React from 'react'
 import { Field } from 'redux-form'
 import {

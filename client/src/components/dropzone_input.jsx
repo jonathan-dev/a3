@@ -1,3 +1,6 @@
+/**
+ * Wraps the react Dropzone to be used as form input with redux form
+ */
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import {
@@ -9,9 +12,6 @@ import {
 
 
 class DropzoneInput extends Component {
-    constructor() {
-        super();
-    }
 
     componentDidUpdate() {
         const { imageId, input } = this.props;
@@ -20,7 +20,6 @@ class DropzoneInput extends Component {
         } else {
             input.onChange(null)
         }
-
     }
 
     render() {
