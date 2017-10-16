@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs'
 
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOCK_TIME = 2 * 60 * 60 * 1000;
-const BAN_TIME = 86400000; //default ban time of a day
 
 let userSchema = mongoose.Schema({
     username: {
@@ -56,7 +55,7 @@ userSchema.virtual('isLocked').get(
 );
 
 // expose enum on the model, and provide an internal convenience reference
-var reasons = userSchema.statics.failedLogin = {
+const reasons = userSchema.statics.failedLogin = {
     NOT_FOUND: 0,
     PASSWORD_INCORRECT: 1,
     MAX_ATTEMPTS: 2
@@ -115,7 +114,7 @@ userSchema.methods.incLoginAttempts = function () {
                 .catch(err => reject(err))
         } else {
             // otherwise we're incrementing
-            var updates = {
+            const updates = {
                 $inc: {
                     loginAttempts: 1
                 }
@@ -138,7 +137,7 @@ userSchema.methods.incLoginAttempts = function () {
  * Locks user from logging in (until unbanned)
  */
 userSchema.statics.banUser = function (userid) {
-    var bantime = Number.MAX_SAFE_INTEGER;
+    const bantime = Number.MAX_SAFE_INTEGER;
     return this.findByIdAndUpdate(userid, {
         $set: {
             lockUntil: bantime
@@ -155,7 +154,7 @@ userSchema.statics.unbanUser = function (userid) {
             lockUntil: 1
         }
     });
-}
+};
 
 userSchema.statics.getAuthenticated = function (username, password) {
     return new Promise((resolve, reject) => {
@@ -186,7 +185,7 @@ userSchema.statics.getAuthenticated = function (username, password) {
                                 resolve({user: user});
                             }
                             // reset attempts and lock info
-                            var updates = {
+                            const updates = {
                                 $set: {
                                     loginAttempts: 0
                                 },
