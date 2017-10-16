@@ -23,6 +23,8 @@ import App from './components/app';
 const axiosClient = axios.create({ // all axios can be used, shown in axios documentation
    baseURL: window.location.origin,
 });
+
+// Browser history for the Connected router Component, enables redirection and tracks history
 const browserHistory = createBrowserHistory();
 
 //Creates redux global state store
@@ -30,14 +32,17 @@ let store = createStore(
     harrismusApp,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     applyMiddleware( // apply all middlewares
-        axiosMiddleware(axiosClient) //second parameter options can optionally contain onSuccess, onError, onComplete, successSuffix, errorSuffix,
+        //second parameter options can optionally contain onSuccess, onError, onComplete, successSuffix, errorSuffix
+        axiosMiddleware(axiosClient)
     )
 );
 
+// graphql network interface defining the link to the graqhQL backend
 const networkInterface = createNetworkInterface({
   uri: window.location.origin+'/graphql'
 });
 
+// apply the middlewares on the graphql network interface
 networkInterface.use([{
   applyMiddleware(req, next) {
     if (!req.options.headers) {
@@ -51,10 +56,13 @@ networkInterface.use([{
   }
 }]);
 
+// create the apollo client providing it with the created graphQL interface
 const apolloClient = new ApolloClient({
   networkInterface
 });
 
+// wrap the app in order to prevent redirection blockade. Known problem with react router, see
+// react router redux documentation for further details
 const NoBlockApp = withRouter(App);
 
 //Initialises app with router and middleware
