@@ -1,5 +1,7 @@
 /**
- * This file contains all links for the header bar of the react application
+ * This component handles the visual representation of the header bar alongside displaying all links which need to be
+ * included in the header bar. All necessary state information for rendering alongside functionality in form of
+ * callbacks will be passed by its corresponding container and can be accessed via the props.
  * */
 
 import React from 'react';
