@@ -10,9 +10,10 @@ import {
     ExtractJwt,
     Strategy as JwtStrategy
 } from 'passport-jwt' //hooks passport into jwt
-import mailgunConfig from '../config/mailgun'
-import key from '../config/key'
-import mongo from './database/mongo'
+import mailgunConfig from '../config/mailgun';
+import { generateEmailText } from './email_generation';
+import key from '../config/key';
+import mongo from './database/mongo';
 
 //Initialises JWT options for passport-jwt
 const jwtOptions = {
@@ -177,9 +178,9 @@ export function authApp(app) {
             if (password) {
                 mongo.resetPassword(token, password)
                     .then(user => {
-                        const text = 'password reset successfully!';
-                        sendMail(user.email, text)
-                        res.send()
+                        const text = generateEmailText(token);
+                        sendMail(user.email, text);
+                        res.sendStatus(200);
                     })
                     .catch(err => res.status(401).send('Unauthorized'))
             }
