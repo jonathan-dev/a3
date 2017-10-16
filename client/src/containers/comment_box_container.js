@@ -82,10 +82,10 @@ const handleCommentUpdate = (event, originalComment, mutate, dispatch) => {
  * Handles the deletion of a existing comment, no need for dispatching actions as refetch query will update the state
  * on its own.
  *
- * @param {comment} comment to be deleted
- * @param {postId} postId the post if of the belonging post
+ * @param comment to be deleted
+ * @param postId the post if of the belonging post
  * @param mutate
- * @function {mutate} mutate the graphQL mutation
+ * @function mutate the graphQL mutation
  * */
 const handleDeleteComment = (comment, postId, mutate) => {
     mutate({
