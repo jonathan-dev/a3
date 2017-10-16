@@ -16,7 +16,7 @@ import {
 } from 'react-bootstrap'
 import { Field } from 'redux-form'
 import inputField from './input_field'
-import DropzoneInput from './DropzoneInput'
+import DropzoneInput from './dropzone_input'
 
 
 class CreatePostPage extends Component {
