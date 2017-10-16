@@ -1,5 +1,7 @@
 /**
  * Wraps the react Dropzone to be used as form input with redux form
+ *
+ * react-dropzone: https://www.npmjs.com/package/react-dropzone
  */
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
@@ -13,6 +15,9 @@ import {
 
 class DropzoneInput extends Component {
 
+    /**
+     * trigger redux form change when an image Id is received
+     */
     componentDidUpdate() {
         const { imageId, input } = this.props;
         if (imageId) {
