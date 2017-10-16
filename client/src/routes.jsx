@@ -1,7 +1,6 @@
 /**
  * This file contains all the routes for the react application
- * */
-
+ */
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 

@@ -1,3 +1,9 @@
+/**
+ * Handles all redux actions related to login and authentication, modifies the state accordingly.
+ *
+ * Note: Reducers with _SUCCESS or _FAIL are dispatched by redux-axios-middleware.
+ * Each reducer (case) returns updated state object. Refer to redux docs for more info.
+ */
 import {
     POST_LOGIN_SUCCESS,
     POST_LOGIN_FAIL,

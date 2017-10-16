@@ -1,3 +1,7 @@
+/**
+ * Provides a Mongoose schema data model
+ * for storing/retrieving comments in MongoDB
+ */
 import mongoose from 'mongoose'
 
 let commentSchema = mongoose.Schema({

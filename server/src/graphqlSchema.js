@@ -1,3 +1,7 @@
+/**
+ * Defines all possible graphql requests with details,
+ * and how to perform/resolve each request.
+ */
 import {
     graphql,
     GraphQLSchema,
@@ -12,9 +16,9 @@ import {
 } from 'graphql' // GraphQL and GraphQL types
 import mongo from './database/mongo' // Database
 import * as actions from './actions'
-import * as types from './graphqlTypes'
+import * as types from './graphqlTypes' //Graphql data types
 
-//Defines all queries that can be done, and their details
+//Defines all queries that can be done via GraphQL.
 const QueryType = new GraphQLObjectType({
     name: 'Query',
     description: 'Perform a query on the database using one of the following:',
@@ -22,9 +26,11 @@ const QueryType = new GraphQLObjectType({
 
         posts: {
             type: new GraphQLList(types.PostType),
+            description: 'Get a list of posts',
             args: {
                 owner: {
-                    type: GraphQLString
+                    type: GraphQLString,
+                    description: 'Filter by the owner of the post'
                 }
             },
             resolve: (x, args) => {
@@ -34,6 +40,7 @@ const QueryType = new GraphQLObjectType({
                 return mongo.getPosts();
             }
         },
+
         post: {
             type: types.PostType,
             description: 'Get a specific post. Pass in post id as an argument.',
@@ -110,6 +117,7 @@ const QueryType = new GraphQLObjectType({
     })
 });
 
+//Defines all mutations (changes) in graphql
 const PostMutation = new GraphQLObjectType({
     name: 'PostMutations',
     description: 'Post API Mutations',
@@ -209,7 +217,7 @@ const PostMutation = new GraphQLObjectType({
                     //Checks if user is an admin
                     if (context.req.user.isAdmin) {
                         // Performs ban or unban
-                        return (banned ?  mongo.banUser(id) : mongo.unbanUser(id))
+                        return (banned ?  mongo.banUser(id) : mongo.unbanUser(id));
                     } else {
                         throw new Error('you need to be an admin to perform this action');
                     }

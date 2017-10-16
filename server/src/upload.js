@@ -1,3 +1,7 @@
+/**
+ * Adds image upload functionality to express app
+ */
+
 import formidable from 'formidable'
 import md5 from 'md5'
 

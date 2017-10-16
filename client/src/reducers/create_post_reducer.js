@@ -1,3 +1,8 @@
+/**
+ * Handles all redux actions related to uploading images & creating posts,
+ * modifies the state with new post info accordingly.
+ * Each reducer (case) returns updated state object. Refer to redux docs for more info.
+ */
 import {
     UPDATE_UPLOAD_PROGRESS,
     UPLOAD_IMAGE_SUCCESS,
