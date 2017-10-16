@@ -1,5 +1,6 @@
 /**
  * This file contains the logic behind the login and logout persistence of user data
+ * Note: currently not in use, replaced by redux actions
  * */
 
 export function logIn (username, token) {

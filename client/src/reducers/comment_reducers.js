@@ -1,3 +1,8 @@
+/**
+ * Handles all redux actions related to editing comments,
+ * modifies the state to add or remove the comment that's currently being edited & it's details
+ * Each reducer (case) returns updated state object. Refer to redux docs for more info.
+ */
 import {
     EDIT_COMMENT_CLICKED,
     EDIT_COMMENT_TEXT_CHANGED,

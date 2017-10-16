@@ -1,3 +1,7 @@
+/**
+ * Provides a Mongoose schema data model
+ * for storing/retrieving posts in MongoDB
+ */
 import mongoose from 'mongoose'
 
 let postSchema = mongoose.Schema({
