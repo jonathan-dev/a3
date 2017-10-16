@@ -30,15 +30,7 @@ export const TagType = new GraphQLObjectType({
     })
 });
 
-export const TagAttributesInputType = new GraphQLInputObjectType({
-    name: 'TagAttributes',
-    fields: () => ({
-        id: {
-            type: GraphQLString
-        }
-    })
-});
-
+// Defines the fields of a post in the database
 export const PostType = new GraphQLObjectType({
     name: 'Post',
     description: 'Post that is displayed in the feed',
